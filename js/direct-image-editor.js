@@ -1,9 +1,3 @@
-/*
- * directImageEditor a $ UI widget for image uploading and editting, part of the directEdit project
- * depends on directImageEditorCPS
- * (c) 2010-2012 Carlo Roosen (http://www.carloroosen.nl)
- */
-
 /*jslint nomen: true, browser: true */
 /*global jQuery: false, console:false, FileReader: false */
 

@@ -29,4 +29,4 @@ First publication on Dec 09 2013
 
 DirectEdit is maintained on [https://github.com/carloroosen/directEdit-FREE](https://github.com/carloroosen/directEdit-FREE). Feel free to contribute.
 
-The DirectEdit javascript library is a part of the DirectEdit project. It has a REST interface, and can easily be implemented in other applications.
+The DirectEdit javascript library is a part of the DirectEdit project. It has a REST interface, and can easily be implemented in other applications.a

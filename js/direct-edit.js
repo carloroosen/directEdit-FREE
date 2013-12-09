@@ -55,61 +55,62 @@ var directEdit, directNotify, directTranslate;
 				optionSelector = element.attr('data-global-options');
 				if (optionSelector && self.globalOptions) {
 					thisOptions = {};
-					if (optionSelector === 'page-options') thisOptions.type = 'options';
-					thisGlobalOptions = self.globalOptions[optionSelector];
-					if (element.attr('data-global-options') === 'page-options') {
+					if (optionSelector === 'page-options') {
 						editorType = 'options';
 					} else {
+						thisGlobalOptions = self.globalOptions[optionSelector];
+						if (element.attr('data-local-options')) {
+							thisLocalOptions = JSON.parse(element.attr('data-local-options')) || {};
+						}
 						$.extend(true, thisOptions, thisGlobalOptions, thisLocalOptions);
-						$.extend(true, thisOptions, thisGlobalOptions, thisLocalOptions);
+						editorType = thisOptions.type;
 						additionalData = self.getData(element);
 					}
 
-					if (thisOptions && thisOptions.type) {
-						editorType = thisOptions.type;
-						switch (editorType) {
-						case 'text':
-							link = element.closest('a');
-							if (link.length === 1) {
-								link.directLinkEditor({'buttonFollowLink':true});
-							} else if (thisOptions.unwrap) {
-								parentElement = element.parent();
-								parentElement.html(element.html());
-								element = parentElement;
-							}
-							element.directTextEditor(thisOptions);
-							editor = element.data("directEdit-directTextEditor");
-							break;
-						case 'file':
-							element.directFileUploader(thisOptions);
-							editor = element.data("directEdit-directFileUploader");
-							break;
-						case 'image':
-							element.directImageEditor(thisOptions);
-							editor = element.data("directEdit-directImageEditor");
-							break;
-						case 'link':
-							element.directLinkEditor(thisOptions);
-							editor = element.data("directEdit-directLinkEditor");
-							break;
-						case 'list':
-							element.directListEditor(thisOptions);
-							editor = element.data("directEdit-directListEditor");
-							break;
-						case 'options':
-							element.directPageOptions(thisOptions);
-							editor = element.data("directEdit-directPageOptions");
-							break;
+					switch (editorType) {
+					case 'text':
+						link = element.closest('a');
+						if (link.length === 1) {
+							link.directLinkEditor({'buttonFollowLink':true});
+						} 
+						console.log(thisOptions);
+						if (thisOptions.unwrap) {
+							parentElement = element.parent();
+							parentElement.html(element.html());
+							element = parentElement;
 						}
-						if (editor) {
-							if (editorType === 'options') {
-								self.editors['direct-page-options'] = editor;
-							} else {
-								editor.setAdditionalData(additionalData);
-								self.editors['editor-' + self.counter] = editor;
-							}
-							self.counter += 1;
+						element.directTextEditor(thisOptions);
+						editor = element.data("directEdit-directTextEditor");
+						break;
+					case 'file':
+						element.directFileUploader(thisOptions);
+						editor = element.data("directEdit-directFileUploader");
+						break;
+					case 'image':
+						element.directImageEditor(thisOptions);
+						editor = element.data("directEdit-directImageEditor");
+						break;
+					case 'link':
+						element.directLinkEditor(thisOptions);
+						editor = element.data("directEdit-directLinkEditor");
+						break;
+					case 'list':
+						element.directListEditor(thisOptions);
+						editor = element.data("directEdit-directListEditor");
+						break;
+					case 'options':
+						element.directPageOptions(thisOptions);
+						editor = element.data("directEdit-directPageOptions");
+						break;
+					}
+					if (editor) {
+						if (editorType === 'options') {
+							self.editors['direct-page-options'] = editor;
+						} else {
+							editor.setAdditionalData(additionalData);
+							self.editors['editor-' + self.counter] = editor;
 						}
+						self.counter += 1;
 					}
 				}
 			}

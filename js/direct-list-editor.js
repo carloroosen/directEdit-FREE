@@ -1,8 +1,3 @@
-/*
- * a $ UI widget linkEditor, part of the directEdit project
- * (c) 2012 Carlo Roosen (http://www.carloroosen.nl)
- */
-
 /*jslint nomen: true, browser: true */
 /*global jQuery: false, console: false, directEdit : false, directNotify : false */
 (function ($) {
