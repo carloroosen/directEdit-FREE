@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Direct Edit
-Plugin URI: http://www.directedit.co/
-Description: Edit your website directly in the front end. DirectEdit is the fastest and easiest way to maintain your website without help. Especially when you are not a designer or a programmer! <strong><a href="http://directedit.co/">Visit the plugin website for more details.</a></strong>
+Plugin URI: http://directedit.co/
+Description: DirectEdit is the fastest and easiest way to keep your website up-to-date. Edit your website directly in the front-end: after setting up your website you can do all the editing without ever seeing the back-end again. No more flipping back between front-end and back-end to see the result. <strong><a href="http://directedit.co/">Visit the plugin website for more details.</a></strong>
 Version: 1.0
 Author: Carlo Roosen
-Author URI: http://www.carloroosen.com/
+Author URI: http://carloroosen.com/
 */
 
 define( 'DIRECT_VERSION', '1.0' );
