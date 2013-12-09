@@ -92,10 +92,15 @@ function de_plugin_menu() {
 				}
 			}
 			
-			wp_redirect( home_url( '/wp-admin/plugins.php?page=direct-edit&upgrade_error=true' ) );
+			wp_redirect( home_url( '/wp-admin/plugins.php?page=direct-edit&error=upgrade' ) );
 		} elseif ( isset( $_REQUEST['action'] ) && 'copy_files' == $_REQUEST['action'] ) {
 			if ( ! file_exists( get_template_directory() . '/direct-edit' ) ) {
-				de_copy( DIRECT_PATH . 'theme', get_template_directory() . '/direct-edit' );
+				$result = de_copy( DIRECT_PATH . 'theme', get_template_directory() . '/direct-edit' );
+				if ( ! $result ) {
+					@de_rmdir( get_template_directory() . '/direct-edit' );
+					wp_redirect( home_url( '/wp-admin/plugins.php?page=direct-edit&error=copy_files' ) );
+					die();
+				}
 			}
 			
 			wp_redirect( home_url( '/wp-admin/plugins.php?page=direct-edit&saved=true' ) );
@@ -128,8 +133,12 @@ function de_plugin_page() {
 
 	if ( isset( $_REQUEST[ 'saved' ] ) ) {
 		echo '<div id="message" class="updated fade"><p><strong> Settings saved.</strong></p></div>';
-	} elseif ( isset( $_REQUEST[ 'upgrade_error' ] ) ) {
-		echo '<div id="message" class="updated fade"><p><strong> Upgrade error.</strong></p></div>';
+	} elseif ( isset( $_REQUEST[ 'error' ] ) ) {
+		if ( $_REQUEST[ 'error' ] == 'upgrade' ) {
+			echo '<div id="message" class="updated fade"><p><strong> Upgrade error.</strong></p></div>';
+		} elseif ( $_REQUEST[ 'error' ] == 'copy_files' ) {
+			echo '<div id="message" class="updated fade"><p><strong> Settings could not be saved. Check folder permissions.</strong></p></div>';
+		}
 	}
 		
 	if ( get_option( 'de_options_wp_hooks' ) )
@@ -142,6 +151,9 @@ function de_plugin_page() {
 			<br>
 		</div>
 		<h2>Direct Edit <?php _e( 'Options', 'direct-edit' ); ?></h2>
+		<div class="inside">
+			<iframe src="http://directedit.co/iframe/" frameborder="0" scrolling="no" style="width: 50%; height: 550px; float:right;"></iframe>
+		</div>
 		<h3><i><?php _e( 'upgrade to PRO', 'direct-edit' );?></i></h3>
 		<div class="inside">
 			<form method="post">
@@ -207,9 +219,6 @@ function de_plugin_page() {
 					</tbody>
 				</table>
 			</form>
-		</div>
-		<div class="inside">
-			<iframe src="http://directedit.co/iframe/" frameborder="0" scrolling="no" style="width: 100%; height: 450px;"></iframe>
 		</div>
 	</div>
 	<?php

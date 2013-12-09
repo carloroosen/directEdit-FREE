@@ -83,18 +83,8 @@ function de_adjust_menu( $wp_admin_bar ) {
 					$wp_admin_bar->remove_menu( $node->id );
 				}
 			}
-			$wp_admin_bar->remove_menu( 'new-content' );
 
 			if ( current_user_can('edit_posts') || current_user_can( 'edit_de_frontend' ) ) {
-				$wp_admin_bar->add_node( array(
-						'id' => 'new-content',
-						'title' => '<span class="ab-icon"></span><span class="ab-label">New</span>',
-						'parent' => '',
-						'group' => '',
-						'meta' => array( 'title' => 'Add New' )
-					)
-				);
-				
 				foreach( get_post_types( array( 'show_ui' => true ), 'objects' ) as $postType ) {
 					if ( ! in_array( $postType->name, array( 'post', 'page' ) ) && ( in_array( $postType->name, array( 'de_list_item', 'de_webform' ) ) || strpos( $postType->name, 'de_' ) !== 0 ) )
 						continue;
@@ -141,8 +131,6 @@ function de_load_global_options() {
 	
 	if ( file_exists( get_template_directory() . '/direct-edit' ) && file_exists( get_template_directory() . '/direct-edit/options/direct-options.json' ) ) {
 		$de_global_options = json_decode( file_get_contents( get_template_directory_uri() . '/direct-edit/options/direct-options.json' ), true );
-	} elseif ( file_exists( DIRECT_PATH . 'pro' ) ) {
-		$de_global_options = json_decode( file_get_contents( DIRECT_PATH . 'pro/theme/options/direct-options.json' ), true );
 	} else {
 		$de_global_options = json_decode( file_get_contents( DIRECT_PATH . 'theme/options/direct-options.json' ), true );
 	}

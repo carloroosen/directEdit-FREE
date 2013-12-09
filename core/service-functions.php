@@ -109,18 +109,28 @@ function de_wrap_the_title_remove ( $result = null ) {
 function de_copy( $source, $target ) {
 	 if ( is_dir( $source ) ) {
 		umask( 0 );
-		@mkdir( $target, 0777 );
+		$result = mkdir( $target, 0777 );
+		if ( ! $result )
+			return false;
+		
 		$d = dir( $source );
 		while ( FALSE !== ( $entry = $d->read() ) ) {
 			if ( $entry == '.' || $entry == '..' )
 				continue;
-			de_copy( "$source/$entry", "$target/$entry" );
+			$result = de_copy( "$source/$entry", "$target/$entry" );
+			if ( ! $result )
+				return false;
 		}
 		$d->close();
 	} else {
-		copy( $source, $target );
+		$result = copy( $source, $target );
+		if ( ! $result )
+			return false;
+
 		chmod( $target, 0777 );
 	}
+	
+	return true;
 }
 
 // Delete directory with files in it

@@ -198,7 +198,7 @@ class De_Store {
 					}
 					
 					if ( $item->get_setting( 'redirect' ) && $item->get_setting( 'redirect' ) !== 'false' && $item->get_setting( 'redirect' ) !== 'no' ) {
-						self::$redirect = De_Url::get_url( self::$new_post_id );
+						self::$redirect = add_query_arg( array( 'de_message' => 'saved' ), De_Url::get_url( self::$new_post_id ) );
 					}
 				}
 				
@@ -297,7 +297,7 @@ class De_Store {
 						De_Url::register_url( $item->get_setting( 'postId' ), sanitize_title( $content ) );
 
 						if ( $item->get_setting( 'redirect' ) && $item->get_setting( 'redirect' ) !== 'false' && $item->get_setting( 'redirect' ) !== 'no' ) {
-							self::$redirect = De_Url::get_url( $item->get_setting( 'postId' ) );
+							self::$redirect = add_query_arg( array( 'de_message' => 'saved' ), De_Url::get_url( $item->get_setting( 'postId' ) ) );
 						}
 					}
 
