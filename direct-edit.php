@@ -2,6 +2,7 @@
 /*
 Plugin Name: Direct Edit
 Plugin URI: http://www.directedit.co/
+Description: Edit your website directly in the front end. DirectEdit is the fastest and easiest way to maintain your website without help. Especially when you are not a designer or a programmer! <strong><a href="http://directedit.co/">Visit the plugin website for more details.</a></strong>
 Version: 1.0
 Author: Carlo Roosen
 Author URI: http://www.carloroosen.com/
