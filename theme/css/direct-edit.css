@@ -1,0 +1,788 @@
+/* all dE elements */
+
+.direct-edit *, .direct-edit { 
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+}
+.direct-hidden:not(.direct-show-all) {
+	display: none;
+}
+
+/* directNotify */
+
+#direct-notify-container {
+	position: fixed;
+	top: 40px;
+	right: 10px;
+	width: 200px;
+	z-index: 2147483647;
+}
+
+#direct-notify-container div.notify {
+    border-radius: 0.375em 0.375em 0.375em 0.375em;
+	padding:10px;
+    font-family: Arial;
+    font-size: 0.9375em;
+    background: rgba(5, 5, 5, 0.8);
+    color: #dddddd;
+	margin-bottom: 5px;
+	overflow:hidden;
+}
+#direct-notify-container div.notify p {
+	margin:0;
+}
+
+/* directFileUploader */
+
+.direct-file-uploader .direct-file-uploader-buttons {
+    position: absolute;
+}
+.direct-file-uploader .direct-file-uploader-buttons a {
+    background: rgba(5, 5, 5, 0.8);
+    border: 0 none;
+    border-radius: 0.375em 0.375em 0.375em 0.375em;
+    color: #bbbbbb;
+    cursor: pointer;
+    display: block;
+    float: left;
+    font-family: Arial;
+    font-size: 0.9375em;
+    line-height: 1.125em;
+    margin-right: 0.25em;
+    opacity: 0;
+    padding: 0.375em 0.5em;
+    text-decoration: none;
+    transition: all 0.3s ease 0s;
+}
+.direct-file-uploader:hover .direct-file-uploader-buttons a {
+    opacity: 1;
+}
+
+/* directListEditor */
+
+.direct-list-editor-buttons .group-left {
+  position: absolute;
+  margin-left: 0.3125em;
+  top: 0.3125em;
+}
+
+.direct-list-editor-buttons .group-right {
+  position: absolute;
+  top: 0.3125em;
+  margin-left: 6.25em;
+}
+
+.direct-list-editor-buttons {
+    position: absolute;
+    top: 1.5em;
+    width: 100%;
+}
+.direct-list-editor-buttons a {
+    background: rgba(5, 5, 5, 0.8);
+    border: 0 none;
+    border-radius: 0.375em 0.375em 0.375em 0.375em;
+    color: #bbbbbb;
+    cursor: pointer;
+    display: block;
+    font-family: Arial;
+    font-size: 0.9375em;
+    line-height: 1.125em;
+    margin-bottom: 0.25em;
+    margin-left: 0.6em;
+    opacity: 1;
+    padding: 0.375em 0.5em;
+    text-decoration: none;
+    transition: all 0.3s ease 0s;
+}
+.direct-list-editor-buttons a:hover, .direct-list-editor-buttons a:focus {
+    background: none repeat scroll 0 0 black;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+.direct-list-editor-item div:hover a, .direct-list-editor-buttons:hover a {
+    opacity: 1;
+}
+
+/* directLinkEditor */
+
+a.direct-link-editor .direct-link-editor-buttons {
+    opacity: 0;
+    position: absolute;
+    z-index: 2147483647;
+}
+a.direct-link-editor:hover .direct-link-editor-buttons {
+    margin-top: 23px;
+    opacity: 1;
+}
+a.direct-link-editor .direct-link-editor-buttons a {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.6);
+    border: 0 none;
+    border-radius: 4px;
+    color: #bbbbbb;
+    cursor: pointer;
+    display: block;
+    float: left;
+    font-family: "FuturaMedium", Helvetica,Arial;
+    font-size: 13px;
+    font-weight: normal !important;
+    line-height: 1.125em;
+    margin-right: 0.25em;
+    padding: 0.375em 0.5em;
+    text-decoration: none;
+    transition: all 0.3s ease 0s;
+}
+a.direct-link-editor .direct-link-editor-buttons a:hover {
+    background-color: #333333;
+    color: #EEEEEE;
+}
+
+/* directTextEditor */
+
+*[contenteditable=true] {
+	outline-style:none;
+	
+}
+.direct-text-editor-placeholder:after {
+	content: "\0000a0";
+}
+
+/* directTextEditor toolbar */
+
+#direct-text-editor-toolbar-container {
+	position:fixed;
+	top:40px;
+	left:40px;
+	z-index:2147483647;
+}
+
+#direct-text-editor-toolbar-container .toolbar {
+    border: 1px solid #babdb6;
+    padding: 2px;
+    background-color: #eeeeec;
+    border-radius: 6px;
+	cursor:move;
+    font-size: 12pt;
+    line-height: 12px;
+}
+
+#direct-text-editor-toolbar-container  .grip {
+	background-image:url('../images/grip.png');
+	width:8px;
+	height:20px;
+	display:inline-block;
+	margin:4px 3px 0 0;
+	padding:0;
+	vertical-align:top;
+}
+
+#direct-text-editor-toolbar-container  .ui-button  {
+	padding: 5px 10px;
+	margin-right: -1px;
+}
+
+#direct-text-editor-toolbar-container  .ui-button-icon-only {
+	width:16px;
+}
+
+#direct-text-editor-toolbar-container  .ui-button .ui-button-text {
+	margin: 0;
+}
+
+#direct-text-editor-toolbar-container  .ui-button .ui-icon {
+	margin: 0;
+	background-image: url(../images/button-icons.png);
+}
+
+#direct-text-editor-toolbar-container  .ui-button.ui-state-active .ui-icon {
+	background-image: url(../images/button-icons-active.png);
+}
+
+.direct-icon-undo { background-position : -16px 0; }
+.direct-icon-redo { background-position : -32px 0; }
+.direct-icon-bold { background-position : -48px 0; }
+.direct-icon-italic { background-position : -64px 0; }
+.direct-icon-file { background-position : -80px 0; }
+.direct-icon-align-center { background-position : -96px 0; }
+.direct-icon-align-full { background-position : -112px 0; }
+.direct-icon-align-left { background-position : -128px 0; }
+.direct-icon-align-right { background-position : -144px 0; }
+.direct-icon-list-ul { background-position : -160px 0; }
+.direct-icon-list-ol { background-position : -176px 0; }
+.direct-icon-quote { background-position : -192px 0; }
+.direct-icon-link { background-position : -208px 0; }
+.direct-icon-link-button { background-position : -224px 0; }
+.direct-icon-image { background-position : -240px 0; }
+.direct-icon-video { background-position : -256px 0; }
+.direct-icon-p { background-position : -272px 0; }
+.direct-icon-h1 { background-position : -288px 0; }
+.direct-icon-h2 { background-position : -304px 0; }
+.direct-icon-h3 { background-position : -320px 0; }
+.direct-icon-h4 { background-position : -336px 0; }
+.direct-icon-h5{ background-position : -352px 0; }
+.direct-icon-p-lead{ background-position : -400px 0; }
+
+
+/* image editor */
+
+#direct-image-editor-dialog .submit {
+	float:right;
+	margin:5px;
+}
+
+#direct-image-editor-dialog #spinner {
+	float:right;
+	margin:8px 0 0 15px;
+	width:16px;
+	height:16px;
+	background-image: url(../images/spinner.gif);
+	display:none;
+}
+
+img.direct-image-editor-active-image {
+	box-shadow: 0 0 0 3px #ccc;
+}
+
+#direct-image-editor-dialog div.ui-slider-container {
+	margin: 6px 10px;
+}
+
+#direct-image-editor-dialog .sliderContainer {
+	clear:both;
+	height:14px;
+	padding: 8px 0;
+}
+
+#direct-image-editor-dialog .select_image_type {
+	float:left;
+	text-align:center;
+}
+
+#direct-image-editor-dialog .select_image_type input[type="radio"].select_image_style  {
+	display:none;
+}
+
+#direct-image-editor-dialog .select_image_type label  {
+	background-image:url('../images/select_style.png');
+	display:block;
+	width:72px;
+	height:80px;
+	margin-right:3px;
+}
+#direct-image-editor-dialog .select_image_type input[type="radio"].select_image_style:checked+label {
+	outline:3px solid grey;
+}
+
+#direct-image-editor-dialog .select_image_type label.left  {
+	background-position:0;
+}
+
+#direct-image-editor-dialog .select_image_type label.centered  {
+	background-position:-72px;
+}
+
+#direct-image-editor-dialog .select_image_type label.right  {
+	background-position:-144px;
+}
+
+#direct-image-editor-dialog .select_image_type label.full  {
+	background-position:-216px;
+}
+
+#direct-image-editor-dialog .select_image_type label.iconleft  {
+	background-position:-288px;
+}
+
+#direct-image-editor-dialog .select_image_type label.iconright  {
+	background-position:-360px;
+}
+
+#direct-image-editor-dialog .image-editor-container {
+	background-color:white;
+	border: 1px #ccc solid;
+}
+
+#direct-image-editor-dialog .input_text {
+	float:left;
+	text-align:left;
+	margin:2px 0 0 5px;
+}
+
+#direct-image-editor-dialog .input_text label {
+	margin:0 0 5px 0;
+}
+
+#direct-image-editor-dialog #editpagetoolbox .buttonset {
+	float:right;
+}
+
+/* combobox */
+
+.ui-combobox {
+	padding-left:9.52381%;
+	float: left;
+	width: 300px;
+	display: block;
+}
+.ui-combobox a.ui-combobox-toggle {
+	float: left;
+	display: block;
+	top: 0;
+	bottom: 0;
+	margin: 0 0 0 -1px;
+	padding: 4px;
+	width:16px;
+}
+.ui-combobox a.ui-combobox-toggle  .ui-icon{
+	margin:0;
+}
+.ui-combobox-input {
+	display: block;
+	float: left;
+	margin: 0;
+	padding: 0.3em;
+}
+
+.ui-combobox .ui-button-icon-only {
+width:0;
+margin-left: -1px;
+}
+
+/* Page options dialog */
+
+#direct-page-options button,
+#direct-page-options input,
+#direct-page-options select,
+#direct-page-options textarea {
+  margin: 0;
+  font-size: 100%;
+  vertical-align: middle;
+}
+
+#direct-page-options button,
+#direct-page-options input {
+  *overflow: visible;
+  line-height: normal;
+}
+
+#direct-page-options button::-moz-focus-inner,
+#direct-page-options input::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+#direct-page-options button,
+#direct-page-options input[type="button"],
+#direct-page-options input[type="reset"],
+#direct-page-options input[type="submit"] {
+  cursor: pointer;
+  -webkit-appearance: button;
+}
+
+#direct-page-options label,
+#direct-page-options select,
+#direct-page-options button,
+#direct-page-options input[type="button"],
+#direct-page-options input[type="reset"],
+#direct-page-options input[type="submit"],
+#direct-page-options input[type="radio"],
+#direct-page-options input[type="checkbox"] {
+  cursor: pointer;
+}
+
+#direct-page-options input[type="radio"],
+#direct-page-options input[type="checkbox"] {
+  float: none;
+  display: inline;
+}
+
+#direct-page-options input[type="search"] {
+  -webkit-box-sizing: content-box;
+     -moz-box-sizing: content-box;
+          box-sizing: content-box;
+  -webkit-appearance: textfield;
+}
+
+#direct-page-options input[type="search"]::-webkit-search-decoration,
+#direct-page-options input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
+#direct-page-options textarea {
+  overflow: auto;
+  vertical-align: top;
+}
+
+#direct-page-options p {
+  margin: 0 0 10px;
+}
+
+#direct-page-options h1,
+#direct-page-options h2,
+#direct-page-options h3,
+#direct-page-options h4,
+#direct-page-options h5,
+#direct-page-options h6 {
+  margin: 10px 0;
+  font-family: inherit;
+  font-weight: bold;
+  line-height: 20px;
+  color: inherit;
+  text-rendering: optimizelegibility;
+}
+
+#direct-page-options h1,
+#direct-page-options h2,
+#direct-page-options h3 {
+  line-height: 40px;
+}
+
+#direct-page-options h1 {
+  font-size: 38.5px;
+}
+
+#direct-page-options h2 {
+  font-size: 31.5px;
+}
+
+#direct-page-options h3 {
+  font-size: 24.5px;
+}
+
+#direct-page-options h4 {
+  font-size: 17.5px;
+}
+
+#direct-page-options h5 {
+  font-size: 14px;
+  color:#fd9833;
+}
+
+#direct-page-options h6 {
+  font-size: 11.9px;
+}
+
+#direct-page-options form {
+  margin: 0 0 20px;
+}
+
+#direct-page-options fieldset {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+#direct-page-options legend {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin-bottom: 20px;
+  font-size: 21px;
+  line-height: 40px;
+  color: #333333;
+  border: 0;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+#direct-page-options label,
+#direct-page-options input,
+#direct-page-options button,
+#direct-page-options select,
+#direct-page-options textarea {
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 20px;
+}
+
+#direct-page-options input,
+#direct-page-options button,
+#direct-page-options select,
+#direct-page-options textarea {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#direct-page-options label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+#direct-page-options select,
+#direct-page-options textarea,
+#direct-page-options input[type="text"],
+#direct-page-options input[type="password"],
+#direct-page-options input[type="datetime"],
+#direct-page-options input[type="datetime-local"],
+#direct-page-options input[type="date"],
+#direct-page-options input[type="month"],
+#direct-page-options input[type="time"],
+#direct-page-options input[type="week"],
+#direct-page-options input[type="number"],
+#direct-page-options input[type="email"],
+#direct-page-options input[type="url"],
+#direct-page-options input[type="search"],
+#direct-page-options input[type="tel"],
+#direct-page-options input[type="color"] {
+  display: inline-block;
+  height: 20px;
+  padding: 4px 6px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  line-height: 20px;
+  color: #555555;
+  vertical-align: middle;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+}
+
+#direct-page-options input,
+#direct-page-options textarea {
+  width: 206px;
+}
+
+#direct-page-options textarea {
+  height: auto;
+}
+
+#direct-page-options textarea,
+#direct-page-options input[type="text"],
+#direct-page-options input[type="password"],
+#direct-page-options input[type="datetime"],
+#direct-page-options input[type="datetime-local"],
+#direct-page-options input[type="date"],
+#direct-page-options input[type="month"],
+#direct-page-options input[type="time"],
+#direct-page-options input[type="week"],
+#direct-page-options input[type="number"],
+#direct-page-options input[type="email"],
+#direct-page-options input[type="url"],
+#direct-page-options input[type="search"],
+#direct-page-options input[type="tel"],
+#direct-page-options input[type="color"] {
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
+     -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+       -o-transition: border linear 0.2s, box-shadow linear 0.2s;
+          transition: border linear 0.2s, box-shadow linear 0.2s;
+}
+
+#direct-page-options textarea:focus,
+#direct-page-options input[type="text"]:focus,
+#direct-page-options input[type="password"]:focus,
+#direct-page-options input[type="datetime"]:focus,
+#direct-page-options input[type="datetime-local"]:focus,
+#direct-page-options input[type="date"]:focus,
+#direct-page-options input[type="month"]:focus,
+#direct-page-options input[type="time"]:focus,
+#direct-page-options input[type="week"]:focus,
+#direct-page-options input[type="number"]:focus,
+#direct-page-options input[type="email"]:focus,
+#direct-page-options input[type="url"]:focus,
+#direct-page-options input[type="search"]:focus,
+#direct-page-options input[type="tel"]:focus,
+#direct-page-options input[type="color"]:focus {
+  border-color: rgba(82, 168, 236, 0.8);
+  outline: 0;
+  outline: thin dotted \9;
+  /* IE6-9 */
+
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+}
+
+#direct-page-options input[type="radio"],
+#direct-page-options input[type="checkbox"] {
+  margin: 4px 0 0;
+  margin-top: 1px \9;
+  *margin-top: 0;
+  line-height: normal;
+}
+
+#direct-page-options input[type="file"],
+#direct-page-options input[type="image"],
+#direct-page-options input[type="submit"],
+#direct-page-options input[type="reset"],
+#direct-page-options input[type="button"],
+#direct-page-options input[type="radio"],
+#direct-page-options input[type="checkbox"] {
+  width: auto;
+}
+
+#direct-page-options select,
+#direct-page-options input[type="file"] {
+  height: 30px;
+  /* In IE7, the height of the select element cannot be changed by height, only font-size */
+
+  *margin-top: 4px;
+  /* For IE7, add top margin to align select with labels */
+
+  line-height: 30px;
+}
+
+#direct-page-options select {
+  width: 220px;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+}
+
+#direct-page-options select[multiple],
+#direct-page-options select[size] {
+  height: auto;
+}
+
+#direct-page-options select:focus,
+#direct-page-options input[type="file"]:focus,
+#direct-page-options input[type="radio"]:focus,
+#direct-page-options input[type="checkbox"]:focus {
+  outline: thin dotted #333;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+
+#direct-page-options input:-moz-placeholder,
+#direct-page-options textarea:-moz-placeholder {
+  color: #999999;
+}
+
+#direct-page-options input:-ms-input-placeholder,
+#direct-page-options textarea:-ms-input-placeholder {
+  color: #999999;
+}
+
+#direct-page-options input::-webkit-input-placeholder,
+#direct-page-options textarea::-webkit-input-placeholder {
+  color: #999999;
+}
+
+#direct-page-options input,
+#direct-page-options textarea {
+  margin-left: 0;
+}
+
+#direct-page-options input[disabled],
+#direct-page-options select[disabled],
+#direct-page-options textarea[disabled],
+#direct-page-options input[readonly],
+#direct-page-options select[readonly],
+#direct-page-options textarea[readonly] {
+  cursor: not-allowed;
+  background-color: #eeeeee;
+}
+
+#direct-page-options input[type="radio"][disabled],
+#direct-page-options input[type="checkbox"][disabled],
+#direct-page-options input[type="radio"][readonly],
+#direct-page-options input[type="checkbox"][readonly] {
+  background-color: transparent;
+}
+
+#direct-page-options .btn {
+  display: inline-block;
+  *display: inline;
+  padding: 4px 12px;
+  margin-bottom: 0;
+  *margin-left: .3em;
+  font-size: 14px;
+  line-height: 20px;
+  color: #333333;
+  text-align: center;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+  vertical-align: middle;
+  cursor: pointer;
+  background-color: #f5f5f5;
+  *background-color: #e6e6e6;
+  background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
+  background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+  background-repeat: repeat-x;
+  border: 1px solid #cccccc;
+  *border: 0;
+  border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  border-bottom-color: #b3b3b3;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+  *zoom: 1;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+     -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+#direct-page-options .btn:hover,
+#direct-page-options .btn:focus,
+#direct-page-options .btn:active,
+#direct-page-options .btn.active,
+#direct-page-options .btn.disabled,
+#direct-page-options .btn[disabled] {
+  color: #333333;
+  background-color: #e6e6e6;
+  *background-color: #d9d9d9;
+}
+
+#direct-page-options .btn:active,
+#direct-page-options .btn.active {
+  background-color: #cccccc \9;
+}
+
+#direct-page-options .btn:first-child {
+  *margin-left: 0;
+}
+
+#direct-page-options .btn:hover,
+#direct-page-options .btn:focus {
+  color: #333333;
+  text-decoration: none;
+  background-position: 0 -15px;
+  -webkit-transition: background-position 0.1s linear;
+     -moz-transition: background-position 0.1s linear;
+       -o-transition: background-position 0.1s linear;
+          transition: background-position 0.1s linear;
+}
+
+#direct-page-options .btn:focus {
+  outline: thin dotted #333;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+
+#direct-page-options .btn.active,
+#direct-page-options .btn:active {
+  background-image: none;
+  outline: 0;
+  -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+     -moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+          box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+#direct-page-options .btn.disabled,
+#direct-page-options .btn[disabled] {
+  cursor: default;
+  background-image: none;
+  opacity: 0.65;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+     -moz-box-shadow: none;
+          box-shadow: none;
+}
+
+#direct-page-options button.btn,
+#direct-page-options input[type="submit"].btn {
+  *padding-top: 3px;
+  *padding-bottom: 3px;
+}
+
+#direct-page-options button.btn::-moz-focus-inner,
+#direct-page-options input[type="submit"].btn::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}

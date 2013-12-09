@@ -1,0 +1,1 @@
+start cmd.exe /k "uglifyjs direct-image-editor.js direct-file-uploader.js direct-text-editor.js direct-list-editor.js direct-link-editor.js direct-edit.js -o direct-edit-min.js -c -m --mangle-toplevel"

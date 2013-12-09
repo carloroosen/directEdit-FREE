@@ -1,0 +1,127 @@
+{
+	"title": {
+		"type": "text",
+		"format": "title",
+		"placeholder": "..."
+	},
+	"plain": {
+		"type": "text",
+		"format": "plain",
+		"placeholder": "..."
+	},
+	"inline": {
+		"type": "text",
+		"format": "inline",
+		"buttons": {
+			"format": ["b", "i"],
+			"insert": ["link"]
+		},
+		"buttonOptions" : {
+			"link" : {
+				"prefixes" : [["/", "internal link"], ["http://", "external link"], ["https://", "external link (safe)"], ["mailto:", "email address"]]
+			}
+		},
+		"placeholder": "..."
+	},
+	"basic": {
+		"type": "text",
+		"format": "block",
+		"buttons": {
+			"format": ["b", "i"],
+			"insert": ["link"]
+		},
+		"buttonOptions" : {
+			"link" : {
+				"prefixes" : [["/", "internal link"], ["http://", "external link"], ["https://", "external link (safe)"], ["mailto:", "email address"]]
+			}
+		},
+        "formatRules" : {
+            "div" : "p",
+            "p"   : "b,i,a,br"
+        },
+		"placeholder": "..."
+	},
+	"rich": {
+		"type": "text",
+		"format": "block",
+		"buttons": {
+			"format": ["b", "i"],
+			"block": ["p", "h1", "h2", "h3", "h4", "blockquote"],
+			"align": ["left", "center", "right"],
+			"list": ["ul", "ol"],
+			"insert": ["link", "image", "file", "video"]
+		},
+		"buttonOptions" : {
+			"image" : {
+				"imgFileFormat": "jpg",
+				"imgQuality": 70,
+				"styles" : {
+					"left" : {
+						"constraints" : { "minWidth": 100, "maxWidth": 400, "minHeight": 100, "maxHeight": 400 },
+						"class" : "align-left",
+						"isDefault" : true
+					},
+					"right" : {
+						"constraints" : { "minWidth": 100, "maxWidth": 400, "minHeight": 100, "maxHeight": 400 },
+						"class" : "align-right"
+					},
+					"full" : {
+						"constraints" : { "minWidth": 800, "maxWidth": 800, "minHeight": 100, "maxHeight": 400 },
+						"class" : "align-left"
+					}
+				}
+			},
+			"link" : {
+				"prefixes" : [["/", "internal link"], ["http://", "external link"], ["https://", "external link (safe)"], ["mailto:", "email address"]]
+			}
+		},
+		"placeholder": "..."
+	},
+	"image": {
+		"type": "image",
+		"imgFileFormat": "jpg",
+		"imgQuality": 70,
+		"constraints" : {
+			"minWidth": 800,
+			"maxWidth": 800,
+			"minHeight": 400,
+			"maxHeight": 400
+		}
+	},
+	"link": {
+		"type": "link",
+		"buttonEditLink": true,
+		"buttonFollowLink": true,
+		"prefixes" : [["/", "internal link"]]
+	},
+	"link-post": {
+		"type": "link",
+		"buttonDelete": true,
+		"buttonShowHide": true,
+		"buttonFollowLink": true
+	},
+	"file": {
+		"type": "file"
+	},
+	"page-options": {
+		"type": "options"
+	},
+	"list": {
+		"type": "list",
+		"listSelector" : "ul",
+		"commands" : {
+			"move-left" : {
+				"caption" : "move left"
+			},
+			"move-right" : {
+				"caption" : "move right"
+			},
+			"delete" : {
+				"caption" : "delete"
+			},
+			"add" : {
+				"caption" : "insert after"
+			}
+		}
+	}
+}

@@ -1,0 +1,3 @@
+directEdit
+==========
+all rights reserved
