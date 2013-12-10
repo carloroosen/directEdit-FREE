@@ -1,5 +1,5 @@
 === DirectEdit ===
-Contributors: carloroosen, 
+Contributors: carloroosen, pilotessa
 Tags: front end, frontend, wysiwyg, editor, publish, content management
 Requires at least: 3.7
 Tested up to: 3.7
