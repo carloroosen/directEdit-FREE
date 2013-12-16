@@ -170,12 +170,11 @@ class De_Store {
 					$new_post = array(
 						'post_content' => '',
 						'post_title' => 'New ' . $obj->labels->singular_name,
-						'post_status' => 'publish',
+						'post_status' => 'draft',
 						'post_date' => date('Y-m-d H:i:s'),
 						'post_author' => $user_ID,
 						'post_type' => $item->get_setting( 'postType' ),
-						'post_category' => array( 0 ),
-						'post_status' => 'draft'
+						'post_category' => array( 0 )
 					);
 					self::$new_post_id = wp_insert_post( $new_post, $wp_error );
 
@@ -219,7 +218,9 @@ class De_Store {
 
 			if (  $item instanceof De_Item_Text ) {
 				// Save inline images (make them public)
-				require_once( DIRECT_PATH . 'lib/simple_html_dom.php' );
+				if ( ! class_exists( 'simple_html_dom' ) ) {
+					require_once( DIRECT_PATH . 'lib/simple_html_dom.php' );
+				}
 				
 				$html = new simple_html_dom();
 				
