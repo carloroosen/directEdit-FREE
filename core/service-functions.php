@@ -162,9 +162,9 @@ function de_get_current_template() {
 function de_get_login_form_permalink() {
 	if( get_option( 'de_wp_login_redirect' ) ) {
 		$id = get_option( 'de_login_form' );
-		if ( file_exists( get_template_directory() . '/de_webform/log-in.php' ) && $id && De_Language_Wrapper::has_multilanguage() && De_Language_Wrapper::get_post_language( $id ) && De_Language_Wrapper::get_language_post( $id, De_Language_Wrapper::get_current_language() ) ) {
+		if ( file_exists( get_stylesheet_directory() . '/de_webform/log-in.php' ) && $id && De_Language_Wrapper::has_multilanguage() && De_Language_Wrapper::get_post_language( $id ) && De_Language_Wrapper::get_language_post( $id, De_Language_Wrapper::get_current_language() ) ) {
 			return get_permalink( De_Language_Wrapper::get_language_post( $id, De_Language_Wrapper::get_current_language() )->ID );
-		} elseif ( file_exists( get_template_directory() . '/de_webform/log-in.php' ) && $id && get_permalink( $id ) ) {
+		} elseif ( file_exists( get_stylesheet_directory() . '/de_webform/log-in.php' ) && $id && get_permalink( $id ) ) {
 			return get_permalink( $id );
 		} else {
 			return add_query_arg( 'redirect_to', urlencode( home_url() ), home_url( 'wp-login.php' ) );

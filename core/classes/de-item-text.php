@@ -22,7 +22,7 @@ class De_Item_Text extends De_Item {
 		} elseif ( $this->store == 'wpexcerpt' && ( ! $this->get_setting( 'type' ) || $this->get_setting( 'type' ) != 'text' || ! $this->get_setting( 'format' ) ) ) {
 			$this->delete_setting( 'type' );
 			$this->delete_setting( 'format' );
-			$this->set_setting( 'options', 'basic' );
+			$this->set_setting( 'options', 'inline' );
 		} else {
 			if ( ! $this->get_setting( 'type' ) || $this->get_setting( 'type' ) != 'text' ) {
 				$this->delete_setting( 'type' );
@@ -32,11 +32,14 @@ class De_Item_Text extends De_Item {
 	}
 	
 	public function output( $content = null ) {
-		$container = 'div';
 		$attr = array();
 		
 		if ( $this->get_setting( 'container' ) ) {
 			$container = $this->get_setting( 'container' );
+		} elseif( $this->get_setting( 'format' ) == 'inline' ) {
+			$container = 'span';
+		} else {
+			$container = 'div';
 		}
 		if ( $this->get_setting( 'attr' ) && is_array( $this->get_setting( 'attr' ) ) ) {
 			$attr = $this->get_setting( 'attr' );

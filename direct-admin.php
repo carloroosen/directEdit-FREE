@@ -67,8 +67,8 @@ function de_plugin_menu() {
 				
 				if ( ! is_wp_error($result) ) {
 					// Add PRO options to json options file
-					if ( file_exists( get_template_directory() . '/direct-edit' ) && file_exists( get_template_directory() . '/direct-edit/options/direct-options.json' ) ) {
-						$options = json_decode( file_get_contents( get_template_directory_uri() . '/direct-edit/options/direct-options.json' ), true );
+					if ( file_exists( get_stylesheet_directory() . '/direct-edit' ) && file_exists( get_stylesheet_directory() . '/direct-edit/options/direct-options.json' ) ) {
+						$options = json_decode( file_get_contents( get_stylesheet_directory_uri() . '/direct-edit/options/direct-options.json' ), true );
 						$options_upgrade = json_decode( file_get_contents( DIRECT_PATH . 'pro/upgrade/theme/options/direct-options.json' ), true );
 						
 						$changed = false;
@@ -80,7 +80,7 @@ function de_plugin_menu() {
 						}
 						
 						if ( $changed ) {
-							file_put_contents ( get_template_directory() . '/direct-edit/options/direct-options.json', de_print_json( json_encode( $options ) ) );
+							file_put_contents ( get_stylesheet_directory() . '/direct-edit/options/direct-options.json', de_print_json( json_encode( $options ) ) );
 						}
 					}
 					
@@ -94,10 +94,10 @@ function de_plugin_menu() {
 			
 			wp_redirect( home_url( '/wp-admin/plugins.php?page=direct-edit&error=upgrade' ) );
 		} elseif ( isset( $_REQUEST['action'] ) && 'copy_files' == $_REQUEST['action'] ) {
-			if ( ! file_exists( get_template_directory() . '/direct-edit' ) ) {
-				$result = de_copy( DIRECT_PATH . 'theme', get_template_directory() . '/direct-edit' );
+			if ( ! file_exists( get_stylesheet_directory() . '/direct-edit' ) ) {
+				$result = de_copy( DIRECT_PATH . 'theme', get_stylesheet_directory() . '/direct-edit' );
 				if ( ! $result ) {
-					@de_rmdir( get_template_directory() . '/direct-edit' );
+					@de_rmdir( get_stylesheet_directory() . '/direct-edit' );
 					wp_redirect( home_url( '/wp-admin/plugins.php?page=direct-edit&error=copy_files' ) );
 					die();
 				}
@@ -105,8 +105,8 @@ function de_plugin_menu() {
 			
 			wp_redirect( home_url( '/wp-admin/plugins.php?page=direct-edit&saved=true' ) );
 		} elseif ( isset( $_REQUEST['action'] ) && 'remove_files' == $_REQUEST['action'] ) {
-			if ( file_exists( get_template_directory() . '/direct-edit' ) ) {
-				de_rmdir( get_template_directory() . '/direct-edit' );
+			if ( file_exists( get_stylesheet_directory() . '/direct-edit' ) ) {
+				de_rmdir( get_stylesheet_directory() . '/direct-edit' );
 			}
 			
 			wp_redirect( home_url( '/wp-admin/plugins.php?page=direct-edit&saved=true' ) );
@@ -144,7 +144,7 @@ function de_plugin_page() {
 	if ( get_option( 'de_options_wp_hooks' ) )
 		$options_wp_hooks = unserialize( base64_decode( get_option( 'de_options_wp_hooks' ) ) );
 	else
-		$options_wp_hooks = array();
+		$options_wp_hooks = array( 'title' => 1, 'content' => 1, 'excerpt' => 1 );
 	?>
 	<div class="wrap">
 		<div id="icon-themes" class="icon32">
@@ -169,7 +169,7 @@ function de_plugin_page() {
 			</form>
 		</div>
 		<h3><i><?php _e( 'setup wizard', 'direct-edit' );?></i></h3>
-		<?php if ( ! file_exists( get_template_directory() . '/direct-edit' ) ) { ?>
+		<?php if ( ! file_exists( get_stylesheet_directory() . '/direct-edit' ) ) { ?>
 		<h3><?php _e( 'copy files to current theme', 'direct-edit' );?></h3>
 		<div class="inside">
 			<form method="post">

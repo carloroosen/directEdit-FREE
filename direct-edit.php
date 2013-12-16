@@ -130,8 +130,8 @@ function de_images_remove() {
 function de_load_global_options() {
 	global $de_global_options;
 	
-	if ( file_exists( get_template_directory() . '/direct-edit' ) && file_exists( get_template_directory() . '/direct-edit/options/direct-options.json' ) ) {
-		$de_global_options = json_decode( file_get_contents( get_template_directory_uri() . '/direct-edit/options/direct-options.json' ), true );
+	if ( file_exists( get_stylesheet_directory() . '/direct-edit' ) && file_exists( get_stylesheet_directory() . '/direct-edit/options/direct-options.json' ) ) {
+		$de_global_options = json_decode( file_get_contents( get_stylesheet_directory_uri() . '/direct-edit/options/direct-options.json' ), true );
 	} else {
 		$de_global_options = json_decode( file_get_contents( DIRECT_PATH . 'theme/options/direct-options.json' ), true );
 	}
@@ -194,21 +194,21 @@ function de_add_de_page() {
 			$wp_query->posts = array( $post );
 			$wp_query->post_count = 1;
 
-			if ( file_exists ( get_template_directory() . '/single-' . $post_type . '.php' ) ) {
+			if ( file_exists ( get_stylesheet_directory() . '/single-' . $post_type . '.php' ) ) {
 				$de_current_template = 'single-' . $post_type . '.php';
-				include( get_template_directory() . '/single-' . $post_type . '.php' );
+				include( get_stylesheet_directory() . '/single-' . $post_type . '.php' );
 				exit;
-			} elseif ( $post_type == 'page' && file_exists ( get_template_directory() . '/page.php' ) ) {
+			} elseif ( $post_type == 'page' && file_exists ( get_stylesheet_directory() . '/page.php' ) ) {
 				$de_current_template = 'page.php';
-				include( get_template_directory() . '/page.php' );
+				include( get_stylesheet_directory() . '/page.php' );
 				exit;
-			} elseif( $post_type != 'page' && file_exists ( get_template_directory() . '/single.php' ) ) {
+			} elseif( $post_type != 'page' && file_exists ( get_stylesheet_directory() . '/single.php' ) ) {
 				$de_current_template = 'single.php';
-				include( get_template_directory() . '/single.php' );
+				include( get_stylesheet_directory() . '/single.php' );
 				exit;
-			} elseif( file_exists ( get_template_directory() . '/index.php' ) ) {
+			} elseif( file_exists ( get_stylesheet_directory() . '/index.php' ) ) {
 				$de_current_template = 'index.php';
-				include( get_template_directory() . '/index.php' );
+				include( get_stylesheet_directory() . '/index.php' );
 				exit;
 			}
 		}
@@ -222,7 +222,7 @@ function de_hooks() {
 		if ( get_option( 'de_options_wp_hooks' ) ) {
 			$options_wp_hooks = unserialize( base64_decode( get_option( 'de_options_wp_hooks' ) ) );
 		} else {
-			$options_wp_hooks = array();
+			$options_wp_hooks = array( 'title' => 1, 'content' => 1, 'excerpt' => 1 );
 		}
 		if ( get_post_meta( $direct_queried_object->ID, 'de_wp_hooks', true ) ) {
 			$de_wp_hooks = unserialize( base64_decode( get_post_meta( $direct_queried_object->ID, 'de_wp_hooks', true ) ) );
@@ -242,6 +242,7 @@ function de_hooks() {
 			add_filter( 'the_content', 'de_wrap_the_content' );
 		}
 		if ( ! empty( $de_wp_hooks[ 'excerpt' ] ) && $de_wp_hooks[ 'excerpt' ] == 1 || empty( $de_wp_hooks[ 'excerpt' ] ) && ! empty( $options_wp_hooks[ 'excerpt' ] ) ) {
+			add_filter( 'get_the_excerpt', 'de_wrap_the_excerpt' );
 			add_filter( 'the_excerpt', 'de_wrap_the_excerpt' );
 		}
 	}
@@ -309,7 +310,7 @@ function de_wrap_the_excerpt( $content ) {
 		try {
 			$settings = array(
 				'postId' => $post->ID,
-				'unwrap' => true
+				'unwrap' => false
 			);
 			$item = new $class( 'wpexcerpt', $settings );
 			
@@ -327,13 +328,13 @@ function de_wrap_the_excerpt( $content ) {
 
 function de_scripts_and_styles() {
 	if ( ! is_admin() && ( current_user_can('edit_posts') || current_user_can( 'edit_users' ) || current_user_can( 'edit_theme_options' ) || current_user_can( 'edit_de_frontend' ) ) ) {
-		if ( file_exists( get_template_directory() . '/direct-edit' ) && file_exists( get_template_directory() . '/direct-edit/css/direct-edit.css' ) ) {
-			wp_enqueue_style( 'directEdit', get_template_directory_uri() . '/direct-edit/css/direct-edit.css' );
+		if ( file_exists( get_stylesheet_directory() . '/direct-edit' ) && file_exists( get_stylesheet_directory() . '/direct-edit/css/direct-edit.css' ) ) {
+			wp_enqueue_style( 'directEdit', get_stylesheet_directory_uri() . '/direct-edit/css/direct-edit.css' );
 		} else {
 			wp_enqueue_style( 'directEdit', DIRECT_URL . 'theme/css/direct-edit.css' );
 		}
-		if ( file_exists( get_template_directory() . '/direct-edit' ) && file_exists( get_template_directory() . '/direct-edit/css/jquery-ui-1.8.16.custom.css' ) ) {
-			wp_enqueue_style( 'jquery-ui-custom', get_template_directory_uri() . '/direct-edit/css/jquery-ui-1.8.16.custom.css' );
+		if ( file_exists( get_stylesheet_directory() . '/direct-edit' ) && file_exists( get_stylesheet_directory() . '/direct-edit/css/jquery-ui-1.8.16.custom.css' ) ) {
+			wp_enqueue_style( 'jquery-ui-custom', get_stylesheet_directory_uri() . '/direct-edit/css/jquery-ui-1.8.16.custom.css' );
 		} else {
 			wp_enqueue_style( 'jquery-ui-custom', DIRECT_URL . 'theme/css/jquery-ui-1.8.16.custom.css' );
 		}
@@ -366,13 +367,13 @@ function de_scripts_and_styles() {
 			wp_enqueue_script( 'direct-list-editor', DIRECT_URL . 'js/direct-list-editor.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-slider', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-dialog', 'jquery-ui-button' ), DIRECT_VERSION, true );
 			wp_enqueue_script( 'direct-edit', DIRECT_URL . 'js/direct-edit.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-slider', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-dialog', 'jquery-ui-button' ), DIRECT_VERSION, true );
 		}
-		if ( file_exists( get_template_directory() . '/direct-edit' ) && file_exists( get_template_directory() . '/direct-edit/js/direct-edit-custom.js' ) ) {
-			wp_enqueue_script( 'direct-edit-custom', get_template_directory_uri() . '/direct-edit/js/direct-edit-custom.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-slider', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-dialog', 'jquery-ui-button' ), DIRECT_VERSION, true );
+		if ( file_exists( get_stylesheet_directory() . '/direct-edit' ) && file_exists( get_stylesheet_directory() . '/direct-edit/js/direct-edit-custom.js' ) ) {
+			wp_enqueue_script( 'direct-edit-custom', get_stylesheet_directory_uri() . '/direct-edit/js/direct-edit-custom.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-slider', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-dialog', 'jquery-ui-button' ), DIRECT_VERSION, true );
 		} else {
 			wp_enqueue_script( 'direct-edit-custom', DIRECT_URL . 'theme/js/direct-edit-custom.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-slider', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-dialog', 'jquery-ui-button' ), DIRECT_VERSION, true );
 		}
-		if ( file_exists( get_template_directory() . '/direct-edit' ) && file_exists( get_template_directory() . '/direct-edit/js/direct-translations-' . $locale . '.js' ) ) {
-			wp_enqueue_script( 'direct-translations', get_template_directory_uri() . '/direct-edit/js/direct-translations-' . $locale . '.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-slider', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-dialog', 'jquery-ui-button' ), DIRECT_VERSION, true );
+		if ( file_exists( get_stylesheet_directory() . '/direct-edit' ) && file_exists( get_stylesheet_directory() . '/direct-edit/js/direct-translations-' . $locale . '.js' ) ) {
+			wp_enqueue_script( 'direct-translations', get_stylesheet_directory_uri() . '/direct-edit/js/direct-translations-' . $locale . '.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-slider', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-dialog', 'jquery-ui-button' ), DIRECT_VERSION, true );
 		} else {
 			wp_enqueue_script( 'direct-translations', DIRECT_URL . 'theme/js/direct-translations-' . $locale . '.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-slider', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-dialog', 'jquery-ui-button' ), DIRECT_VERSION, true );
 		}
