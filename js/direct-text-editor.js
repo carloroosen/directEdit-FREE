@@ -502,7 +502,7 @@
 				buttonOptions.icons = {
 					'primary': buttonDefinition.icon
 				};
-				buttonOptions.text = buttonDefinition.tooltip;
+				buttonOptions.text = null;
 			}
 			if($.fn.button.noConflict) {
 				$.fn.btn = $.fn.button.noConflict();
