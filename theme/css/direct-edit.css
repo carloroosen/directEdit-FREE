@@ -191,11 +191,11 @@ a.direct-link-editor .direct-link-editor-buttons a:hover {
 
 #direct-text-editor-toolbar-container  .ui-button .ui-icon {
 	margin: 0;
-	background-image: url(../images/button-icons.png);
+	background-image: url(../images/button-icons.png) !important;
 }
 
 #direct-text-editor-toolbar-container  .ui-button.ui-state-active .ui-icon {
-	background-image: url(../images/button-icons-active.png);
+	background-image: url(../images/button-icons-active.png) !important;
 }
 
 .direct-icon-undo { background-position : -16px 0; }

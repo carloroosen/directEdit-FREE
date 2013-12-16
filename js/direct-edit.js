@@ -72,13 +72,12 @@ var directEdit, directNotify, directTranslate;
 						link = element.closest('a');
 						if (link.length === 1) {
 							link.directLinkEditor({'buttonFollowLink':true});
-						} 
-						console.log(thisOptions);
-						if (thisOptions.unwrap) {
+						} else if (thisOptions.unwrap) {
 							parentElement = element.parent();
 							parentElement.html(element.html());
 							element = parentElement;
 						}
+						thisOptions.instanceID = self.counter;
 						element.directTextEditor(thisOptions);
 						editor = element.data("directEdit-directTextEditor");
 						break;
