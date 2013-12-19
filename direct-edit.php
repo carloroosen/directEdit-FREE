@@ -194,6 +194,22 @@ function de_add_de_page() {
 			$wp_query->posts = array( $post );
 			$wp_query->post_count = 1;
 
+			if ( get_option( 'de_options_custom_page_types' ) )
+				$options = unserialize( base64_decode( get_option( 'de_options_custom_page_types' ) ) );
+			else
+				$options = array();
+
+			foreach( $options as $option ) {
+				if ( $post_type == 'de_' . sanitize_title( $option->name ) ) {
+					if ( is_dir( get_stylesheet_directory() . '/custom/' . sanitize_title( $option->name ) ) && file_exists( get_stylesheet_directory() . '/custom/' . sanitize_title( $option->name ) . '/functions.php' ) ) {
+						include get_stylesheet_directory() . '/custom/' . sanitize_title( $option->name ) . '/functions.php';
+					}
+					if ( is_dir( get_stylesheet_directory() . '/custom/' . sanitize_title( $option->name ) ) && file_exists( get_stylesheet_directory() . '/custom/' . sanitize_title( $option->name ) . '/single.php' ) ) {
+						include get_stylesheet_directory() . '/custom/' . sanitize_title( $option->name ) . '/single.php';
+						exit;
+					}
+				}
+			}
 			if ( file_exists ( get_stylesheet_directory() . '/single-' . $post_type . '.php' ) ) {
 				$de_current_template = 'single-' . $post_type . '.php';
 				include( get_stylesheet_directory() . '/single-' . $post_type . '.php' );

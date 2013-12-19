@@ -154,7 +154,7 @@ class De_Url {
 				}
 				
 				if ( $i == count( $de_url_array ) - 1 ) {
-					return $result;
+					return get_post( $result->ID );
 				} else {
 					$de_post_parent = $result->ID;
 				}
