@@ -16,7 +16,7 @@
 			showCommand : ['action', 'direct-show-post']
 		},
 		_create: function () {
-			var self, buttons, selectLink;
+			var self, buttons;
 			self = this;
 			if (this.element.is('a')) {
 				// standalone link

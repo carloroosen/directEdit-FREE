@@ -30,7 +30,9 @@
 			if (this.options.format === 'plain' || this.options.format === 'title') {
 				this._validateContent = this._validateContentPlain; // soo cool, just replace a function :)
 			}
-
+			if (this.options.instanceID) {
+				this.instanceID = this.options.instanceID;
+			}
 			// create member functions for eventHandlers that have a fixed reference to 'this' (closure). 
 			this._createEventHandlers();
 
@@ -500,7 +502,7 @@
 				buttonOptions.icons = {
 					'primary': buttonDefinition.icon
 				};
-				buttonOptions.text = false;
+				buttonOptions.text = null;
 			}
 			if($.fn.button.noConflict) {
 				$.fn.btn = $.fn.button.noConflict();
