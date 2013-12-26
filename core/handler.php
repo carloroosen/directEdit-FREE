@@ -250,6 +250,12 @@ function de_save_page() {
 	if ( isset( $_POST[ 'direct-page-options' ] ) && is_array( $_POST[ 'direct-page-options' ] ) && isset( $_POST[ 'direct-page-options' ][ 'postId' ] ) && get_post( $_POST[ 'direct-page-options' ][ 'postId' ] ) ) {
 		$post_id = $_POST[ 'direct-page-options' ][ 'postId' ];
 		
+		// Include custom functions.php if needed
+		$template = $_POST[ 'direct-page-options' ][ 'templateName' ];
+		if ( is_dir( dirname( get_stylesheet_directory() . '/' . $template ) ) && file_exists( dirname( get_stylesheet_directory() . '/' . $template ) . '/functions.php' ) ) {
+			include dirname( get_stylesheet_directory() . '/' . $template ) . '/functions.php';
+		}
+		
 		if ( direct_bloginfo( 'title', false, $post_id ) != stripslashes( $_POST[ 'direct-page-options' ][ 'de_title' ] ) ) {
 			update_post_meta( $post_id, 'de_title', stripslashes( $_POST[ 'direct-page-options' ][ 'de_title' ] ) );
 		}

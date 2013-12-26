@@ -40,52 +40,63 @@ class De_Url {
 	}
 
 	public static function get_url( $de_post_id ) {
-		$de_post = get_post( $de_post_id );
-		$result = '';
-		
-		if ( $de_post ) {
-			// Prevent infinite loop
-			remove_filter( 'page_link', 'de_filter_permalink' );
-			remove_filter( 'post_link', 'de_filter_permalink' );
-			remove_filter( 'post_type_link', 'de_filter_permalink' );
+		if ( get_option( 'de_smart_urls' ) && get_option( 'permalink_structure' ) == '/%postname%/' ) {
+			$de_post = get_post( $de_post_id );
+			$result = '';
 			
-			if ( de_is_front_page( $de_post_id ) ) {
-				if ( De_Language_Wrapper::has_multilanguage() ) {
-					$result = home_url( '/' . De_Language_Wrapper::get_post_language( $de_post_id ) . '/' );
-				} else {
-					// Return site url for homepage
-					$result = get_site_url();
-				}
-			} else {
-				$de_slug = get_post_meta( $de_post_id, 'de_slug', true );
-				if ( empty( $de_slug ) ) {
-					$result = get_permalink( $de_post_id );
-				} else {
-					$de_post_parent = get_post_meta( $de_post_id, 'de_post_parent', true );
-					if ( $de_post_parent ) {
-						$p = self::get_url( $de_post_parent );
-						if ( $p ) {
-							$result = $p . "$de_slug/";
-						} else {
-							$result = get_permalink( $de_post_id );
-						}
+			if ( $de_post ) {
+				// Prevent infinite loop
+				remove_filter( 'page_link', 'de_filter_permalink' );
+				remove_filter( 'post_link', 'de_filter_permalink' );
+				remove_filter( 'post_type_link', 'de_filter_permalink' );
+				
+				if ( de_is_front_page( $de_post_id ) ) {
+					if ( De_Language_Wrapper::has_multilanguage() ) {
+						$result = home_url( '/' . De_Language_Wrapper::get_post_language( $de_post_id ) . '/' );
 					} else {
-						if ( De_Language_Wrapper::has_multilanguage() && De_Language_Wrapper::get_post_language( $de_post_id ) ) {
-							$result = home_url( "/" . De_Language_Wrapper::get_post_language( $de_post_id ) . "/$de_slug/" );
+						// Return site url for homepage
+						$result = get_site_url();
+					}
+				} else {
+					$de_slug = get_post_meta( $de_post_id, 'de_slug', true );
+					if ( empty( $de_slug ) ) {
+						$result = get_permalink( $de_post_id );
+					} else {
+						$de_post_parent = get_post_meta( $de_post_id, 'de_post_parent', true );
+						if ( $de_post_parent ) {
+							$p = self::get_url( $de_post_parent );
+							if ( $p ) {
+								$result = $p . "$de_slug/";
+							} else {
+								$result = get_permalink( $de_post_id );
+							}
 						} else {
-							$result = home_url( "/$de_slug/" );
+							if ( De_Language_Wrapper::has_multilanguage() && De_Language_Wrapper::get_post_language( $de_post_id ) ) {
+								$result = home_url( "/" . De_Language_Wrapper::get_post_language( $de_post_id ) . "/$de_slug/" );
+							} else {
+								$result = home_url( "/$de_slug/" );
+							}
 						}
 					}
 				}
+				
+				// Re-hook this again
+				add_filter( 'page_link', 'de_filter_permalink', 10, 2 );
+				add_filter( 'post_link', 'de_filter_permalink', 10, 2 );
+				add_filter( 'post_type_link', 'de_filter_permalink', 10, 2 );
 			}
 			
-			// Re-hook this again
-			add_filter( 'page_link', 'de_filter_permalink', 10, 2 );
-			add_filter( 'post_link', 'de_filter_permalink', 10, 2 );
-			add_filter( 'post_type_link', 'de_filter_permalink', 10, 2 );
+			return $result;
+		} else {
+			if ( get_post_status ( $de_post_id ) == 'publish' ) {
+				return get_permalink( $de_post_id );
+			} else {
+				require_once ABSPATH . '/wp-admin/includes/post.php';
+				list( $permalink, $postname ) = get_sample_permalink( $de_post_id );
+
+				return str_replace( '%pagename%', $postname, $permalink );
+			}
 		}
-		
-		return $result;
 	}
 	
 	public static function get_post( $de_url ) {

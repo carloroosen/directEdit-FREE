@@ -157,8 +157,8 @@ function de_on_switch_theme() {
 
 function de_define_current_template( $template ) {
 	global $de_current_template;
-	
-	$de_current_template =  basename( $template );
+
+	$de_current_template = str_replace( get_stylesheet_directory() . '/', '', str_replace( get_stylesheet_directory() . DIRECTORY_SEPARATOR, '', $template ) );
 
 	return $template;
 }
