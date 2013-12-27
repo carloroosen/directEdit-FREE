@@ -30,9 +30,7 @@
 			if (this.options.format === 'plain' || this.options.format === 'title') {
 				this._validateContent = this._validateContentPlain; // soo cool, just replace a function :)
 			}
-			if (this.options.instanceID) {
-				this.instanceID = this.options.instanceID;
-			}
+
 			// create member functions for eventHandlers that have a fixed reference to 'this' (closure). 
 			this._createEventHandlers();
 
@@ -433,12 +431,13 @@
 						if (childNodeDOM.nodeType !== 3) {
 							// if accepted in top, move upward (FF automatically places <ul> and <ol> outside a <p>, but Chrome needs some help here) 
 							if (node.get(0).tagName.toLowerCase() === 'p' && childNode.is(self.options.formatRules[self.tagName])) {
+								/* TODO, make it work :D
 								contents = node.contents();
 								// wrap the items before and after this childNode in a p and delete the parent p in which all are wrapped
 								contents.slice(0, contents.index(childNode)).wrapAll('<p />');
 								contents.slice(contents.index(childNode) + 1).wrapAll('<p />');
 								self._validateContent(childNode, 'p');
-								childNode.unwrap();
+								childNode.unwrap();*/
 							} else {
 								if (childNode.text().trim() === '') {
 									childNode.remove();
