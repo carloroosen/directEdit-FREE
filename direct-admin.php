@@ -59,7 +59,7 @@ function de_plugin_menu() {
 		}
 
 		if ( isset( $_REQUEST['action'] ) && 'upgrade' == $_REQUEST['action'] ) {
-			$upgrade_url = 'http://directedit.co/downloads/direct-edit-pro.zip?key=' . urlencode( $_POST[ 'upgrade_key' ] ) . '&url=' . urlencode( get_option( 'siteurl' ) ) . '&activity=upgrade';
+			$upgrade_url = 'http://directedit.co/downloads/direct-edit-upgrade.zip?key=' . urlencode( $_POST[ 'upgrade_key' ] ) . '&url=' . urlencode( get_option( 'siteurl' ) ) . '&activity=upgrade';
 			$upgrade_path = download_url( $upgrade_url );
 			if ( $upgrade_path && WP_Filesystem() ) {
 				$result = unzip_file( $upgrade_path, DIRECT_PATH );
