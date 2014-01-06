@@ -253,7 +253,7 @@ function de_save_page() {
 		// Include custom functions.php if needed
 		$template = $_POST[ 'direct-page-options' ][ 'templateName' ];
 		if ( is_dir( dirname( get_stylesheet_directory() . '/' . $template ) ) && file_exists( dirname( get_stylesheet_directory() . '/' . $template ) . '/functions.php' ) ) {
-			include dirname( get_stylesheet_directory() . '/' . $template ) . '/functions.php';
+			require_once dirname( get_stylesheet_directory() . '/' . $template ) . '/functions.php';
 		}
 		
 		if ( direct_bloginfo( 'title', false, $post_id ) != stripslashes( $_POST[ 'direct-page-options' ][ 'de_title' ] ) ) {
