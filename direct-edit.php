@@ -3,12 +3,12 @@
 Plugin Name: Direct Edit
 Plugin URI: http://directedit.co/
 Description: DirectEdit is the fastest and easiest way to keep your website up-to-date. Edit your website directly in the front-end: after setting up your website you can do all the editing without ever seeing the back-end again. No more flipping back between front-end and back-end to see the result. <strong><a href="http://directedit.co/">Visit the plugin website for more details.</a></strong>
-Version: 1.0.1
+Version: 1.0.2
 Author: Carlo Roosen
 Author URI: http://carloroosen.com/
 */
 
-define( 'DIRECT_VERSION', '1.0' );
+define( 'DIRECT_VERSION', '1.0.2' );
 define( 'DIRECT_PATH', plugin_dir_path( __FILE__ ) );
 define( 'DIRECT_URL', plugin_dir_url( __FILE__ ) );
 
@@ -249,10 +249,10 @@ function de_hooks() {
 		if ( ! empty( $de_wp_hooks[ 'title' ] ) && $de_wp_hooks[ 'title' ] == 1 || empty( $de_wp_hooks[ 'title' ] ) && ! empty( $options_wp_hooks[ 'title' ] ) ) {
 			add_filter( 'the_title', 'de_wrap_the_title' );
 			// Remove the_title wrap for menu
-			add_filter( 'wp_nav_menu_items', 'de_wrap_the_title_restore' );
-			add_filter( 'wp_nav_menu_objects', 'de_wrap_the_title_remove' );
-			add_filter( 'wp_page_menu', 'de_wrap_the_title_restore' );
-			add_filter( 'wp_page_menu_args', 'de_wrap_the_title_remove' );
+			//add_filter( 'wp_nav_menu_items', 'de_wrap_the_title_restore' );
+			//add_filter( 'wp_nav_menu_objects', 'de_wrap_the_title_remove' );
+			//add_filter( 'wp_page_menu', 'de_wrap_the_title_restore' );
+			//add_filter( 'wp_page_menu_args', 'de_wrap_the_title_remove' );
 		}
 		if ( ! empty( $de_wp_hooks[ 'content' ] ) && $de_wp_hooks[ 'content' ] == 1 || empty( $de_wp_hooks[ 'content' ] ) && ! empty( $options_wp_hooks[ 'content' ] ) ) {
 			add_filter( 'the_content', 'de_wrap_the_content' );
@@ -267,7 +267,7 @@ function de_hooks() {
 function de_wrap_the_title( $content ) {
 	global $post;
 
-	if ( current_user_can( 'edit_posts' ) || current_user_can( 'edit_de_frontend' ) ) {
+	if ( in_the_loop() && ( current_user_can( 'edit_posts' ) || current_user_can( 'edit_de_frontend' ) ) ) {
 		$result = '';
 		
 		$class = 'De_Item_Text';
@@ -293,7 +293,7 @@ function de_wrap_the_title( $content ) {
 function de_wrap_the_content( $content ) {
 	global $post;
 
-	if ( current_user_can( 'edit_posts' ) || current_user_can( 'edit_de_frontend' ) ) {
+	if ( in_the_loop() && ( current_user_can( 'edit_posts' ) || current_user_can( 'edit_de_frontend' ) ) ) {
 		$result = '';
 		
 		$class = 'De_Item_Text';
@@ -319,7 +319,7 @@ function de_wrap_the_content( $content ) {
 function de_wrap_the_excerpt( $content ) {
 	global $post;
 
-	if ( current_user_can( 'edit_posts' ) || current_user_can( 'edit_de_frontend' ) ) {
+	if ( in_the_loop() && ( current_user_can( 'edit_posts' ) || current_user_can( 'edit_de_frontend' ) ) ) {
 		$result = '';
 		
 		$class = 'De_Item_Text';
