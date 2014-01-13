@@ -404,7 +404,7 @@
 			}
 			// recursively search the DOM tree
 			node.contents().each(function () {
-				var childNodeDOM, childNode, newRuleDefault, tagName, newRule, contents;
+				var childNodeDOM, childNode, newRuleDefault, tagName, newRule;
 				childNodeDOM = this;
 				childNode = $(this);
 				if (childNode.hasClass('noValidate')) { return; }
