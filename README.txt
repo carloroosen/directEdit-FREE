@@ -14,9 +14,9 @@ Edit your website directly in the frontend.
 
 [youtube http://www.youtube.com/watch?v=eEccSe--IWc]
 
-Edit your website directly in the frontend. Modify content, titles and excerpts just by starting to type. Press save and the changes are public.
+Edit your website directly in the front-end. With the wysiwyg inline editor you can modify content just anywhere. You must try it to see how smooth it works!
 
-Images can be inserted directly from your computer. Choosen an image, and while you resize or crop it, it will be uploaded to the server automatically. One click and the image is inserted on your page. 
+Direct edit has an amazing image editor. Choose an image, and while you resize or crop it, it will be uploaded to the server automatically. One click and the image is inserted on your page. 
 
 Want to learn more? Visit <http://directedit.co>.
 
