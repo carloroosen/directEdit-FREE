@@ -115,6 +115,10 @@ function de_plugin_menu() {
 			update_option( 'de_options_wp_hooks', base64_encode( serialize( $options ) ) );
 			
 			wp_redirect( home_url( '/wp-admin/plugins.php?page=direct-edit&saved=true' ) );
+		} elseif ( isset( $_REQUEST[ 'action' ] ) && 'de_options' == $_REQUEST[ 'action' ] ) {
+			update_option( 'de_disable_validation', $_REQUEST[ 'disable_validation' ] );
+			
+			wp_redirect( home_url( '/wp-admin/plugins.php?page=direct-edit&saved=true' ) );
 		}
 	}
 	
@@ -212,6 +216,22 @@ function de_plugin_page() {
 						</tr>
 						<tr>
 							<td><input type="hidden" name="wp_hooks[excerpt]" value="" /><label><input type="checkbox" name="wp_hooks[excerpt]" value="1"<?php echo ( ! empty( $options_wp_hooks[ 'excerpt' ] ) ? ' checked="checked"' : '' ); ?> /> <?php _e( 'Excerpt', 'direct-edit' ); ?></label></td>
+						</tr>
+						<tr>
+							<td><input type="submit" value="save" /></td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+		</div>
+		<h3><i><?php _e( 'options', 'direct-edit' );?></i></h3>
+		<div class="inside">
+			<form method="post">
+				<input type="hidden" name="action" value="de_options" />
+				<table border="0">
+					<tbody>
+						<tr>
+							<td><input type="hidden" name="disable_validation" value="" /><label><input type="checkbox" name="disable_validation" value="1"<?php echo ( get_option( 'de_disable_validation' ) ? ' checked="checked"' : '' ); ?> /> <?php _e( 'disable text validation', 'direct-edit' ); ?></label></td>
 						</tr>
 						<tr>
 							<td><input type="submit" value="save" /></td>

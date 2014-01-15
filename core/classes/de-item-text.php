@@ -29,6 +29,14 @@ class De_Item_Text extends De_Item {
 				$this->set_setting( 'options', 'plain' );
 			}
 		}
+		
+		if ( $this->get_setting( 'validate' === null ) ) {
+			if ( get_option( 'de_disable_validation' ) ) {
+				$this->set_setting( 'validate', false );
+			} else {
+				$this->set_setting( 'validate', true );
+			}
+		}
 	}
 	
 	public function output( $content = null ) {

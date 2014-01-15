@@ -33,7 +33,8 @@ class De_Item {
 		'unwrap',
 		'sourceMaxResize',
 		'sourceMinWidth',
-		'sourceMinHeight'
+		'sourceMinHeight',
+		'validate'
 	);
 	
 	public function __construct( $store, $settings ) {
@@ -88,7 +89,7 @@ class De_Item {
 		} elseif( ! empty( $this->settings[ 'options' ] ) && ! empty( $de_global_options[ $this->settings[ 'options' ] ][ $key ] ) ) {
 			return $de_global_options[ $this->settings[ 'options' ] ][ $key ];
 		} else
-			return false;
+			return null;
 	}
 	
 	public function set_setting( $key, $value ) {
