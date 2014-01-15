@@ -8,13 +8,13 @@
 		state: 'inactive',
 		hasPlaceholderContent: false,
 		eventHandlers : null,
-		instanceID: 0,
 		selection: null,
 		originalContent: '',
 		originalContentSet: false,
 		additionalData: null,
 		options: {
 			debug: false,
+			instanceID: 0,
 			format: 'block', // ["block","inline","plain","title"]
 			placeholder: 'empty',
 			formatRules : {
@@ -404,7 +404,7 @@
 			}
 			// recursively search the DOM tree
 			node.contents().each(function () {
-				var childNodeDOM, childNode, newRuleDefault, tagName, newRule, contents;
+				var childNodeDOM, childNode, newRuleDefault, tagName, newRule;
 				childNodeDOM = this;
 				childNode = $(this);
 				if (childNode.hasClass('noValidate')) { return; }
@@ -492,7 +492,7 @@
 			// create DOM
 			if (!this.buttonDefinitions.hasOwnProperty(buttonId)) { return ''; }
 			buttonDefinition = this.buttonDefinitions[buttonId];
-			id = String('directEdit-textEditor-button-' + this.instanceID + '-' + buttonId);
+			id = String('directEdit-textEditor-button-' + this.options.instanceID + '-' + buttonId);
 			buttonHolder = $('<span><label for="' + id + '" title="' + buttonDefinition.tooltip + '">' + buttonDefinition.buttontext + '</label></span>');
 			button = $('<input id="' + id + '" type="checkbox" />').appendTo(buttonHolder);
 			buttonOptions = buttonDefinition.buttonOptions || {};

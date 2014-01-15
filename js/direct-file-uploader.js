@@ -41,12 +41,13 @@
 				});
 				this.element.removeAttr('href').addClass('link-editor').prepend(buttons);
 			}
-			if ($.directEdit.directManager) {
-				this.additionalData = $.directEdit.directManager.getData(this.element);
-			}
 			this.dialog = $('<div id="direct-file-uploader-dialog"></div>').dialog(this.options.dialogOptions);
 			(function () {
 				dialogOpenHandler = function () {
+					var textEditor;
+					textEditor = self.element.data('directEdit-directTextEditor');
+					self.additionalData = textEditor.additionalData;
+					console.log(self.additionalData);
 					self._createUploadPage();
 				};
 			}());
@@ -70,9 +71,6 @@
 		},
 		setAdditionalData: function (data) {
 			this.additionalData = data;
-		},
-		setAjaxUrl: function (url) {
-			this.ajaxUrl = url;
 		},
 		getDialog: function () {
 			return this.dialog;
@@ -112,7 +110,7 @@
 				}
 			}
 			$.ajax({
-				url: this.options.ajaxUrl,
+				url: this.options.ajaxUrl || $.directEdit.fn.ajaxUrl,
 				type: 'POST',
 				xhr: function () {  // custom xhr
 					var myXhr = $.ajaxSettings.xhr();

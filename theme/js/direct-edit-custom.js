@@ -56,6 +56,12 @@
 				return state;
 			}
 		},
+		h1 : {
+			command: 'formatBlock',
+			commandValue : 'H1',
+			tooltip: 'header 1',
+			icon: 'direct-icon-h1'
+		},
 		h2 : {
 			command: 'formatBlock',
 			commandValue : 'H2',
