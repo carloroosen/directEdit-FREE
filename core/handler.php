@@ -228,6 +228,8 @@ function de_list_move_right() {
 }
 
 function de_save_page() {
+	global $user_ID;
+	
 	$responce = array();
 	
 	foreach( $_POST as $key => $field ) {
@@ -247,37 +249,74 @@ function de_save_page() {
 	}
 	
 	// Edit page options
-	if ( isset( $_POST[ 'direct-page-options' ] ) && is_array( $_POST[ 'direct-page-options' ] ) && isset( $_POST[ 'direct-page-options' ][ 'postId' ] ) && get_post( $_POST[ 'direct-page-options' ][ 'postId' ] ) ) {
-		$post_id = $_POST[ 'direct-page-options' ][ 'postId' ];
-		
-		// Include custom functions.php if needed
-		$template = $_POST[ 'direct-page-options' ][ 'templateName' ];
-		if ( is_dir( dirname( get_stylesheet_directory() . '/' . $template ) ) && file_exists( dirname( get_stylesheet_directory() . '/' . $template ) . '/functions.php' ) ) {
-			require_once dirname( get_stylesheet_directory() . '/' . $template ) . '/functions.php';
-		}
-		
-		if ( direct_bloginfo( 'title', false, $post_id ) != stripslashes( $_POST[ 'direct-page-options' ][ 'de_title' ] ) ) {
-			update_post_meta( $post_id, 'de_title', stripslashes( $_POST[ 'direct-page-options' ][ 'de_title' ] ) );
-		}
-		if ( direct_bloginfo( 'description', false, $post_id ) != stripslashes( $_POST[ 'direct-page-options' ][ 'de_description' ] ) ) {
-			update_post_meta( $post_id, 'de_description', stripslashes( $_POST[ 'direct-page-options' ][ 'de_description' ] ) );
-		}
-		if ( get_option( 'de_smart_urls' ) && get_option( 'permalink_structure' ) == '/%postname%/' ) {
-			if ( sanitize_title( stripslashes( $_POST[ 'direct-page-options' ][ 'de_slug' ] ) ) && direct_bloginfo( 'slug', false, $post_id ) != De_Url::unique_slug( $post_id, sanitize_title( stripslashes( $_POST[ 'direct-page-options' ][ 'de_slug' ] ) ) ) ) {
-				De_Url::register_url( $post_id, sanitize_title( stripslashes( $_POST[ 'direct-page-options' ][ 'de_slug' ] ) ) );
+	if ( isset( $_POST[ 'direct-page-options' ] ) && is_array( $_POST[ 'direct-page-options' ] ) ) {
+		if ( ! empty( $_POST[ 'direct-page-options' ][ 'postId' ] ) ) {
+			$post_id = $_POST[ 'direct-page-options' ][ 'postId' ];
+		} elseif ( ! empty( De_Store::$new_post_id ) ) {
+			$post_id = De_Store::$new_post_id;
+		} else {
+			if ( ! empty( $_POST[ 'direct-page-options' ][ 'postType' ] ) && in_array( $_POST[ 'direct-page-options' ][ 'postType' ], get_post_types( array('show_ui' => true ) ) ) ) {
+				$new_post_title = stripslashes( $_POST[ 'direct-page-options' ][ 'de_title' ] );
+				
+				$new_post = array(
+					'post_content' => '',
+					'post_title' => $new_post_title,
+					'post_status' => 'draft',
+					'post_date' => date('Y-m-d H:i:s'),
+					'post_author' => $user_ID,
+					'post_type' => $_POST[ 'direct-page-options' ][ 'postType' ],
+					'post_category' => array( 0 )
+				);
+				$post_id = wp_insert_post( $new_post, $wp_error );
+
+				$new_post = array(
+					'ID' => $post_id,
+					'post_name' => sanitize_title( $new_post_title )
+				);
+				wp_update_post( $new_post );
+
+				update_post_meta( $post_id, 'de_new_page', 1 );
+
+				if ( De_Language_Wrapper::has_multilanguage() ) {
+					De_Language_Wrapper::set_post_language( $post_id, De_Language_Wrapper::get_default_language() );
+					De_Url::register_url( $post_id, sanitize_title( $new_post_title ) );
+					De_Language_Wrapper::create_language_posts( $post_id );
+				} else {
+					De_Url::register_url( $post_id, sanitize_title( $new_post_title ) );
+				}
 			}
 		}
-		// It is needed for menu translation only
-		if( De_Language_Wrapper::has_multilanguage() ) {
-			if ( direct_bloginfo( 'navigation_label', false, $post_id ) != stripslashes( $_POST[ 'direct-page-options' ][ 'de_navigation_label' ] ) ) {
-				update_post_meta( $post_id, 'de_navigation_label', stripslashes( $_POST[ 'direct-page-options' ][ 'de_navigation_label' ] ) );
+
+		if ( ! empty( $post_id ) && get_post( $post_id ) ) {
+			// Include custom functions.php if needed
+			$template = $_POST[ 'direct-page-options' ][ 'templateName' ];
+			if ( is_dir( dirname( get_stylesheet_directory() . '/' . $template ) ) && file_exists( dirname( get_stylesheet_directory() . '/' . $template ) . '/functions.php' ) ) {
+				require_once dirname( get_stylesheet_directory() . '/' . $template ) . '/functions.php';
 			}
+			
+			if ( direct_bloginfo( 'title', false, $post_id ) != stripslashes( $_POST[ 'direct-page-options' ][ 'de_title' ] ) ) {
+				update_post_meta( $post_id, 'de_title', stripslashes( $_POST[ 'direct-page-options' ][ 'de_title' ] ) );
+			}
+			if ( direct_bloginfo( 'description', false, $post_id ) != stripslashes( $_POST[ 'direct-page-options' ][ 'de_description' ] ) ) {
+				update_post_meta( $post_id, 'de_description', stripslashes( $_POST[ 'direct-page-options' ][ 'de_description' ] ) );
+			}
+			if ( get_option( 'de_smart_urls' ) && get_option( 'permalink_structure' ) == '/%postname%/' ) {
+				if ( sanitize_title( stripslashes( $_POST[ 'direct-page-options' ][ 'de_slug' ] ) ) && direct_bloginfo( 'slug', false, $post_id ) != De_Url::unique_slug( $post_id, sanitize_title( stripslashes( $_POST[ 'direct-page-options' ][ 'de_slug' ] ) ) ) ) {
+					De_Url::register_url( $post_id, sanitize_title( stripslashes( $_POST[ 'direct-page-options' ][ 'de_slug' ] ) ) );
+				}
+			}
+			// It is needed for menu translation only
+			if( De_Language_Wrapper::has_multilanguage() ) {
+				if ( direct_bloginfo( 'navigation_label', false, $post_id ) != stripslashes( $_POST[ 'direct-page-options' ][ 'de_navigation_label' ] ) ) {
+					update_post_meta( $post_id, 'de_navigation_label', stripslashes( $_POST[ 'direct-page-options' ][ 'de_navigation_label' ] ) );
+				}
+			}
+			
+			do_action( 'de_save_page_options', $_POST[ 'direct-page-options' ] );
+			
+			$responce[ 'direct-page-options' ] = true;
+			$responce[ 'redirect' ] = esc_url( De_Url::get_url( $post_id ) );
 		}
-		
-		do_action( 'de_save_page_options', $_POST[ 'direct-page-options' ] );
-		
-		$responce[ 'direct-page-options' ] = true;
-		$responce[ 'redirect' ] = esc_url( De_Url::get_url( $post_id ) );
 	}
 	
 	$responce = apply_filters( 'de_save_page_pre_return_responce', $responce );

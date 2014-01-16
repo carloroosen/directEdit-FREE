@@ -191,6 +191,7 @@ function de_add_de_page() {
 			
 			$post_type = $pt;
 			$post = get_default_post_to_edit( $pt );
+			$direct_queried_object = $post;
 			$wp_query->posts = array( $post );
 			$wp_query->post_count = 1;
 
