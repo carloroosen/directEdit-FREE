@@ -235,7 +235,7 @@ class De_Store {
 
 				$content = $html->save();
 			} elseif ( $item instanceof De_Item_Image ) {
-				// Save standaline images (make them public)
+				// Save standalone images (make them public)
 				$id = $field[ 'data' ][ 'image' ];
 				
 				if ( self::save_image( $item, $id ) ) {
@@ -250,7 +250,7 @@ class De_Store {
 			switch( $item->store ) {
 				case 'postmeta':
 					if ( $item->get_setting( 'key' ) ) {
-						if ( $item instanceof De_Item_Image && get_post_meta( $item->get_setting( 'postId' ), $item->get_setting( 'key' ), true ) ) {
+						if ( $item instanceof De_Item_Image && get_post_meta( $item->get_setting( 'postId' ), $item->get_setting( 'key' ), true ) && get_post_meta( $item->get_setting( 'postId' ), $item->get_setting( 'key' ), true ) != $id ) {
 							wp_delete_attachment( get_post_meta( $item->get_setting( 'postId' ), $item->get_setting( 'key' ), true ), true );
 						}
 						update_post_meta( $item->get_setting( 'postId' ), $item->get_setting( 'key' ), $content );
