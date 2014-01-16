@@ -123,5 +123,31 @@
 				"caption" : "insert after"
 			}
 		}
+	},
+	"list-divClasses": {
+		"type": "list",
+		"listSelector" : "ul",
+		"divClasses" : { 
+			"right" : "group-right",
+			"left" : "group-left"
+		},
+		"commands" : {
+			"move-left" : {
+				"caption" : "move up",
+				"div" : "left"
+			},
+			"move-right" : {
+				"caption" : "move down",
+				"div" : "right"
+			},
+			"delete" : {
+				"caption" : "delete",
+				"div" : "left"
+			},
+			"add" : {
+				"caption" : "insert after",
+				"div" : "right"
+			}
+		}
 	}
 }

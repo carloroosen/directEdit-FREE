@@ -8,8 +8,8 @@
 		options : {
 			ajaxUrl : '',
 			init : null,
-			listSelector : 'ul',
-			placeholder : '<li><a>add first item</a></li>',
+			listSelector : '',
+			placeholder : '<a>add first item</a>',
 			callback : null,
 			command : ['action', 'direct-']  // name and value prefix for POST 
 		},
@@ -24,7 +24,7 @@
 
 			self = this;
 			this.element.find('.direct-list-editor-buttons').remove();
-			if (this.element.is(self.options.listSelector)) {
+			if ((self.options.listSelector && this.element.is(self.options.listSelector)) || this.element.find(self.options.listSelector).length !== 1) {
 				this.list = this.element;
 			} else {
 				this.list = this.element.find(self.options.listSelector);
@@ -81,6 +81,7 @@
 								if (divClass && divClasses[divClass]) {
 									divClasses[divClass].append(commandHTML);
 								} else {
+									console.log(divClass, divClasses[divClass]);
 									buttonWrapper.append(commandHTML);
 								}
 								/* add event handlers */

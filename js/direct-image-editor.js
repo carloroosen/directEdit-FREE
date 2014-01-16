@@ -102,12 +102,7 @@
 					result = result || {};
 					self.options.callback.call(self, result);
 				} else if (self.image) {
-					newImage = self.image
-						.after(result.content)
-						.next()
-						.directImageEditor(self.options) // a fresh and new editor
-						.directImageEditor('setModified');
-					self.image.remove();
+					self.cloneImageAttributes(result.content);
 				}
 			};
 		},
@@ -370,21 +365,31 @@
 		setModified: function () {
 			this.modified = true;
 		},
-		getImageData: function () {
-			var res, reserved, value, tempData;
+		cloneImageAttributes: function(imageHtml) {
+			var tempImage, self;
+			self = this;
+			tempImage = $(imageHtml);
+			$.each(tempImage.get(0).attributes, function (i, attr) {
+				self.image.attr(attr.nodeName, attr.value);
+			});
+			this.imageData = this.getImageData();
+			this.setAdditionalData($.directEdit.fn.getData(this.image));
+		},
+		getImageData: function() {
+			var res, reserved, value, imageData;
 			reserved = ['containerW', 'containerH', 'imageScaledH', 'imageScaledW', 'top', 'left', 'source', 'style'];
-			tempData = {};
+			imageData = {};
 			for (res in reserved) {
 				if (reserved.hasOwnProperty(res)) {
 					value = this.image.attr('data-' + [reserved[res].toLowerCase()]);
 					if (value) {
-						tempData[reserved[res]] = value;
+						imageData[reserved[res]] = value;
 					}
 				}
 			}
 			value = this.image.attr('alt');
-			if (value) { tempData.alt = value; }
-			return tempData;
+			if (value) { imageData.alt = value; }
+			return imageData;
 		},
 		getData: function () {
 			if (this.image) {
@@ -395,15 +400,9 @@
 			}
 		},
 		setData: function (data) {
-			var newEditor;
 			if (this.isImage) {
-				newEditor = this.image
-					.after(data.content)
-					.next()
-					.directImageEditor(this.options) // a fresh and new editor
-					.data("directEdit-directImageEditor");
-				this.image.remove();
-				return newEditor;
+				this.cloneImageAttributes(data.content);
+				this.modified = false;
 			}
 		},
 		setAdditionalData: function (data) {
