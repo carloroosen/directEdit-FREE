@@ -280,7 +280,7 @@ class De_Store {
 					
 					wp_update_post( $myPost );
 					
-					if ( empty( $currentSlug ) || $currentSlug == wp_unique_post_slug( sanitize_title( $currentTitle ), $item->get_setting( 'postId' ), 'publish', $currentType, $currentParent ) ) {
+					if ( empty( $currentSlug ) || ( get_post_type( $item->get_setting( 'postId' ) ) != 'de_webform' && $currentSlug == wp_unique_post_slug( sanitize_title( $currentTitle ), $item->get_setting( 'postId' ), 'publish', $currentType, $currentParent ) ) ) {
 						$newSlug = sanitize_title( $content );
 						$myPost = array();
 						$myPost[ 'ID' ] = $item->get_setting( 'postId' );
