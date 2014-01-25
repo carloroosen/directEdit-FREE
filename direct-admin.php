@@ -116,7 +116,7 @@ function de_plugin_menu() {
 			
 			wp_redirect( home_url( '/wp-admin/plugins.php?page=direct-edit&saved=true' ) );
 		} elseif ( isset( $_REQUEST[ 'action' ] ) && 'de_options' == $_REQUEST[ 'action' ] ) {
-			update_option( 'de_disable_validation', $_REQUEST[ 'disable_validation' ] );
+			update_option( 'de_text_validation', $_REQUEST[ 'text_validation' ] );
 			
 			wp_redirect( home_url( '/wp-admin/plugins.php?page=direct-edit&saved=true' ) );
 		}
@@ -231,7 +231,7 @@ function de_plugin_page() {
 				<table border="0">
 					<tbody>
 						<tr>
-							<td><input type="hidden" name="disable_validation" value="" /><label><input type="checkbox" name="disable_validation" value="1"<?php echo ( get_option( 'de_disable_validation' ) ? ' checked="checked"' : '' ); ?> /> <?php _e( 'disable text validation', 'direct-edit' ); ?></label></td>
+							<td><input type="hidden" name="text_validation" value="" /><label><input type="checkbox" name="text_validation" value="1"<?php echo ( get_option( 'de_text_validation' ) ? ' checked="checked"' : '' ); ?> /> <?php _e( 'validate text', 'direct-edit' ); ?></label></td>
 						</tr>
 						<tr>
 							<td><input type="submit" value="save" /></td>

@@ -14,6 +14,7 @@
 		additionalData: null,
 		options: {
 			debug: false,
+			validate: false,
 			instanceID: 0,
 			format: 'block', // ["block","inline","plain","title"]
 			placeholder: 'empty',
@@ -375,7 +376,9 @@
 		// content
 		_validateContent : function (node, rule) {
 			var self = this, plaintext = '', element, contents;
-
+			
+			if (!this.options.validate) return;
+			
 			if (!node) {
 				node = this.element;
 				rule = this.options.format === 'block' ? 'div' : 'p';

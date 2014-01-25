@@ -30,10 +30,8 @@ class De_Item_Text extends De_Item {
 			}
 		}
 		
-		if ( $this->get_setting( 'validate' === null ) ) {
-			if ( get_option( 'de_disable_validation' ) ) {
-				$this->set_setting( 'validate', false );
-			} else {
+		if ( $this->get_setting( 'validate' ) === null ) {
+			if ( get_option( 'de_text_validation' ) ) {
 				$this->set_setting( 'validate', true );
 			}
 		}

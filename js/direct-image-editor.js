@@ -96,7 +96,7 @@
 			this.dialog.on('dialogopen', dialogOpenHandler);
 		},
 		_createSuccessHandler: function () {
-			var self = this, newImage;
+			var self = this;
 			this.callback = function (result) {
 				if (self.options.callback) {
 					result = result || {};
