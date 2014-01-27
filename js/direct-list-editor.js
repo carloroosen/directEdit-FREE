@@ -118,7 +118,6 @@
 					dataType: 'json',
 					success: function (result) {
 						self.setData(result, true);
-						directNotify(directTranslate('Could not save changes.'));
 					},
 					data: {
 						index : index,
