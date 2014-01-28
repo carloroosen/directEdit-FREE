@@ -34,7 +34,8 @@ class De_Item {
 		'sourceMaxResize',
 		'sourceMinWidth',
 		'sourceMinHeight',
-		'validate'
+		'validate',
+		'maxLength'
 	);
 	
 	public function __construct( $store, $settings ) {
@@ -50,6 +51,12 @@ class De_Item {
 		if ( in_array( $this->store, array( 'wptitle', 'wpcontent', 'wpexcerpt' ) ) && ! $this instanceof De_Item_Text ) {
 			$this->settings[ 'disableEdit' ] = true;
 		}
+		if ( in_array( $this->store, array( 'post' ) ) && ! $this instanceof De_Item_Link ) {
+			$this->settings[ 'disableEdit' ] = true;
+		}
+		if ( in_array( $this->store, array( 'postdate' ) ) && ! $this instanceof De_Item_Date ) {
+			$this->settings[ 'disableEdit' ] = true;
+		}
 
 		// Check that the defined global option exists
 		if ( ! empty( $this->settings[ 'options' ] ) && empty( $de_global_options[ "{$this->settings[ 'options' ]}" ] ) ) {
@@ -57,7 +64,7 @@ class De_Item {
 		}
 		
 		// Some default settings
-		if ( in_array( $this->store, array( 'postmeta', 'wptitle', 'wpcontent', 'wpexcerpt' ) ) ) {
+		if ( in_array( $this->store, array( 'postmeta', 'wptitle', 'wpcontent', 'wpexcerpt', 'postdate' ) ) ) {
 			if ( empty( $this->settings[ 'postId' ] ) && empty( $this->settings[ 'postType' ] ) ) {
 				if ( $de_snippet_list->in_the_loop ) {
 					$this->settings[ 'postType' ] = $de_snippet_list->item_type;

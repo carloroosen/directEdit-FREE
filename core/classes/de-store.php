@@ -14,6 +14,7 @@ class De_Store {
 			case 'wpcontent':
 			case 'wpexcerpt':
 			case 'post':
+			case 'postdate':
 				return ( current_user_can( 'edit_posts' ) || current_user_can( 'edit_de_frontend' ) );
 			break;
 			case 'usermeta':
@@ -132,6 +133,14 @@ class De_Store {
 					return null;
 				}
 			break;
+			case 'postdate':
+				// $store = 'date' is available for dates only
+				if ( $item instanceof De_Item_Date ) {
+					$content = get_the_time( 'Y-m-d H:i:s', $item->get_setting( 'postId' ) );;
+				} else {
+					return null;
+				}
+			break;
 			default:
 				return null;
 			break;
@@ -160,7 +169,7 @@ class De_Store {
 		global $user_ID;
 
 		if ( De_Store::is_editable( $item ) ) {
-			if ( in_array( $item->store, array( 'postmeta', 'wptitle', 'wpcontent', 'wpexcerpt' ) ) && ! $item->get_setting( 'postId' ) ) {
+			if ( in_array( $item->store, array( 'postmeta', 'wptitle', 'wpcontent', 'wpexcerpt', 'postdate' ) ) && ! $item->get_setting( 'postId' ) ) {
 				if ( ! self::$new_post_id ) {
 					if ( in_array( $item->get_setting( 'postType' ), get_post_types( array('show_ui' => true ) ) ) )
 						$obj = get_post_type_object( $item->get_setting( 'postType' ) );
@@ -171,7 +180,7 @@ class De_Store {
 						'post_content' => '',
 						'post_title' => 'New ' . $obj->labels->singular_name,
 						'post_status' => 'draft',
-						'post_date' => date('Y-m-d H:i:s'),
+						'post_date' => current_time( 'mysql' ),
 						'post_author' => $user_ID,
 						'post_type' => $item->get_setting( 'postType' ),
 						'post_category' => array( 0 )
@@ -405,6 +414,20 @@ class De_Store {
 				case 'post':
 					// Is not editable
 					return null;
+				break;
+				case 'date':
+					if ( $content == mysql2date( 'Y-m-d H:i:s', $content ) ) {
+						$myPost = array();
+						$myPost[ 'ID' ] = $item->get_setting( 'postId' );
+						$myPost[ 'post_date' ] = $content;
+						$myPost[ 'post_date_gmt' ] = get_gmt_from_date( $content );
+						
+						wp_update_post( $myPost );
+
+						return $content;
+					} else {
+						return null;
+					}
 				break;
 				default:
 					return null;
