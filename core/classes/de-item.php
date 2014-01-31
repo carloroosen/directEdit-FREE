@@ -87,13 +87,13 @@ class De_Item {
 	public function get_setting( $key ) {
 		global $de_global_options;
 
-		if ( is_array( $this->settings ) && ! empty( $this->settings[ $key ] ) ) {
-			if( ! empty( $this->settings[ 'options' ] ) && ! empty( $de_global_options[ $this->settings[ 'options' ] ][ $key ] ) ) {
+		if ( is_array( $this->settings ) && isset( $this->settings[ $key ] ) ) {
+			if( ! empty( $this->settings[ 'options' ] ) && isset( $de_global_options[ $this->settings[ 'options' ] ][ $key ] ) && ( is_array( $de_global_options[ $this->settings[ 'options' ] ][ $key ] ) || is_array( $this->settings[ $key ] ) ) ) {
 				return array_replace_recursive( ( array ) $de_global_options[ $this->settings[ 'options' ] ][ $key ], ( array ) $this->settings[ $key ] );
 			} else {
 				return $this->settings[ $key ];
 			}
-		} elseif( ! empty( $this->settings[ 'options' ] ) && ! empty( $de_global_options[ $this->settings[ 'options' ] ][ $key ] ) ) {
+		} elseif( ! empty( $this->settings[ 'options' ] ) && isset( $de_global_options[ $this->settings[ 'options' ] ][ $key ] ) ) {
 			return $de_global_options[ $this->settings[ 'options' ] ][ $key ];
 		} else
 			return null;
