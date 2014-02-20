@@ -1,5 +1,12 @@
 /* all dE elements */
 
+.ui-dialog.direct-edit{
+    z-index: 2147483647;
+}
+.ui-dialog.direct-edit.transition{
+	transition: width .5s, top .5s, left .5s;
+	-webkit-transition: top .5s, left .5s;
+}
 .direct-edit *, .direct-edit { 
 	-webkit-box-sizing: content-box;
 	-moz-box-sizing: content-box;
@@ -25,12 +32,12 @@
     font-family: Arial;
     font-size: 0.9375em;
     background: rgba(5, 5, 5, 0.8);
-    color: #dddddd;
 	margin-bottom: 5px;
 	overflow:hidden;
 }
 #direct-notify-container div.notify p {
 	margin:0;
+    color: #dddddd;
 }
 
 /* directFileUploader */
@@ -224,6 +231,10 @@ a.direct-link-editor .direct-link-editor-buttons a:hover {
 
 
 /* image editor */
+
+#direct-image-editor-dialog img {
+	max-width:none;
+}
 
 #direct-image-editor-dialog .submit {
 	float:right;

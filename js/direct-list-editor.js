@@ -81,7 +81,6 @@
 								if (divClass && divClasses[divClass]) {
 									divClasses[divClass].append(commandHTML);
 								} else {
-									console.log(divClass, divClasses[divClass]);
 									buttonWrapper.append(commandHTML);
 								}
 								/* add event handlers */

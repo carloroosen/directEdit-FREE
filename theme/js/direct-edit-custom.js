@@ -74,6 +74,12 @@
 			tooltip: 'header 3',
 			icon: 'direct-icon-h3'
 		},
+		h4 : {
+			command: 'formatBlock',
+			commandValue : 'H4',
+			tooltip: 'header 4',
+			icon: 'direct-icon-h4'
+		},
 		ul : {
 			command: 'insertUnorderedList',
 			tooltip: 'bullet list',

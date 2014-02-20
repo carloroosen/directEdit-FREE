@@ -54,20 +54,21 @@
 		"buttonOptions" : {
 			"image" : {
 				"imgFileFormat": "jpg",
-				"imgQuality": 70,
+				"imgQuality": 80,
+				"sourceMaxResize": 1200,
 				"styles" : {
 					"left" : {
-						"constraints" : { "minWidth": 100, "maxWidth": 400, "minHeight": 100, "maxHeight": 400 },
-						"class" : "align-left",
+						"constraints" : { "minWidth": 150, "maxWidth": 600, "minHeight": 100, "maxHeight": 400 },
+						"class" : "alignleft",
 						"isDefault" : true
 					},
 					"right" : {
 						"constraints" : { "minWidth": 100, "maxWidth": 400, "minHeight": 100, "maxHeight": 400 },
-						"class" : "align-right"
+						"class" : "alignright"
 					},
 					"full" : {
 						"constraints" : { "minWidth": 800, "maxWidth": 800, "minHeight": 100, "maxHeight": 400 },
-						"class" : "align-left"
+						"class" : "alignleft"
 					}
 				}
 			},
@@ -80,7 +81,8 @@
 	"image": {
 		"type": "image",
 		"imgFileFormat": "jpg",
-		"imgQuality": 70,
+		"imgQuality": 80,
+		"sourceMaxResize": 1200,
 		"constraints" : {
 			"minWidth": 800,
 			"maxWidth": 800,

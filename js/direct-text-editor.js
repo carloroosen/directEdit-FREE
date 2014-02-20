@@ -9,8 +9,8 @@
 		hasPlaceholderContent: false,
 		eventHandlers : null,
 		selection: null,
-		originalContent: '',
-		originalContentSet: false,
+		originalValidatedContent: '',
+		originalValidatedContentSet: false,
 		additionalData: null,
 		options: {
 			debug: false,
@@ -37,6 +37,9 @@
 
 			// create toolbar and buttons
 			if (this.options.buttons) { this._createToolbar(); }
+			
+			// Store original content to track changes
+			this.originalContent = this.element.html();
 
 			// configure browser editing
 			this.tagName = this.element.get(0).tagName.toLowerCase();
@@ -109,10 +112,10 @@
 		activate: function () {
 			$(this.element).addClass('inEditMode');
 			this._validateContent();
-			if (!this.originalContentSet) {
+			if (!this.originalValidatedContentSet) {
 				// the text has not been changed by the user, maybe only by the validator or by the browser
-				this.originalContent = this.element.html();
-				this.originalContentSet = true;
+				this.originalValidatedContent = this.element.html();
+				this.originalValidatedContentSet = true;
 			}
 			if (this.toolbar) { this.toolbar.show(); }
 			this._setPlaceholder(false);
@@ -144,13 +147,18 @@
 				}
 			}
 		},
+		isTouched :  function () {
+			// is checked when saving
+			return (this.originalContent !== this.element.html()) || this.isModified();
+		},
 		isModified: function () {
+			// is checked when trying to leave the page, less strict than isTouched()
 			var isModified;
-			if (this.originalContentSet) {
+			if (this.originalValidatedContentSet) {
 				if (this.hasPlaceholderContent) {
-					isModified = (this.originalContent !== '');
+					isModified = (this.originalValidatedContent !== '');
 				} else {
-					isModified = (this.originalContent !== this.element.html());
+					isModified = (this.originalValidatedContent !== this.element.html());
 				}
 			} else {
 				isModified = false;
@@ -167,7 +175,7 @@
 		setData: function (result) {
 			this.element.html(result.content);
 			$.extend(this.additionalData, result.data);
-			this.originalContent = this.element.html();
+			this.originalValidatedContent = this.originalContent = this.element.html();
 			this.hasPlaceholderContent = false;
 			this._setPlaceholder(true);
 		},
@@ -460,6 +468,22 @@
 					}
 				}
 			});
+			// find images in own p, and move them to the beginning of the next empty p.
+			if(node === this.element && !node.is('p')) {
+				$(this.element.find('p').get().reverse()).each(function () {
+					var par = $(this), img;
+
+					if (par.contents().length === 0) {
+						par.remove();
+					}
+					if (par.contents().length === 1 && par.children('img').length == 1 && par.next().is('p')) {
+						img = par.children('img');
+						console.log('image moved to start of paragraph');
+						par.next().prepend(img);
+						par.remove();
+					}
+				});
+			}
 		},
 		_validateContentPlain: function () {
 			var contentOrgStripped, contentNewStripped, getText, self = this;

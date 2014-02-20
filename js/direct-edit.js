@@ -142,7 +142,7 @@ var directEdit, directNotify, directTranslate;
 			for (e in this.editors) {
 				if (this.editors.hasOwnProperty(e)) {
 					editor = this.editors[e];
-					if (editor.isModified() || editor.options.alwaysSave) {
+					if (editor.options.alwaysSave || (typeof editor.isTouched == 'function' ? editor.isTouched() : editor.isModified())) {
 						data[e] = editor.getData();
 						taskCount += 1;
 					}
@@ -201,8 +201,22 @@ var directEdit, directNotify, directTranslate;
 			$.directEdit.fn.saveAll();
 			return false;
 		});
-	};
+		
+		// show notify message on page load when specified as ?de_message=saved
+		function getQueryParams(qs) {
+			var params = {}, tokens, re = /[?&]?([^=]+)=([^&]*)/g;
 
+			qs = qs.split("+").join(" ");
+			while (tokens = re.exec(qs)) {
+				params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+			}
+			return params;
+		}
+
+		var query = getQueryParams(document.location.search);
+		if (query.de_message  === 'saved') directNotify(directTranslate("The page has been saved."));
+	};
+	
 	// ping server every 10 minutes to keep the session alive
 	setInterval(function () { $.post($.directEdit.fn.ajaxUrl); }, 600000);
 

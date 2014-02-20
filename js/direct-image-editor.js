@@ -13,12 +13,13 @@
 		options: {
 			selector: 'img',
 			ajaxUrl : '',
-			constraints: { minWidth: 16, maxWidth: 1200, minHeight: 16, maxHeight: 1200 },
+			constraints: { minWidth: 16, maxWidth: 800, minHeight: 16, maxHeight: 600 },
 			dialogOptions : {
-				width: 640,
-				height: 500,
+				width: '600',
+				height: '500',
 				title: "Edit image",
 				modal: false,
+				position: ['center','middle'],
 				resizable: true,
 				draggable: true,
 				dialogClass: 'direct-edit'
@@ -30,7 +31,6 @@
 		_create: function () {
 			var selectImage, unSelectHandler, dblclickOpen, dialogOpenHandler, self;
 			self = this;
-
 			if (this.element.is('img')) {
 				this.isImage = true;
 				this.image = this.element;
@@ -42,6 +42,7 @@
 			}
 
 			this.options.dialogOptions.autoOpen = false;
+			
 			this.dialog = $('<div id="direct-image-editor-dialog"></div>').dialog(this.options.dialogOptions);
 			(function () {
 				var selectedImage;
@@ -109,9 +110,9 @@
 		getDialog: function () { return this.dialog; },
 		_createEditPage: function () {
 			var selectedStyle, style, styles, isFirstStyle, contentEdit, imageTypeButtons,
-				editableImage, sliderContainer, editorOptions, toolBox, editForm, buttonSet,
+				editableImage, sliderContainer, editorOptions, toolBox, editForm, buttonSet, fixedSizeWrapper,
 				changeStyle, newImage, saveImageData, saveSourceImageSuccess, self;
-			// A style is set of scaling constraints, styles must containe at least one style
+			// A style is set of scaling constraints, styles must contain at least one style
 			styles = this.options.styles;
 			if (!styles) {
 				styles = {};
@@ -160,21 +161,29 @@
 			buttonSet.append('<div class="spinner"></div>');
 			buttonSet.buttonset().appendTo(editForm);
 			sliderContainer = $('<div class="sliderContainer">').appendTo(toolBox);
+
+			fixedSizeWrapper = $('<div style="box-resize:content-box;margin-bottom:10px;width:' + styles[selectedStyle].constraints.maxWidth +'px;height:' + styles[selectedStyle].constraints.maxHeight +'px">');
+			fixedSizeWrapper.appendTo(contentEdit);
+
 			editableImage = $('<div class="editableImage" style="overflow:hidden; width:' + (this.imageData.containerW || '0') + 'px; height:' + (this.imageData.containerH || '0') + 'px;"><img src="' + this.imageData.source + '" style="position:relative; top:' + (this.imageData.top || '0') + 'px; left:' + (this.imageData.left || '0') + 'px; width:' + (this.imageData.imageScaledW || '0') + 'px; height:' + (this.imageData.imageScaledH || '0') + 'px;" alt="" /></div>');
-			editableImage.appendTo(contentEdit);
+			editableImage.appendTo(fixedSizeWrapper);
 
 			// create editable image
 			editorOptions = {sliderContainer : sliderContainer};
 			if (this.options.scaleType) { $.extend(editorOptions, { 'scaleType' : this.options.scaleType }); }
-			if (this.options.viewScale) { $.extend(editorOptions, { 'viewScale' : this.options.viewScale }); }
+			if (this.options.sourceMaxResize) { $.extend(editorOptions, { 'sourceMaxResize' : this.options.sourceMaxResize }); }
+			if (!(this.imageData.imageScaledW && this.imageData.imageScaledH)) {
+				$.extend(editorOptions, {'resetSize' : true});
+			}
 			$.extend(editorOptions, styles[selectedStyle].constraints);
 			editableImage.directImageEditorCPS(editorOptions);
-
 			// event handlers closure
 			(function () {
 				changeStyle = function () {
-					editableImage.directImageEditorCPS(styles[$(this).attr('value')].constraints);
 					self.imageData.style = $(this).attr('value');
+					editableImage.directImageEditorCPS(styles[self.imageData.style].constraints);
+					fixedSizeWrapper.width(styles[self.imageData.style].constraints.maxWidth).height(styles[self.imageData.style].constraints.maxHeight);
+					self.repositionDialog();
 				};
 				newImage = function (event) {
 					// prevent the dialog from being closed by the pseudo-blur detector
@@ -216,6 +225,7 @@
 
 			// append the whole thing to the dialog container
 			this.dialog.empty().append(contentEdit);
+			this.repositionDialog();
 		},
 		_createUploadPage: function () {
 			var contentUpload, saveSourceImageSuccess, self;
@@ -260,6 +270,7 @@
 				}
 			});
 			this.dialog.empty().append(contentUpload);
+			this.repositionDialog(this.options.dialogOptions.width, this.options.dialogOptions.height);
 		},
 		_createConfirmPage: function (imageData, file) {
 			var contentConfirm, self, thumb, afterImageLoad;
@@ -359,6 +370,20 @@
 				data: data
 			});
 		},
+		repositionDialog : function (w,h) {
+			var self = this;
+			setTimeout (function () {
+				self.dialog.parent().addClass('transition');;
+				self.dialog.dialog({
+					position: { 'my': 'center', 'at': 'center' },
+					width: w || 'auto',
+					height: h || 'auto'
+				})
+			}, 10);
+			setTimeout (function () {
+				self.dialog.parent().removeClass('transition');;
+			}, 20);
+		},
 		isModified: function () {
 			return this.modified || false; // if falsy then false
 		},
@@ -416,7 +441,7 @@
 
 /*
  * directImageEditorCPS a $ UI widget for image editing, part of the directEdit project
- * (c) 2010-2013 Carlo Roosen (http://www.carloroosen.nl)
+ * (c) 2010-2014 Carlo Roosen (http://www.carloroosen.nl)
  */
 
 	$.widget("directEdit.directImageEditorCPS", {
@@ -445,9 +470,6 @@
 
 			// resizable handles, handles that cannot be used will be hidden automatically 
 			handles: 'e, s, se',
-
-			// scale the view of the editor THIS OPTION IS EXPERIMENTAL
-			viewScale : 1,
 
 			// hide UI elements in image when moving mouse away 
 			autoHide : true,
@@ -496,96 +518,74 @@
 				this.container.resizable("destroy");
 				this.container.off('hover');
 				this.container.children().show();
+				this.options.resetSize = true;
 				this._initialize();
 			}
 		},
 		_fetchSourceSize : function (tempImage) {
 			if (tempImage.width() === 0 || tempImage.height() === 0) { throw ('Could not fetch image size'); }
-			this.imageSrcW = tempImage.width();
-			this.imageSrcH = tempImage.height();
+			var sourceRescale = this.options.sourceMaxResize / Math.max(tempImage.width(), tempImage.height());
+			this.imageSrcW = tempImage.width() * sourceRescale;
+			this.imageSrcH = tempImage.height() * sourceRescale;
 			tempImage.remove();
 			this._initialize();
 		},
 		_initialize: function () {
-			var thisEditor, container, image, divW, divH, scale, scaleMin, startScale, containment,
+			var self, container, image, scale, scaleMin, startScale, containment,
 				storedContainerW, storedContainerH, uiElements;
 			// we dont use the native _init() function, because it would be called too early, before the source image size is known
 			if (this.imageSrcW === 0 || this.imageSrcH === 0) {	throw ('Could not detect image size'); }
 
-			// create a reference to 'this' that also works inside functions
-			thisEditor = this;
+			// create a reference to 'this' that also works inside closures
+			self = this;
 			container = this.container;
 			image = this.image;
 
-			// retrieve image scale and position from css.
-			// If css width and height is not set or auto, assume it is a new image and zoom out
-			if (image.css('width') !== 'auto' && image.css('height') !== 'auto') {
-				thisEditor.imageScaledW = image.width();
-				thisEditor.imageScaledH = image.height();
-				divW = container.width() - image.width();
-				divH = container.height() - image.height();
-				thisEditor.relativeX = (divW !== 0) ? (parseInt(image.css('left'), 10) / divW) : thisEditor.relativeX;
-				thisEditor.relativeY = (divH !== 0) ? (parseInt(image.css('top'), 10) / divH) : thisEditor.relativeY;
-				thisEditor.relativeX = Math.min(1, Math.max(0, thisEditor.relativeX));
-				thisEditor.relativeY = Math.min(1, Math.max(0, thisEditor.relativeY));
-			} else {
-				thisEditor.imageScaledW = 0;  // will be adjusted later
-				thisEditor.imageScaledH = 0;
-			}
-
 			// limit maximum size to image size. Not for scaletype 'fit', here small images will be displayed on a background color
-			if (thisEditor.options.scaleType !== 'fit') {
-				thisEditor.options.maxWidth = Math.min(thisEditor.options.maxWidth, thisEditor.imageSrcW);
-				thisEditor.options.maxHeight = Math.min(thisEditor.options.maxHeight, thisEditor.imageSrcH);
+			if (this.options.scaleType !== 'fit') {
+				this.options.maxWidth = Math.min(this.options.maxWidth, this.imageSrcW);
+				this.options.maxHeight = Math.min(this.options.maxHeight, this.imageSrcH);
 			}
 			// minimum values must be equal to or smaller than maximum values
-			thisEditor.options.minWidth = Math.min(thisEditor.options.minWidth, thisEditor.options.maxWidth);
-			thisEditor.options.minHeight = Math.min(thisEditor.options.minHeight, thisEditor.options.maxHeight);
+			this.options.minWidth = Math.min(this.options.minWidth, this.options.maxWidth);
+			this.options.minHeight = Math.min(this.options.minHeight, this.options.maxHeight);
 
-			// container size validation
-			thisEditor.containerW = Math.max(Math.min(container.width(), thisEditor.options.maxWidth), thisEditor.options.minWidth);
-			thisEditor.containerH = Math.max(Math.min(container.height(), thisEditor.options.maxHeight), thisEditor.options.minHeight);
-
-			// validate image scaling
-			scale = Math.max(thisEditor.imageScaledW / thisEditor.imageSrcW, thisEditor.imageScaledH / thisEditor.imageSrcH);
-			scaleMin = thisEditor._getScaleMin();
-			scale = Math.min(Math.max(scale, scaleMin), 1);
-			thisEditor.imageScaledW = thisEditor.imageSrcW * scale;
-			thisEditor.imageScaledH = thisEditor.imageSrcH * scale;
+			// set current scaling
+			scale = this.options.resetSize ? this._resetSize() : this._getSizeFromImage(image, container);
 
 			// Resizable Container
 			container.resizable({
 				start : function () {
-					startScale = Math.max(thisEditor.imageScaledW / thisEditor.imageSrcW, thisEditor.imageScaledH / thisEditor.imageSrcH);
+					startScale = Math.max(self.imageScaledW / self.imageSrcW, self.imageScaledH / self.imageSrcH);
 				},
 				resize : function (e, ui) {
 					var scaleW, scaleH, scaleMin, scale;
-					thisEditor.containerW = ui.size.width / thisEditor.options.viewScale;
-					thisEditor.containerH = ui.size.height / thisEditor.options.viewScale;
-					scaleW = thisEditor.containerW / thisEditor.imageSrcW;
-					scaleH = thisEditor.containerH / thisEditor.imageSrcH;
-					if (thisEditor.options.scaleType === 'fit') {
+					self.containerW = ui.size.width;
+					self.containerH = ui.size.height;
+					scaleW = self.containerW / self.imageSrcW;
+					scaleH = self.containerH / self.imageSrcH;
+					if (self.options.scaleType === 'fit') {
 						scaleMin = Math.min(Math.min(scaleW, scaleH), 1);
 					} else {
 						scaleMin = Math.max(scaleW, scaleH);
 					}
 					scale = Math.max(scaleMin, startScale);
-					thisEditor.imageScaledW = thisEditor.imageSrcW * scale;
-					thisEditor.imageScaledH = thisEditor.imageSrcH * scale;
-					thisEditor._setSlider(scale);
-					thisEditor._updateView();
+					self.imageScaledW = self.imageSrcW * scale;
+					self.imageScaledH = self.imageSrcH * scale;
+					self._setSlider(scale);
+					self._updateView();
 				},
-				maxWidth : thisEditor.options.maxWidth * thisEditor.options.viewScale,
-				maxHeight : thisEditor.options.maxHeight * thisEditor.options.viewScale,
-				minWidth : thisEditor.options.minWidth * thisEditor.options.viewScale,
-				minHeight : thisEditor.options.minHeight * thisEditor.options.viewScale,
-				handles : thisEditor._getHandles()
+				maxWidth : self.options.maxWidth,
+				maxHeight : self.options.maxHeight,
+				minWidth : self.options.minWidth,
+				minHeight : self.options.minHeight,
+				handles : self._getHandles()
 			});
 
 			// Draggable Image
 			image.draggable({
 				start: function () {
-					containment = thisEditor._getContainment();
+					containment = self._getContainment();
 				},
 				drag: function (e, ui) {
 					if (ui.position.left < containment.minX) { ui.position.left = containment.minX; }
@@ -594,36 +594,36 @@
 					if (ui.position.top > containment.maxY) { ui.position.top = containment.maxY; }
 				},
 				stop: function (e, ui) {
-					thisEditor.relativeX = (thisEditor.containerW - thisEditor.imageScaledW !== 0) ? ui.position.left / ((thisEditor.containerW - thisEditor.imageScaledW) * thisEditor.options.viewScale) : thisEditor.relativeX;
-					thisEditor.relativeY = (thisEditor.containerH - thisEditor.imageScaledH !== 0) ? ui.position.top / ((thisEditor.containerH - thisEditor.imageScaledH) * thisEditor.options.viewScale) : thisEditor.relativeY;
+					self.relativeX = (self.containerW - self.imageScaledW !== 0) ? ui.position.left / (self.containerW - self.imageScaledW) : self.relativeX;
+					self.relativeY = (self.containerH - self.imageScaledH !== 0) ? ui.position.top / (self.containerH - self.imageScaledH) : self.relativeY;
 				}
 			});
 
 			// Create Slider
-			thisEditor.slider.slider({
+			this.slider.slider({
 				values: [0],
 				max: 1000,
 				start: function () {
-					storedContainerW = thisEditor.containerW;
-					storedContainerH = thisEditor.containerH;
+					storedContainerW = self.containerW;
+					storedContainerH = self.containerH;
 				},
 				slide: function (e, ui) {
 					var sliderScaleMin, slideVal, scale;
-					sliderScaleMin = thisEditor._getScaleMin();
+					sliderScaleMin = self._getScaleMin();
 					slideVal = Math.max(0, Math.min((ui.value / 1000), 1));
 					scale = sliderScaleMin + ((1 - sliderScaleMin) * slideVal);
-					thisEditor.imageScaledW = thisEditor.imageSrcW * scale;
-					thisEditor.imageScaledH = thisEditor.imageSrcH * scale;
-					if (thisEditor.options.scaleType !== 'fit') {
-						thisEditor.containerW = Math.min(storedContainerW, thisEditor.imageScaledW);
-						thisEditor.containerH = Math.min(storedContainerH, thisEditor.imageScaledH);
+					self.imageScaledW = self.imageSrcW * scale;
+					self.imageScaledH = self.imageSrcH * scale;
+					if (self.options.scaleType !== 'fit') {
+						self.containerW = Math.min(storedContainerW, self.imageScaledW);
+						self.containerH = Math.min(storedContainerH, self.imageScaledH);
 					}
-					thisEditor._updateView();
+					self._updateView();
 				}
 			});
 
 			// Autohide ui elements
-			if (thisEditor.options.autoHide) {
+			if (this.options.autoHide) {
 				uiElements = container.children().not('img').hide();
 				container.hover(
 					function () {
@@ -651,17 +651,69 @@
 			container.css({
 				'overflow': 'hidden'
 			});
-			thisEditor._updateView();
-			thisEditor._setSlider(scale);
+			this._updateView();
+			this._setSlider(scale);
+		},
+		_getSizeFromImage : function (image, container) {
+			var divW, divH, scale, scaleMin;
+			// retrieve image scale and position from image.
+			this.imageScaledW = image.width();
+			this.imageScaledH = image.height();
+			this.containerW = container.width();
+			this.containerH = container.height();
+			divW = this.containerW - this.imageScaledW;
+			divH = this.containerH - this.imageScaledH;
+			
+			// set positioning
+			this.relativeX = (divW !== 0) ? (parseInt(image.css('left'), 10) / divW) : this.relativeX;
+			this.relativeY = (divH !== 0) ? (parseInt(image.css('top'), 10) / divH) : this.relativeY;
+			this.relativeX = Math.min(1, Math.max(0, this.relativeX));
+			this.relativeY = Math.min(1, Math.max(0, this.relativeY));
+
+			// validate image scaling
+			scale = Math.max(this.imageScaledW / this.imageSrcW, this.imageScaledH / this.imageSrcH);
+			scaleMin = this._getScaleMin();
+			scale = Math.min(Math.max(scale, scaleMin), 1);
+
+			// set image size
+			this.imageScaledW = this.imageSrcW * scale;
+			this.imageScaledH = this.imageSrcH * scale;
+
+			// container size validation
+			this.containerW = Math.max(Math.min(this.containerW, this.options.maxWidth), this.options.minWidth);
+			this.containerH = Math.max(Math.min(this.containerH, this.options.maxHeight), this.options.minHeight);	
+			return scale;
+		},
+		_resetSize : function () {
+			var scale, scaleMin;
+			// center image
+			this.relativeX = .5;
+			this.relativeY = 0; // 
+			
+			// get the maximum scale that will show the image without cropping
+			scale = Math.min(this.options.maxWidth / this.imageSrcW, this.options.maxHeight / this.imageSrcH);
+			scaleMin = this._getScaleMin();
+			scale = Math.min(Math.max(scale, scaleMin), 1);
+			this.containerW = this.imageSrcW * scale;
+			this.containerH = this.imageSrcH * scale;
+
+			// set image size
+			this.imageScaledW = this.imageSrcW * scale;
+			this.imageScaledH = this.imageSrcH * scale;
+
+			// container size validation
+			this.containerW = Math.max(Math.min(this.containerW, this.options.maxWidth), this.options.minWidth);
+			this.containerH = Math.max(Math.min(this.containerH, this.options.maxHeight), this.options.minHeight);	
+			return scale;
 		},
 		_updateView : function () {
 			var imageX, imageY;
-			this.image.css('width', this.imageScaledW * this.options.viewScale);
-			this.image.css('height', this.imageScaledH * this.options.viewScale);
-			this.container.css('width', this.containerW * this.options.viewScale);
-			this.container.css('height', this.containerH * this.options.viewScale);
-			imageX = (this.containerW - this.imageScaledW) * this.relativeX * this.options.viewScale;
-			imageY = (this.containerH - this.imageScaledH) * this.relativeY * this.options.viewScale;
+			this.image.css('width', this.imageScaledW);
+			this.image.css('height', this.imageScaledH);
+			this.container.css('width', this.containerW);
+			this.container.css('height', this.containerH);
+			imageX = (this.containerW - this.imageScaledW) * this.relativeX;
+			imageY = (this.containerH - this.imageScaledH) * this.relativeY;
 			this.image.css('left', imageX + 'px');
 			this.image.css('top', imageY + 'px');
 		},
@@ -683,10 +735,10 @@
 		_getContainment : function () {
 			// draggable ui position bounderies
 			var containment = [];
-			containment.minX = Math.min(this.containerW - this.imageScaledW, 0) * this.options.viewScale;
-			containment.minY = Math.min(this.containerH - this.imageScaledH, 0) * this.options.viewScale;
-			containment.maxX = Math.max(this.containerW - this.imageScaledW, 0) * this.options.viewScale;
-			containment.maxY = Math.max(this.containerH - this.imageScaledH, 0) * this.options.viewScale;
+			containment.minX = Math.min(this.containerW - this.imageScaledW, 0);
+			containment.minY = Math.min(this.containerH - this.imageScaledH, 0);
+			containment.maxX = Math.max(this.containerW - this.imageScaledW, 0);
+			containment.maxY = Math.max(this.containerH - this.imageScaledH, 0);
 			return containment;
 		},
 		_getHandles : function () {
