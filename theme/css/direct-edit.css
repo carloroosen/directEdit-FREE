@@ -150,9 +150,10 @@ a.direct-link-editor .direct-link-editor-buttons a:hover {
 	outline-style:none;
 	
 }
-.direct-text-editor-placeholder:after {
-	content: "\0000a0";
-}
+
+
+
+
 
 /* directTextEditor toolbar */
 
@@ -235,19 +236,32 @@ a.direct-link-editor .direct-link-editor-buttons a:hover {
 #direct-image-editor-dialog img {
 	max-width:none;
 }
+#direct-image-editor-dialog #fixed-size-wrapper {
+	box-resize:content-box;
+	margin-bottom:10px;
+	background-image: url(../images/corner-br.png),  url(../images/corner-tr.png),  url(../images/corner-bl.png);
+	background-repeat:no-repeat;
+	background-position:right bottom, top right, bottom left;
+}
+
 
 #direct-image-editor-dialog .submit {
 	float:right;
 	margin:5px;
 }
 
-#direct-image-editor-dialog #spinner {
+#direct-image-editor-dialog .spinner {
 	float:right;
-	margin:8px 0 0 15px;
-	width:16px;
+	font-size:.85em;
+	color:#ccc;
+	margin:4px 0;
+	padding-right: 22px;
 	height:16px;
 	background-image: url(../images/spinner.gif);
+	background-repeat:no-repeat;
+	background-position:right center;
 	display:none;
+	transition:opacity 2s;
 }
 
 img.direct-image-editor-active-image {
@@ -310,7 +324,9 @@ img.direct-image-editor-active-image {
 
 #direct-image-editor-dialog .image-editor-container {
 	background-color:white;
-	border: 1px #ccc solid;
+	-webkit-box-shadow: inset 0px 0px 0px 1px #bbb;
+	-moz-box-shadow: inset 0px 0px 0px 1px #bbb;
+	box-shadow: inset 0px 0px 0px 1px #bbb;
 }
 
 #direct-image-editor-dialog .input_text {

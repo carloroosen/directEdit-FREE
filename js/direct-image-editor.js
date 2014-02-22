@@ -20,7 +20,7 @@
 				title: "Edit image",
 				modal: false,
 				position: ['center','middle'],
-				resizable: true,
+				resizable: false,
 				draggable: true,
 				dialogClass: 'direct-edit'
 			},
@@ -42,8 +42,11 @@
 			}
 
 			this.options.dialogOptions.autoOpen = false;
+			this.options.dialogOptions.minWidth = this.options.dialogOptions.width;
 			
 			this.dialog = $('<div id="direct-image-editor-dialog"></div>').dialog(this.options.dialogOptions);
+			self.dialog.parent().css({'min-width': self.options.dialogOptions.width + 'px'});
+			
 			(function () {
 				var selectedImage;
 				selectImage = function (event) {
@@ -155,14 +158,13 @@
 			editForm = $('<form action="" id="selfForm" method="post">').appendTo(toolBox);
 			editForm.append('<input type="hidden" name="image_class" id="image_class" value="inline" />');
 			editForm.append(imageTypeButtons);
-			editForm.append('<div style="clear:both; height:10px;"></div>');
+			editForm.append('<div class="spinner">' + directTranslate('Uploading in the background.') + '</div>');
 			editForm.append('<div class="input_text"><label for="alt">alt:</label><input type="text" name="alt" id="alt" value="' + (this.imageData.alt || '') + '" /></div>');
 			buttonSet = $('<div class="buttonset"><input type="button" id="imageReset" value="' + directTranslate("Different image") + '" /><input type="button" id="sendForm" value="' + directTranslate("Save") + '"></div>');
-			buttonSet.append('<div class="spinner"></div>');
 			buttonSet.buttonset().appendTo(editForm);
 			sliderContainer = $('<div class="sliderContainer">').appendTo(toolBox);
 
-			fixedSizeWrapper = $('<div style="box-resize:content-box;margin-bottom:10px;width:' + styles[selectedStyle].constraints.maxWidth +'px;height:' + styles[selectedStyle].constraints.maxHeight +'px">');
+			fixedSizeWrapper = $('<div id="fixed-size-wrapper" style="width:' + styles[selectedStyle].constraints.maxWidth +'px;height:' + styles[selectedStyle].constraints.maxHeight +'px">');
 			fixedSizeWrapper.appendTo(contentEdit);
 
 			editableImage = $('<div class="editableImage" style="overflow:hidden; width:' + (this.imageData.containerW || '0') + 'px; height:' + (this.imageData.containerH || '0') + 'px;"><img src="' + this.imageData.source + '" style="position:relative; top:' + (this.imageData.top || '0') + 'px; left:' + (this.imageData.left || '0') + 'px; width:' + (this.imageData.imageScaledW || '0') + 'px; height:' + (this.imageData.imageScaledH || '0') + 'px;" alt="" /></div>');
@@ -207,7 +209,7 @@
 						$.extend(self.additionalData, ret.data);
 					}
 					contentEdit.find('#sendForm').button('enable');
-					$('.spinner', contentEdit).hide();
+					$('.spinner', contentEdit).css('opacity',0);
 				};
 			}());
 
@@ -300,7 +302,7 @@
 			}
 			afterImageLoad = function () {
 				var buttonset = contentConfirm.find('#imageUploadButtons');
-				$('<input type="button" id="imageReset" value="' + directTranslate('Andere afbeelding') + '" />').appendTo(buttonset)
+				$('<input type="button" id="imageReset" value="' + directTranslate('Different image') + '" />').appendTo(buttonset)
 					.click(function (event) {
 					// prevent the dialog from being closed by the pseudo-blur detector
 						event.stopPropagation();
@@ -309,7 +311,7 @@
 				if (checkImageSize(thumb)) {
 					thumb.css('maxWidth', 360);
 					thumb.show();
-					$('<input type="button" id="imageUploadButton" value="' + directTranslate('Uploaden en bewerken') + ' >>" />').appendTo(buttonset)
+					$('<input type="button" id="imageUploadButton" value="' + directTranslate('Upload and edit') + ' >>" />').appendTo(buttonset)
 						.click(function (event) {
 							// prevent the dialog from being closed by the pseudo-blur detector
 							event.stopPropagation();
@@ -370,14 +372,14 @@
 				data: data
 			});
 		},
-		repositionDialog : function (w,h) {
+		repositionDialog : function (width,height) {
 			var self = this;
 			setTimeout (function () {
 				self.dialog.parent().addClass('transition');;
 				self.dialog.dialog({
 					position: { 'my': 'center', 'at': 'center' },
-					width: w || 'auto',
-					height: h || 'auto'
+					width: width || 'auto',
+					height: height || 'auto'
 				})
 			}, 10);
 			setTimeout (function () {
@@ -524,14 +526,14 @@
 		},
 		_fetchSourceSize : function (tempImage) {
 			if (tempImage.width() === 0 || tempImage.height() === 0) { throw ('Could not fetch image size'); }
-			var sourceRescale = this.options.sourceMaxResize / Math.max(tempImage.width(), tempImage.height());
+			var sourceRescale = this.options.sourceMaxResize ? this.options.sourceMaxResize / Math.max(tempImage.width(), tempImage.height()) : 1;
 			this.imageSrcW = tempImage.width() * sourceRescale;
 			this.imageSrcH = tempImage.height() * sourceRescale;
 			tempImage.remove();
 			this._initialize();
 		},
 		_initialize: function () {
-			var self, container, image, scale, scaleMin, startScale, containment,
+			var self, container, image, scale, startScale, containment,
 				storedContainerW, storedContainerH, uiElements;
 			// we dont use the native _init() function, because it would be called too early, before the source image size is known
 			if (this.imageSrcW === 0 || this.imageSrcH === 0) {	throw ('Could not detect image size'); }

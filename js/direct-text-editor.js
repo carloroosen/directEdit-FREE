@@ -135,15 +135,16 @@
 					if (this.options.format === 'block') { this.element.contents().wrap('<p>'); }
 					this.hasPlaceholderContent = true;
 				}
-				this.element.removeClass('direct-text-editor-placeholder')
 			} else {
 				if (this.hasPlaceholderContent) {
-					if (this.options.format === 'block') {
-						this.element.find('p').addClass('direct-text-editor-placeholder').html('');
-					} else {
-						this.element.addClass('direct-text-editor-placeholder').html('');
-					}
 					this.hasPlaceholderContent = false;
+					if (this.options.format === 'block') {
+						var p = this.element.find('p').html('&nbsp;');
+						var range = document.createRange();
+						range.selectNode(p.get(0));
+					} else {
+						this.element.html('&nbsp;');
+					}
 				}
 			}
 		},
@@ -468,21 +469,25 @@
 					}
 				}
 			});
+			// remove empty p's
 			// find images in own p, and move them to the beginning of the next empty p.
 			if(node === this.element && !node.is('p')) {
-				$(this.element.find('p').get().reverse()).each(function () {
-					var par = $(this), img;
+				var pars = this.element.find('p');
+				if (pars.length > 1) {
+					$(pars.get().reverse()).each(function () {
+						var par = $(this), img;
 
-					if (par.contents().length === 0) {
-						par.remove();
-					}
-					if (par.contents().length === 1 && par.children('img').length == 1 && par.next().is('p')) {
-						img = par.children('img');
-						console.log('image moved to start of paragraph');
-						par.next().prepend(img);
-						par.remove();
-					}
-				});
+						if (par.contents().length === 0) {
+							par.remove();
+						}
+						if (par.contents().length === 1 && par.children('img').length == 1 && par.next().is('p')) {
+							img = par.children('img');
+							console.log('image moved to start of paragraph');
+							par.next().prepend(img);
+							par.remove();
+						}
+					});
+				}
 			}
 		},
 		_validateContentPlain: function () {
