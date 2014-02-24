@@ -102,6 +102,14 @@
 		"buttonShowHide": true,
 		"buttonFollowLink": true
 	},
+	"date": {
+		"type": "date",
+		"format": "d MM yy",
+		"localize" : {
+			"nl" : "d MM yy",
+			"en" : "MM d, yy"
+		}
+	},
 	"file": {
 		"type": "file"
 	},

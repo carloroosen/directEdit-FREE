@@ -97,6 +97,10 @@ var directEdit, directNotify, directTranslate;
 						element.directListEditor(thisOptions);
 						editor = element.data("directEdit-directListEditor");
 						break;
+					case 'date':
+						element.directDateEditor(thisOptions);
+						editor = element.data("directEdit-directDateEditor");
+						break;
 					case 'options':
 						element.directPageOptions(thisOptions);
 						editor = element.data("directEdit-directPageOptions");
