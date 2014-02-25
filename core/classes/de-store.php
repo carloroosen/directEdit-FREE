@@ -415,7 +415,7 @@ class De_Store {
 					// Is not editable
 					return null;
 				break;
-				case 'date':
+				case 'postdate':
 					if ( $content == mysql2date( 'Y-m-d H:i:s', $content ) ) {
 						$myPost = array();
 						$myPost[ 'ID' ] = $item->get_setting( 'postId' );
