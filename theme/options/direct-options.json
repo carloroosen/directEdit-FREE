@@ -106,8 +106,8 @@
 		"type": "date",
 		"format": "d MM yy",
 		"localize" : {
-			"nl" : "d MM yy",
-			"en" : "MM d, yy"
+			"nl_NL" : "d MM yy",
+			"en_US" : "MM d, yy"
 		}
 	},
 	"file": {
