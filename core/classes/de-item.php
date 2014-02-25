@@ -156,6 +156,7 @@ class De_Item {
 				$content .= '?v=' . time();
 			
 			$direct_image[ 'alt' ] = $data[ 'sizes' ][ $mode ][ 'alt' ];
+			$direct_image[ 'data-source' ] = wp_get_attachment_url( $id );
 		}
 		
 		if ( De_Store::is_editable( $this ) ) {
@@ -236,7 +237,6 @@ class De_Item {
 					$direct_image[ 'style' ] = ( isset( $direct_image[ 'style' ] ) ? $direct_image[ 'style' ] . '; width: ' . $width . '%;' : 'width: ' . $width . '%;' );
 				}
 
-				$direct_image[ 'data-source' ] = wp_get_attachment_url( $id );
 				$direct_image[ 'data-containerW' ] = $data[ 'sizes' ][ $mode ][ 'container-width' ];
 				$direct_image[ 'data-containerH' ] = $data[ 'sizes' ][ $mode ][ 'container-height' ];
 				$direct_image[ 'data-left' ] = $data[ 'sizes' ][ $mode ][ 'left' ];
