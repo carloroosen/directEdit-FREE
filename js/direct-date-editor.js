@@ -11,13 +11,13 @@
 		_create: function () {
 			var self = this;
 			
-			this.dateOld = this.element.attr('data-date');
-			this.input = $('<input value="' + this.element.attr('data-date-datepicker') + '" />').css({'visibility':'hidden','position':'absolute'}).insertAfter(this.element);
+			this.dateOld = this.dateNew = this.element.attr('data-date').substring(0,10); 
+			this.input = $('<input value="' + this.dateOld + '" />').css({'visibility':'hidden','position':'absolute'}).insertAfter(this.element);
 			this.input.datepicker({
 				dateFormat: 'yy-mm-dd',
-				onSelect: function( dateText ) {
-					self.dateNew = dateText;
-					self.element.html($.datepicker.formatDate(self.options.format, new Date(self.dateNew )));
+				onSelect: function( selectedDate ) {
+					self.dateNew = selectedDate;
+					self.element.html($.datepicker.formatDate(self.options.format, new Date(selectedDate )));
 				}
 			});
 			this.element.click(function(){
@@ -30,12 +30,14 @@
 		},
 		getData: function () {
 			var result = {};
-			result.content = this.dateNew;
+			result.content = this.dateNew + ' 00:00:00';
 			result.data = this.additionalData;
 			return result;
 		},
 		setData: function (result) {
-			this.dateNew = this.dateOld = result.content;
+			this.dateNew = this.dateOld = result.content.substring(0,10);
+			this.input.datepicker('setDate', this.dateNew);
+			this.element.html($.datepicker.formatDate(this.options.format, new Date(this.dateNew)));
 			$.extend(this.additionalData, result.data);
 		},
 		setAdditionalData: function (data) {
