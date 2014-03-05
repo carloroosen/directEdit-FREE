@@ -375,8 +375,10 @@ function de_scripts_and_styles() {
 		wp_enqueue_script( 'jquery-ui-dialog' );
 		wp_enqueue_script( 'jquery-ui-button' );
 		wp_enqueue_script( 'jquery-ui-datepicker' );
-		if ( file_exists( get_stylesheet_directory_uri() . '/direct-edit/js/jquery.ui.datepicker-' . substr( $locale, 2 ) . '.js' ) ) {
-			wp_enqueue_script( 'direct-edit', get_stylesheet_directory_uri() . '/direct-edit/js/jquery.ui.datepicker-' . substr( $locale, 2 ) . '.js', array( 'jquery', 'jquery-ui-datepicker' ) );
+		if ( file_exists( get_stylesheet_directory() . '/direct-edit/js/jquery.ui.datepicker-' . substr( $locale, 0, 2 ) . '.js' ) ) {
+			wp_enqueue_script( 'jquery-ui-datepicker-' . $locale, get_stylesheet_directory_uri() . '/direct-edit/js/jquery.ui.datepicker-' . substr( $locale, 0, 2 ) . '.js', array( 'jquery', 'jquery-ui-datepicker' ) );
+		} elseif ( file_exists( DIRECT_PATH . 'theme/js/jquery.ui.datepicker-' . substr( $locale, 0, 2 ) . '.js' ) ) {
+			wp_enqueue_script( 'jquery-ui-datepicker-' . $locale, DIRECT_URL . 'theme/js/jquery.ui.datepicker-' . substr( $locale, 0, 2 ) . '.js', array( 'jquery', 'jquery-ui-datepicker' ) );
 		}
 		if ( file_exists( DIRECT_PATH . 'js/direct-edit-min.js' ) ) {
 			wp_enqueue_script( 'direct-edit', DIRECT_URL . 'js/direct-edit-min.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-slider', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-dialog', 'jquery-ui-button' ), DIRECT_VERSION, true );
@@ -396,7 +398,7 @@ function de_scripts_and_styles() {
 		}
 		if ( file_exists( get_stylesheet_directory() . '/direct-edit' ) && file_exists( get_stylesheet_directory() . '/direct-edit/js/direct-translations-' . $locale . '.js' ) ) {
 			wp_enqueue_script( 'direct-translations', get_stylesheet_directory_uri() . '/direct-edit/js/direct-translations-' . $locale . '.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-slider', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-dialog', 'jquery-ui-button' ), DIRECT_VERSION, true );
-		} else {
+		} elseif( file_exists( DIRECT_PATH . 'theme/js/direct-translations-' . $locale . '.js' ) ) {
 			wp_enqueue_script( 'direct-translations', DIRECT_URL . 'theme/js/direct-translations-' . $locale . '.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-slider', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-dialog', 'jquery-ui-button' ), DIRECT_VERSION, true );
 		}
 	}
