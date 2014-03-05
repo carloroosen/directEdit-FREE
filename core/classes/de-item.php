@@ -35,7 +35,8 @@ class De_Item {
 		'sourceMinWidth',
 		'sourceMinHeight',
 		'validate',
-		'maxLength'
+		'maxLength',
+		'localize'
 	);
 	
 	public function __construct( $store, $settings ) {

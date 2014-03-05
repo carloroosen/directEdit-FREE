@@ -66,7 +66,9 @@ function de_plugin_menu() {
 				unlink( $upgrade_path );
 				
 				if ( ! is_wp_error($result) ) {
-					// Add PRO options to json options file
+					/* Add PRO options to json options file
+					 * It seems it's not needed for now
+					
 					if ( file_exists( get_stylesheet_directory() . '/direct-edit' ) && file_exists( get_stylesheet_directory() . '/direct-edit/options/direct-options.json' ) ) {
 						$options = json_decode( file_get_contents( get_stylesheet_directory_uri() . '/direct-edit/options/direct-options.json' ), true );
 						$options_upgrade = json_decode( file_get_contents( DIRECT_PATH . 'pro/upgrade/theme/options/direct-options.json' ), true );
@@ -83,6 +85,7 @@ function de_plugin_menu() {
 							file_put_contents ( get_stylesheet_directory() . '/direct-edit/options/direct-options.json', de_print_json( json_encode( $options ) ) );
 						}
 					}
+					*/
 					
 					// Save the key
 					update_option( 'automatic_updates_key', $_POST[ 'upgrade_key' ] );

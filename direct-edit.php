@@ -374,6 +374,10 @@ function de_scripts_and_styles() {
 		wp_enqueue_script( 'jquery-ui-resizable' );
 		wp_enqueue_script( 'jquery-ui-dialog' );
 		wp_enqueue_script( 'jquery-ui-button' );
+		wp_enqueue_script( 'jquery-ui-datepicker' );
+		if ( file_exists( get_stylesheet_directory_uri() . '/direct-edit/js/jquery.ui.datepicker-' . substr( $locale, 2 ) . '.js' ) ) {
+			wp_enqueue_script( 'direct-edit', get_stylesheet_directory_uri() . '/direct-edit/js/jquery.ui.datepicker-' . substr( $locale, 2 ) . '.js', array( 'jquery', 'jquery-ui-datepicker' ) );
+		}
 		if ( file_exists( DIRECT_PATH . 'js/direct-edit-min.js' ) ) {
 			wp_enqueue_script( 'direct-edit', DIRECT_URL . 'js/direct-edit-min.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-slider', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-dialog', 'jquery-ui-button' ), DIRECT_VERSION, true );
 		} else {
@@ -382,6 +386,7 @@ function de_scripts_and_styles() {
 			wp_enqueue_script( 'direct-file-uploader', DIRECT_URL . 'js/direct-file-uploader.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-slider', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-dialog', 'jquery-ui-button' ), DIRECT_VERSION, true );
 			wp_enqueue_script( 'direct-link-editor', DIRECT_URL . 'js/direct-link-editor.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-slider', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-dialog', 'jquery-ui-button' ), DIRECT_VERSION, true );
 			wp_enqueue_script( 'direct-list-editor', DIRECT_URL . 'js/direct-list-editor.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-slider', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-dialog', 'jquery-ui-button' ), DIRECT_VERSION, true );
+			wp_enqueue_script( 'direct-date-editor', DIRECT_URL . 'js/direct-date-editor.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-slider', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-dialog', 'jquery-ui-button' ), DIRECT_VERSION, true );
 			wp_enqueue_script( 'direct-edit', DIRECT_URL . 'js/direct-edit.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-slider', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-dialog', 'jquery-ui-button' ), DIRECT_VERSION, true );
 		}
 		if ( file_exists( get_stylesheet_directory() . '/direct-edit' ) && file_exists( get_stylesheet_directory() . '/direct-edit/js/direct-edit-custom.js' ) ) {

@@ -293,6 +293,16 @@ function de_unique_imagename( $dir, $name, $ext ) {
 	return $name2 . $ext2;
 }
 
+function de_datepicker_to_php( $date_string ) {
+	$pattern = array( 'dd', 'd', 'DD', 'o', 'MM', 'M', 'm', 'mm', 'yy','y' );
+	$replace = array( 'd' , 'j', 'l' , 'z', 'F' , 'M', 'n', 'm' , 'Y', 'y' );
+	foreach( $pattern as &$p ) {
+		$p = '/'.$p.'/';
+	}
+	
+	return preg_replace( $pattern, $replace, $date_string );
+}
+
 if ( ! function_exists( 'array_replace_recursive' ) ) {
 	function array_replace_recursive() {
 		// Get array arguments
