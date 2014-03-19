@@ -131,7 +131,7 @@ function de_load_global_options() {
 	global $de_global_options;
 	
 	if ( file_exists( get_stylesheet_directory() . '/direct-edit' ) && file_exists( get_stylesheet_directory() . '/direct-edit/options/direct-options.json' ) ) {
-		$de_global_options = json_decode( file_get_contents( get_stylesheet_directory_uri() . '/direct-edit/options/direct-options.json' ), true );
+		$de_global_options = json_decode( file_get_contents( get_stylesheet_directory() . '/direct-edit/options/direct-options.json' ), true );
 	} else {
 		$de_global_options = json_decode( file_get_contents( DIRECT_PATH . 'theme/options/direct-options.json' ), true );
 	}
