@@ -4,8 +4,31 @@ class De_Store {
 	public static $redirect;
 	
 	public static function is_editable( De_Item $item ) {
+		global $direct_queried_object;
+		
 		if ( $item->get_setting( 'disableEdit' ) && $item->get_setting( 'disableEdit' ) !== 'false' && $item->get_setting( 'disableEdit' ) !== 'no' ) {
 			return false;
+		}
+		
+		// Nothing is editable for Direct Menu Editor except for wpcontent on Edit Menu page only
+		if ( get_option( 'de_menu_editor_enabled' ) && get_option( 'de_edit_menu_page' ) == $item->get_setting( 'postId' ) && is_object( $direct_queried_object ) && $direct_queried_object->ID == $item->get_setting( 'postId' ) ) {
+			switch( $item->store ) {
+				case 'wpcontent':
+					return ( current_user_can( 'edit_theme_options' ) || current_user_can( 'edit_de_frontend' ) );
+				break;
+				default:
+					return false;
+				break;
+			}
+		}
+		
+		// Menu has its own check
+		if ( $item instanceof De_Item_Menu ) {
+			if( is_object( $direct_queried_object ) && get_option( 'de_menu_editor_enabled' ) && get_option( 'de_edit_menu_page' ) == $direct_queried_object->ID && $item->get_setting( 'menu' ) ) {
+				return ( current_user_can( 'edit_theme_options' ) || current_user_can( 'edit_de_frontend' ) );
+			} else {
+				return false;
+			}
 		}
 		
 		switch( $item->store ) {
@@ -475,7 +498,7 @@ class De_Store {
 	}
 	
 	public static function upload_image() {
-		$responce = array();
+		$response = array();
 
 		if ( ! empty( $_POST[ 'data' ][ 'reference' ] ) ) {
 			$item = De_Items::get( $_POST[ 'data' ][ 'reference' ] );
@@ -632,17 +655,17 @@ class De_Store {
 
 				wp_update_attachment_metadata( $id, wp_generate_attachment_metadata( $id, $file ) );
 				
-				$responce[ 'url' ] = $url;
-				$responce[ 'data' ][ 'reference' ] =  $_POST[ 'data' ][ 'reference' ];
-				$responce[ 'data' ][ 'image' ] = $id;
+				$response[ 'url' ] = $url;
+				$response[ 'data' ][ 'reference' ] =  $_POST[ 'data' ][ 'reference' ];
+				$response[ 'data' ][ 'image' ] = $id;
 			}
 		}
 		
-		return $responce;
+		return $response;
 	}
 	
 	public static function upload_file() {
-		$responce = array();
+		$response = array();
 		
 		if ( ! empty( $_POST[ 'data' ][ 'reference' ] ) ) {
 			$item = De_Items::get( $_POST[ 'data' ][ 'reference' ] );
@@ -706,18 +729,18 @@ class De_Store {
 				$path = pathinfo( wp_get_attachment_url( $id ) );
 				
 				// We must pass only data-reference and url
-				$responce[ 'data' ][ 'reference' ] =  $_POST[ 'data' ][ 'reference' ];
-				$responce[ 'url' ] =  wp_get_attachment_url( $id );
-				$responce[ 'extension' ] =  $path[ 'extension' ];
-				$responce[ 'filename' ] =  $path[ 'basename' ];
+				$response[ 'data' ][ 'reference' ] =  $_POST[ 'data' ][ 'reference' ];
+				$response[ 'url' ] =  wp_get_attachment_url( $id );
+				$response[ 'extension' ] =  $path[ 'extension' ];
+				$response[ 'filename' ] =  $path[ 'basename' ];
 			}
 		}
 
-		return $responce;
+		return $response;
 	}
 
 	public static function edit_image() {
-		$responce = array();
+		$response = array();
 		
 		if ( ! empty( $_POST[ 'data' ][ 'reference' ] ) ) {
 			$item = De_Items::get( $_POST[ 'data' ][ 'reference' ] );
@@ -960,11 +983,11 @@ class De_Store {
 				
 				wp_update_attachment_metadata( $id, $data );
 				
-				$responce[ 'content' ] = $item->output_partial_image( $id, 'preview' );
+				$response[ 'content' ] = $item->output_partial_image( $id, 'preview' );
 			}
 		}
 		
-		return $responce;
+		return $response;
 	}
 	
 	public static function save_image( De_Item $item, $id ) {
@@ -1038,5 +1061,143 @@ class De_Store {
 		}
 
 		return true;
+	}
+	
+	public static function read_menus() {
+		$response = array(
+			'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+			'selectionPath' => array()
+		);
+		
+		$menus = wp_get_nav_menus( array('orderby' => 'name') );
+		foreach( $menus as $value ) {
+			$menu_items_array = array();
+			$items = array();
+			
+			$menu_items = wp_get_nav_menu_items( $value->term_id );
+			foreach( $menu_items as $menu_item ) {
+				$menu_items_array[ $menu_item->menu_item_parent ][] = $menu_item;
+			}
+
+			if ( count( $menu_items_array[ 0 ] ) ) {
+				foreach( $menu_items_array[ 0 ] as $menu_item ) {
+					$items[] = self::read_menu_recursive( $menu_item, $menu_items_array );
+				}
+				
+				$response[ 'menus' ][ $value->slug ] = array(
+					'items' => $items
+				);
+			}
+		}
+
+		if ( get_option( 'de_menu_editor_pages' ) ) {
+			$items = array();
+			
+			$args = array(
+				'posts_per_page' => -1,
+				'orderby' => 'title',
+				'order' => 'ASC',
+				'post_type' => 'page',
+				'post_status' => 'any'
+			);
+			$menuitems = get_posts( $args );
+			foreach ( $menuitems as $menuitem ) {
+				$item = array(
+					'name' => $menuitem->post_title,
+					'data' => array(
+						'menu-item-object' => 'page',
+						'menu-item-object-id' => $menuitem->ID,
+						'menu-item-type' => 'post_type'
+					)
+				);
+				
+				$items[] = $item;
+			}
+			
+			if ( count( $items ) ) {
+				$response[ 'new' ][ 'pages' ] = array(
+					'name' => __( 'Pages', 'direct-edit' ),
+					'items' => $items
+				);
+			}
+		}
+		
+		return $response;
+	}
+	
+	public static function read_menu_recursive( $menu_item, $menu_items_array ) {
+		$item = array(
+			'name' => $menu_item->title,
+			'data' => array(
+				'ID' => $menu_item->ID
+			)
+		);
+		if ( ! empty( $menu_items_array[ $menu_item->ID ] ) )
+		foreach( $menu_items_array[ $menu_item->ID ] as $menu_item_child ) {
+			$item[ 'items' ][] = self::read_menu_recursive( $menu_item_child, $menu_items_array );
+		}
+
+		return $item;
+	}
+
+	public static function write_menus() {
+		if ( ! empty( $_POST[ 'menus' ] ) && is_array( $_POST[ 'menus' ] ) ) {
+			foreach( $_POST[ 'menus' ] as $key => $menu_item ) {
+				$menu = wp_get_nav_menu_object( $key );
+				$unsorted_menu_items = wp_get_nav_menu_items( $menu->term_id, array( 'orderby' => 'ID', 'output' => ARRAY_A, 'output_key' => 'ID' ) );
+
+				$menu_items = array();
+				// Index menu items by db ID
+				foreach ( $unsorted_menu_items as $item ) {
+					$menu_items[ $item->db_id ] = $item;
+				}
+
+				if ( ! empty( $menu_item[ 'items' ] ) && is_array( $menu_item[ 'items' ] ) ) {
+					$position = 1;
+					foreach( $menu_item[ 'items' ] as $item ) {
+						self::write_menu_recursive( $menu->term_id, $item, 0, $position, $menu_items );
+					}
+				}
+
+				// Remove menu items from the menu that weren't in $_POST
+				if ( ! empty( $menu_items ) ) {
+					foreach ( array_keys( $menu_items ) as $menu_item_id ) {
+						if ( is_nav_menu_item( $menu_item_id ) ) {
+							wp_delete_post( $menu_item_id );
+						}
+					}
+				}
+			}
+		}
+		
+		return self::read_menus();
+	}
+	
+	public static function write_menu_recursive( $menu_id, $menu_item, $parent_id, &$position, &$menu_items ) {
+		$id = ( isset( $menu_item[ 'data' ][ 'ID' ] ) ? $menu_item[ 'data' ][ 'ID' ] : 0 );
+		if ( ! $id ) {
+			$args[ 'menu-item-object' ] = $menu_item[ 'data' ][ 'menu-item-object' ];
+			$args[ 'menu-item-object-id' ] = $menu_item[ 'data' ][ 'menu-item-object-id' ];
+			$args[ 'menu-item-type' ] = $menu_item[ 'data' ][ 'menu-item-type' ];
+			$args[ 'menu-item-status' ] = 'publish';
+		}
+		$args[ 'menu-item-title' ] = $menu_item[ 'name' ];
+		$args[ 'menu-item-parent-id' ] = $parent_id;
+		$args[ 'menu-item-position' ] = $position;
+		$menu_item_db_id = wp_update_nav_menu_item( $menu_id, $id, $args );
+
+		if ( is_wp_error( $menu_item_db_id ) ) {
+			die( 1 );
+		} elseif ( isset( $menu_items[ $menu_item_db_id ] ) ) {
+			unset( $menu_items[ $menu_item_db_id ] );
+		}
+
+		$position ++;
+		
+		if ( ! empty( $menu_item[ 'items' ] ) && is_array( $menu_item[ 'items' ] ) ) {
+			foreach( $menu_item[ 'items' ] as $item ) {
+				self::write_menu_recursive( $menu_id, $item, $menu_item_db_id, $position, $menu_items );
+			}
+		}
 	}
 }

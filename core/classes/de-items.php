@@ -10,10 +10,8 @@ class De_Items {
 	}
 	
 	public static function update( $item ) {
-		$reference = $item->reference;
-		
-		if ( ! empty( $_SESSION[ 'de' ][ 'items' ][ $reference ] ) ) {
-			$_SESSION[ 'de' ][ 'items' ][ $reference ] = serialize( $item );
+		if ( ! empty( $item->reference ) && ! empty( $_SESSION[ 'de' ][ 'items' ][ $item->reference ] ) ) {
+			$_SESSION[ 'de' ][ 'items' ][ $item->reference ] = serialize( $item );
 		}
 	}
 

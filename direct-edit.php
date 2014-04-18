@@ -344,6 +344,8 @@ function de_wrap_the_excerpt( $content ) {
 }
 
 function de_scripts_and_styles() {
+	global $direct_queried_object;
+	
 	if ( ! is_admin() && ( current_user_can('edit_posts') || current_user_can( 'edit_users' ) || current_user_can( 'edit_theme_options' ) || current_user_can( 'edit_de_frontend' ) ) ) {
 		if ( file_exists( get_stylesheet_directory() . '/direct-edit' ) && file_exists( get_stylesheet_directory() . '/direct-edit/css/direct-edit.css' ) ) {
 			wp_enqueue_style( 'directEdit', get_stylesheet_directory_uri() . '/direct-edit/css/direct-edit.css' );
@@ -371,10 +373,12 @@ function de_scripts_and_styles() {
 		wp_enqueue_script( 'jquery-ui-slider' );
 		wp_enqueue_script( 'jquery-ui-sortable' );
 		wp_enqueue_script( 'jquery-ui-draggable' );
+		wp_enqueue_script( 'jquery-ui-droppable' );
 		wp_enqueue_script( 'jquery-ui-resizable' );
 		wp_enqueue_script( 'jquery-ui-dialog' );
 		wp_enqueue_script( 'jquery-ui-button' );
 		wp_enqueue_script( 'jquery-ui-datepicker' );
+		wp_enqueue_script( 'jquery-ui-accordion' );
 		if ( file_exists( get_stylesheet_directory() . '/direct-edit/js/jquery.ui.datepicker-' . substr( $locale, 0, 2 ) . '.js' ) ) {
 			wp_enqueue_script( 'jquery-ui-datepicker-' . $locale, get_stylesheet_directory_uri() . '/direct-edit/js/jquery.ui.datepicker-' . substr( $locale, 0, 2 ) . '.js', array( 'jquery', 'jquery-ui-datepicker' ) );
 		} elseif ( file_exists( DIRECT_PATH . 'theme/js/jquery.ui.datepicker-' . substr( $locale, 0, 2 ) . '.js' ) ) {
@@ -389,6 +393,9 @@ function de_scripts_and_styles() {
 			wp_enqueue_script( 'direct-link-editor', DIRECT_URL . 'js/direct-link-editor.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-slider', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-dialog', 'jquery-ui-button' ), DIRECT_VERSION, true );
 			wp_enqueue_script( 'direct-list-editor', DIRECT_URL . 'js/direct-list-editor.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-slider', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-dialog', 'jquery-ui-button' ), DIRECT_VERSION, true );
 			wp_enqueue_script( 'direct-date-editor', DIRECT_URL . 'js/direct-date-editor.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-slider', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-dialog', 'jquery-ui-button' ), DIRECT_VERSION, true );
+			if ( ( current_user_can( 'edit_theme_options' ) || current_user_can( 'edit_de_frontend' ) ) && is_object( $direct_queried_object ) && isset( $direct_queried_object->ID ) && get_option( 'de_menu_editor_enabled' ) && get_option( 'de_edit_menu_page' ) == $direct_queried_object->ID ) {
+				wp_enqueue_script( 'direct-menu-editor', DIRECT_URL . 'js/direct-menu-editor.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-slider', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-dialog', 'jquery-ui-button' ), DIRECT_VERSION, true );
+			}
 			wp_enqueue_script( 'direct-edit', DIRECT_URL . 'js/direct-edit.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-slider', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-dialog', 'jquery-ui-button' ), DIRECT_VERSION, true );
 		}
 		if ( file_exists( get_stylesheet_directory() . '/direct-edit' ) && file_exists( get_stylesheet_directory() . '/direct-edit/js/direct-edit-custom.js' ) ) {
@@ -414,7 +421,7 @@ function de_footer_scripts() {
 	jQuery(document).ready(function() {
 		directEdit(<?php echo de_json_encode( $de_global_options ); ?>);
 		<?php if ( ! is_admin() && ( current_user_can('edit_posts') || current_user_can( 'edit_users' ) || current_user_can( 'edit_theme_options' ) || current_user_can( 'edit_de_frontend' ) ) ) { // Save button is only for users who can edit posts ?>
-			jQuery('li#wp-admin-bar-save-page a').directSaveButton({ajaxUrl: '<?php bloginfo( 'wpurl' ); ?>/wp-admin/admin-ajax.php', success: function (m) {console.log(m)}});
+			jQuery('li#wp-admin-bar-save-page a').directSaveButton({ajaxUrl: '<?php echo admin_url( 'admin-ajax.php' ); ?>', success: function (m) {console.log(m)}});
 		<?php } ?>
 	});
 </script>

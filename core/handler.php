@@ -23,6 +23,7 @@ add_action( 'wp_ajax_direct-save-page', 'de_save_page' );
 add_action( 'wp_ajax_direct-show-post', 'de_show_post' );
 add_action( 'wp_ajax_direct-upload-image', 'de_upload_image' );
 add_action( 'wp_ajax_direct-upload-file', 'de_upload_file' );
+add_action( 'wp_ajax_direct-save-menu', 'de_save_menu' );
 // TODO: Sometimes we have to allow guests to upload images. Probably we need some smart condition here 
 //add_action( 'wp_ajax_nopriv_direct-upload-image', 'de_upload_image' );
 //add_action( 'wp_ajax_nopriv_direct-edit-image', 'de_edit_image' );
@@ -30,7 +31,7 @@ add_action( 'wp_ajax_direct-upload-file', 'de_upload_file' );
 function de_list_add() {
 	global $de_snippet_list;
 	
-	$responce = array();
+	$response = array();
 	
 	if ( ! empty( $_POST[ 'data' ][ 'reference' ] ) ) {
 		$item = De_Items::get( $_POST[ 'data' ][ 'reference' ] );
@@ -50,7 +51,7 @@ function de_list_add() {
 						
 						if ( $key == $index ) {
 							$list[] = $id;
-							$responce[ 'activeItem' ] = $key + 1;
+							$response[ 'activeItem' ] = $key + 1;
 						}
 					}
 					
@@ -58,26 +59,26 @@ function de_list_add() {
 				} else {
 					$item->list[] = $id;
 					
-					$responce[ 'activeItem' ] = 0;
+					$response[ 'activeItem' ] = 0;
 				}
 			}
 			
 			$item->list = array_values( $item->list );
 			$item->update();
 			
-			$responce[ 'definition' ] = $item->list;
-			$responce[ 'newItemIdentifier' ] = $id;
-			$responce[ 'newItemContent' ] = $content;
+			$response[ 'definition' ] = $item->list;
+			$response[ 'newItemIdentifier' ] = $id;
+			$response[ 'newItemContent' ] = $content;
 		}
 	}
 
-	echo json_encode( $responce );
+	echo json_encode( $response );
 	
 	die();
 }
 
 function de_list_delete() {
-	$responce = array();
+	$response = array();
 	
 	if ( ! empty( $_POST[ 'data' ][ 'reference' ] ) ) {
 		$item = De_Items::get( $_POST[ 'data' ][ 'reference' ] );
@@ -90,19 +91,19 @@ function de_list_delete() {
 				$item->list = array_values( $item->list );
 				$item->update();
 				
-				$responce[ 'activeItem' ] = min( $index, count( $item->list ) - 1 );
-				$responce[ 'definition' ] = $item->list;
+				$response[ 'activeItem' ] = min( $index, count( $item->list ) - 1 );
+				$response[ 'definition' ] = $item->list;
 			}
 		}
 	}
 
-	echo json_encode( $responce );
+	echo json_encode( $response );
 	
 	die();
 }
 
 function de_delete_post() {
-	$responce = array();
+	$response = array();
 	
 	if ( ! empty( $_POST[ 'data' ][ 'reference' ] ) ) {
 		$item = De_Items::get( $_POST[ 'data' ][ 'reference' ] );
@@ -117,11 +118,11 @@ function de_delete_post() {
 				wp_delete_post( $item->get_setting( 'postId' ), true );
 			}
 			
-			$responce = array( 'action' => 'delete' );
+			$response = array( 'action' => 'delete' );
 		}
 	}
 
-	echo json_encode( $responce );
+	echo json_encode( $response );
 	
 	die();
 }
@@ -135,7 +136,7 @@ function de_edit_image() {
 }
 
 function de_hide_post() {
-	$responce = array();
+	$response = array();
 	
 	if ( ! empty( $_POST[ 'data' ][ 'reference' ] ) ) {
 		$item = De_Items::get( $_POST[ 'data' ][ 'reference' ] );
@@ -146,17 +147,17 @@ function de_hide_post() {
 			$p[ 'post_status' ] = 'draft';
 			wp_update_post( $p );
 			
-			$responce = array( 'action' => 'addclass', 'cssClass' => 'direct-hidden' );
+			$response = array( 'action' => 'addclass', 'cssClass' => 'direct-hidden' );
 		}
 	}
 
-	echo json_encode( $responce );
+	echo json_encode( $response );
 	
 	die();
 }
 
 function de_list_move_left() {
-	$responce = array();
+	$response = array();
 	
 	if ( ! empty( $_POST[ 'data' ][ 'reference' ] ) ) {
 		$item = De_Items::get( $_POST[ 'data' ][ 'reference' ] );
@@ -180,19 +181,19 @@ function de_list_move_left() {
 				$item->list = array_values( $item->list );
 				$item->update();
 				
-				$responce[ 'activeItem' ] = $indexNew;
-				$responce[ 'definition' ] = $item->list;
+				$response[ 'activeItem' ] = $indexNew;
+				$response[ 'definition' ] = $item->list;
 			}
 		}
 	}
 
-	echo json_encode( $responce );
+	echo json_encode( $response );
 	
 	die();
 }
 
 function de_list_move_right() {
-	$responce = array();
+	$response = array();
 	
 	if ( ! empty( $_POST[ 'data' ][ 'reference' ] ) ) {
 		$item = De_Items::get( $_POST[ 'data' ][ 'reference' ] );
@@ -216,13 +217,13 @@ function de_list_move_right() {
 				$item->list = array_values( $item->list );
 				$item->update();
 				
-				$responce[ 'activeItem' ] = $indexNew;
-				$responce[ 'definition' ] = $item->list;
+				$response[ 'activeItem' ] = $indexNew;
+				$response[ 'definition' ] = $item->list;
 			}
 		}
 	}
 
-	echo json_encode( $responce );
+	echo json_encode( $response );
 	
 	die();
 }
@@ -230,7 +231,7 @@ function de_list_move_right() {
 function de_save_page() {
 	global $user_ID;
 	
-	$responce = array();
+	$response = array();
 	
 	foreach( $_POST as $key => $field ) {
 		if ( $key == 'action' || $key == 'direct-page-options' || ! is_array( $field ) || empty( $field[ 'data' ][ 'reference' ] ) )
@@ -240,12 +241,12 @@ function de_save_page() {
 		if ( $item instanceof De_Item && De_Store::is_editable( $item ) ) {
 			$content = De_Store::write( $item, $field );
 			
-			$responce[ $key ] = $item->output_partial( $content );
+			$response[ $key ] = $item->output_partial( $content );
 		}
 	}
 	
 	if ( De_Store::$redirect ) {
-		$responce[ 'redirect' ] = esc_url( De_Store::$redirect );
+		$response[ 'redirect' ] = esc_url( De_Store::$redirect );
 	}
 	
 	// Edit page options
@@ -314,20 +315,20 @@ function de_save_page() {
 			
 			do_action( 'de_save_page_options', $_POST[ 'direct-page-options' ] );
 			
-			$responce[ 'direct-page-options' ] = true;
-			$responce[ 'redirect' ] = esc_url( De_Url::get_url( $post_id ) );
+			$response[ 'direct-page-options' ] = true;
+			$response[ 'redirect' ] = esc_url( De_Url::get_url( $post_id ) );
 		}
 	}
 	
-	$responce = apply_filters( 'de_save_page_pre_return_responce', $responce );
+	$response = apply_filters( 'de_save_page_pre_return_response', $response );
 	
-	echo json_encode( $responce );
+	echo json_encode( $response );
 	
 	die();
 }
 
 function de_show_post() {
-	$responce = array();
+	$response = array();
 	
 	if ( ! empty( $_POST[ 'data' ][ 'reference' ] ) ) {
 		$item = De_Items::get( $_POST[ 'data' ][ 'reference' ] );
@@ -338,11 +339,11 @@ function de_show_post() {
 			$p[ 'post_status' ] = 'publish';
 			wp_update_post( $p );
 			
-			$responce = array( 'action' => 'removeclass', 'cssClass' => 'direct-hidden' );
+			$response = array( 'action' => 'removeclass', 'cssClass' => 'direct-hidden' );
 		}
 	}
 
-	echo json_encode( $responce );
+	echo json_encode( $response );
 	
 	die();
 }
@@ -355,6 +356,12 @@ function de_upload_image() {
 
 function de_upload_file() {
 	echo json_encode( De_Store::upload_file() );
+	
+	die();
+}
+
+function de_save_menu() {
+	echo json_encode( De_Store::write_menus() );
 	
 	die();
 }

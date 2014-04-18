@@ -36,7 +36,10 @@ class De_Item {
 		'sourceMinHeight',
 		'validate',
 		'maxLength',
-		'localize'
+		'localize',
+		'menu',
+		'startLevel',
+		'depth'
 	);
 	
 	public function __construct( $store, $settings ) {

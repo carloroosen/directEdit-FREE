@@ -88,14 +88,15 @@ class De_Url {
 			
 			return $result;
 		} else {
-			if ( get_post_status ( $de_post_id ) == 'publish' ) {
+			// Do we need to return smart urls for drafts? If yes, this code should be fixed (%pagename% for pages %postname% for posts)
+			//if ( get_post_status ( $de_post_id ) == 'publish' ) {
 				return get_permalink( $de_post_id );
-			} else {
-				require_once ABSPATH . '/wp-admin/includes/post.php';
-				list( $permalink, $postname ) = get_sample_permalink( $de_post_id );
+			//} else {
+			//	require_once ABSPATH . '/wp-admin/includes/post.php';
+			//	list( $permalink, $postname ) = get_sample_permalink( $de_post_id );
 
-				return str_replace( '%pagename%', $postname, $permalink );
-			}
+			//	return str_replace( '%pagename%', $postname, $permalink );
+			//}
 		}
 	}
 	

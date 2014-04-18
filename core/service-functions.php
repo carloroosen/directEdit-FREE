@@ -71,7 +71,7 @@ function de_is_deleteable( $post_id ) {
 	}
 	
 	// We can't delete front page, blog archive and dE custom types archives
-	if ( de_is_front_page( $post_id ) || de_is_home( $post_id ) || de_is_de_archive( $post_id ) || ( get_option( 'de_wp_login_redirect' ) && get_option( 'de_login_form' ) == $post_id ) ) {
+	if ( de_is_front_page( $post_id ) || de_is_home( $post_id ) || de_is_de_archive( $post_id ) || ( get_option( 'de_wp_login_redirect' ) && get_option( 'de_login_form' ) == $post_id ) || ( get_option( 'de_menu_editor_enabled' ) && get_option( 'de_edit_menu_page' ) == $post_id ) ) {
 		return false;
 	}
 	

@@ -39,30 +39,46 @@ class De_Item_Text extends De_Item {
 	
 	public function output( $content = null ) {
 		$attr = array();
-		
-		if ( $this->get_setting( 'container' ) ) {
-			$container = $this->get_setting( 'container' );
-		} elseif( $this->get_setting( 'format' ) == 'inline' ) {
-			$container = 'span';
-		} else {
+
+		if ( get_option( 'de_menu_editor_enabled' ) && get_option( 'de_edit_menu_page' ) == $this->get_setting( 'postId' ) && De_Store::is_editable( $this ) ) {
+			// Direct Menu Editor output
 			$container = 'div';
-		}
-		if ( $this->get_setting( 'attr' ) && is_array( $this->get_setting( 'attr' ) ) ) {
-			$attr = $this->get_setting( 'attr' );
-		}
-		
-		// Show Direct Edit only for users who have proper permissions
-		if ( De_Store::is_editable( $this ) ) {
+			if ( $this->get_setting( 'attr' ) && is_array( $this->get_setting( 'attr' ) ) ) {
+				$attr = $this->get_setting( 'attr' );
+			}
 			$attr[ 'data-reference' ] = $this->reference;
 			if ( empty( $attr[ 'id' ] ) )
 				$attr[ 'id' ] = $this->reference;
-			$attr[ 'class' ] = ( isset( $attr[ 'class' ] ) ? $attr[ 'class' ] . ' direct-editable' : 'direct-editable' );
+			$attr[ 'class' ] = ( isset( $attr[ 'class' ] ) ? $attr[ 'class' ] . ' direct-menu-new-items' : 'direct-menu-new-items' );
 			$attr[ 'data-global-options' ] = $this->get_setting( 'options' );
 			$attr[ 'data-local-options' ] = $this->build_local_options();
+			
+			$result = '<' . $container . self::attr_to_string( $attr ) . '></' . $container . '>';
+		} else {
+			if ( $this->get_setting( 'container' ) ) {
+				$container = $this->get_setting( 'container' );
+			} elseif( $this->get_setting( 'format' ) == 'inline' ) {
+				$container = 'span';
+			} else {
+				$container = 'div';
+			}
+			if ( $this->get_setting( 'attr' ) && is_array( $this->get_setting( 'attr' ) ) ) {
+				$attr = $this->get_setting( 'attr' );
+			}
+			
+			// Show Direct Edit only for users who have proper permissions
+			if ( De_Store::is_editable( $this ) ) {
+				$attr[ 'data-reference' ] = $this->reference;
+				if ( empty( $attr[ 'id' ] ) )
+					$attr[ 'id' ] = $this->reference;
+				$attr[ 'class' ] = ( isset( $attr[ 'class' ] ) ? $attr[ 'class' ] . ' direct-editable' : 'direct-editable' );
+				$attr[ 'data-global-options' ] = $this->get_setting( 'options' );
+				$attr[ 'data-local-options' ] = $this->build_local_options();
+			}
+			
+			$content_partial =  $this->output_partial( $content );
+			$result = '<' . $container . self::attr_to_string( $attr ) . '>' . $content_partial[ 'content' ] . '</' . $container . '>';
 		}
-		
-		$content_partial =  $this->output_partial( $content );
-		$result = '<' . $container . self::attr_to_string( $attr ) . '>' . $content_partial[ 'content' ] . '</' . $container . '>';
 		
 		return $result;
 	}
