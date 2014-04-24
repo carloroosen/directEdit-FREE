@@ -53,6 +53,8 @@ class De_Store {
 	}
 	
 	public static function read( De_Item $item ) {
+		global $wp_filter;
+		
 		switch( $item->store ) {
 			case 'postmeta':
 				if ( $item->get_setting( 'key' ) ) {
@@ -71,9 +73,22 @@ class De_Store {
 			break;
 			case 'wptitle':
 				if ( $item->get_setting( 'postId' ) ) {
-					de_wrap_the_title_remove();
+					$wrap_the_title = false;
+					
+					foreach( $wp_filter as $filter ) {
+						if ( isset( $filter[ 'de_wrap_the_title' ] ) ) {
+							$wrap_the_title = true;
+							break;
+						}
+					}
+					
+					if ( $wrap_the_title ) {
+						de_wrap_the_title_remove();
+					}
 					$content = get_the_title( $item->get_setting( 'postId' ) );
-					de_wrap_the_title_restore();
+					if ( $wrap_the_title ) {
+						de_wrap_the_title_restore();
+					}
 					
 					if ( empty( $content ) && De_Language_Wrapper::has_multilanguage() && De_Language_Wrapper::get_post_language( $item->get_setting( 'postId' ) ) && De_Language_Wrapper::get_language_post( $item->get_setting( 'postId' ), De_Language_Wrapper::get_default_language() ) ) {
 						$content = get_the_title( De_Language_Wrapper::get_language_post( $item->get_setting( 'postId' ), De_Language_Wrapper::get_default_language() )->ID );
