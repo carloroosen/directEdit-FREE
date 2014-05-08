@@ -1105,6 +1105,7 @@ class De_Store {
 			}
 		}
 
+		// Add Pages
 		if ( get_option( 'de_menu_editor_pages' ) ) {
 			$items = array();
 			
@@ -1117,16 +1118,48 @@ class De_Store {
 			);
 			$menuitems = get_posts( $args );
 			foreach ( $menuitems as $menuitem ) {
+				if (  de_is_de_archive( $menuitem->ID ) ) {
+					continue;
+				}
+				
 				$item = array(
 					'name' => $menuitem->post_title,
 					'data' => array(
 						'menu-item-object' => 'page',
 						'menu-item-object-id' => $menuitem->ID,
+						'menu-item-status' => 'publish',
 						'menu-item-type' => 'post_type'
 					)
 				);
 				
+				if ( ! self::menu_is_editable( $menuitem ) ) {
+					$item[ 'disabled' ] = 1;
+				}
+				
 				$items[] = $item;
+				
+				// Do we have Home menuitem?
+				if ( get_permalink( $menuitem->ID ) == home_url() ) {
+					$home = $menuitem;
+				}
+			}
+
+			if ( ! isset( $home ) ) {
+				$item = array(
+					'name' => __( 'Home', 'direct-edit' ),
+					'data' => array(
+						'menu-item-object' => 'custom',
+						'menu-item-status' => 'publish',
+						'menu-item-type' => 'custom',
+						'menu-item-url' => home_url()
+					)
+				);
+
+				if ( ! get_option( 'de_menu_editor_pages' ) ) {
+					$item[ 'disabled' ] = 1;
+				}
+
+				array_unshift( $items, $item );
 			}
 			
 			if ( count( $items ) ) {
@@ -1137,6 +1170,216 @@ class De_Store {
 			}
 		}
 		
+		// Add DE archive Pages
+		if ( get_option( 'de_menu_editor_de_archive_pages' ) ) {
+			$items = array();
+			
+			$args = array(
+				'posts_per_page' => -1,
+				'orderby' => 'title',
+				'order' => 'ASC',
+				'post_type' => 'page',
+				'post_status' => 'any'
+			);
+			$menuitems = get_posts( $args );
+			foreach ( $menuitems as $menuitem ) {
+				if (  ! de_is_de_archive( $menuitem->ID ) ) {
+					continue;
+				}
+
+				$item = array(
+					'name' => $menuitem->post_title,
+					'data' => array(
+						'menu-item-object' => 'page',
+						'menu-item-object-id' => $menuitem->ID,
+						'menu-item-status' => 'publish',
+						'menu-item-type' => 'post_type'
+					)
+				);
+				
+				$items[] = $item;
+			}
+			
+			if ( count( $items ) ) {
+				$response[ 'new' ][ 'de_archive_pages' ] = array(
+					'name' => __( 'Archive Pages', 'direct-edit' ),
+					'items' => $items
+				);
+			}
+		}
+
+		// Add DE Webforms
+		if ( get_option( 'de_menu_editor_de_webforms' ) ) {
+			$items = array();
+			
+			$args = array(
+				'posts_per_page' => -1,
+				'orderby' => 'title',
+				'order' => 'ASC',
+				'post_type' => 'de_webform',
+				'post_status' => 'any'
+			);
+			$menuitems = get_posts( $args );
+			foreach ( $menuitems as $menuitem ) {
+				$item = array(
+					'name' => $menuitem->post_title,
+					'data' => array(
+						'menu-item-object' => 'de_webform',
+						'menu-item-object-id' => $menuitem->ID,
+						'menu-item-status' => 'publish',
+						'menu-item-type' => 'post_type'
+					)
+				);
+				
+				$items[] = $item;
+			}
+			
+			if ( count( $items ) ) {
+				$response[ 'new' ][ 'de_webforms' ] = array(
+					'name' => __( 'Webforms', 'direct-edit' ),
+					'items' => $items
+				);
+			}
+		}
+
+		// Add Categories
+		if ( get_option( 'de_menu_editor_categories' ) ) {
+			$items = array();
+			
+			$args = array(
+				'orderby' => 'name',
+				'order' => 'ASC'
+			);
+			$categories = get_categories( $args );
+			foreach ( $categories as $category ) {
+				$item = array(
+					'name' => $category->name,
+					'data' => array(
+						'menu-item-object' => 'category',
+						'menu-item-object-id' => $category->cat_ID,
+						'menu-item-status' => 'publish',
+						'menu-item-type' => 'taxonomy'
+					)
+				);
+				
+				$items[] = $item;
+			}
+			
+			if ( count( $items ) ) {
+				$response[ 'new' ][ 'categories' ] = array(
+					'name' => __( 'Categories', 'direct-edit' ),
+					'items' => $items
+				);
+			}
+		}
+
+		// Add Taxonomies
+		foreach( get_taxonomies( array( '_builtin' => false ) ) as $value ) {
+			if ( get_option( 'de_menu_editor_taxonomies_' . $value->name ) ) {
+				$items = array();
+				
+				$args = array(
+					'orderby' => 'name',
+					'order' => 'ASC'
+				);
+				$terms = get_terms( $value->name, $args );
+				foreach ( $terms as $term ) {
+					$item = array(
+						'name' => $term->name,
+						'data' => array(
+							'menu-item-object' => $value->name,
+							'menu-item-object-id' => $term->term_ID,
+							'menu-item-status' => 'publish',
+							'menu-item-type' => 'taxonomy'
+						)
+					);
+					
+					$items[] = $item;
+				}
+				
+				if ( count( $items ) ) {
+					$response[ 'new' ][ $value->name ] = array(
+						'name' => __( $value->label, 'direct-edit' ),
+						'items' => $items
+					);
+				}
+			}
+		}
+		
+		// Add Posts
+		if ( get_option( 'de_menu_editor_posts' ) ) {
+			$items = array();
+			
+			$args = array(
+				'posts_per_page' => -1,
+				'orderby' => 'title',
+				'order' => 'ASC',
+				'post_type' => 'post',
+				'post_status' => 'any'
+			);
+			$menuitems = get_posts( $args );
+			foreach ( $menuitems as $menuitem ) {
+				$item = array(
+					'name' => $menuitem->post_title,
+					'data' => array(
+						'menu-item-object' => 'post',
+						'menu-item-object-id' => $menuitem->ID,
+						'menu-item-status' => 'publish',
+						'menu-item-type' => 'post_type'
+					)
+				);
+				
+				$items[] = $item;
+			}
+			
+			if ( count( $items ) ) {
+				$response[ 'new' ][ 'posts' ] = array(
+					'name' => __( 'Posts', 'direct-edit' ),
+					'items' => $items
+				);
+			}
+		}
+
+		// Add Custom Posts
+		foreach( get_post_types( array( '_builtin' => false ), 'object' ) as $value ) {
+			if ( $value->name == 'de_list_item' || $value->name == 'de_webform' ) {
+				continue;
+			}
+			
+			if ( get_option( 'de_menu_editor_posts_' . $value->name ) ) {
+				$items = array();
+				
+				$args = array(
+					'posts_per_page' => -1,
+					'orderby' => 'title',
+					'order' => 'ASC',
+					'post_type' => $value->name,
+					'post_status' => 'any'
+				);
+				$menuitems = get_posts( $args );
+				foreach ( $menuitems as $menuitem ) {
+					$item = array(
+						'name' => $menuitem->post_title,
+						'data' => array(
+							'menu-item-object' => $value->name,
+							'menu-item-object-id' => $menuitem->ID,
+							'menu-item-status' => 'publish',
+							'menu-item-type' => 'post_type'
+						)
+					);
+					
+					$items[] = $item;
+				}
+				
+				if ( count( $items ) ) {
+					$response[ 'new' ][ $value->name ] = array(
+						'name' => __( $value->label, 'direct-edit' ),
+						'items' => $items
+					);
+				}
+			}
+		}
+
 		return $response;
 	}
 	
@@ -1144,7 +1387,12 @@ class De_Store {
 		$item = array(
 			'name' => $menu_item->title,
 			'data' => array(
-				'ID' => $menu_item->ID
+				'ID' => $menu_item->ID,
+				'menu-item-object' => $menu_item->object,
+				'menu-item-object-id' => $menu_item->object_id,
+				'menu-item-status' => $menu_item->status,
+				'menu-item-type' => $menu_item->type,
+				'menu-item-url' => $menu_item->url
 			)
 		);
 		if ( ! empty( $menu_items_array[ $menu_item->ID ] ) )
@@ -1190,15 +1438,11 @@ class De_Store {
 	
 	public static function write_menu_recursive( $menu_id, $menu_item, $parent_id, &$position, &$menu_items ) {
 		$id = ( isset( $menu_item[ 'data' ][ 'ID' ] ) ? $menu_item[ 'data' ][ 'ID' ] : 0 );
-		if ( ! $id ) {
-			$args[ 'menu-item-object' ] = $menu_item[ 'data' ][ 'menu-item-object' ];
-			$args[ 'menu-item-object-id' ] = $menu_item[ 'data' ][ 'menu-item-object-id' ];
-			$args[ 'menu-item-type' ] = $menu_item[ 'data' ][ 'menu-item-type' ];
-			$args[ 'menu-item-status' ] = 'publish';
-		}
-		$args[ 'menu-item-title' ] = $menu_item[ 'name' ];
+		$args = $menu_item[ 'data' ];
 		$args[ 'menu-item-parent-id' ] = $parent_id;
 		$args[ 'menu-item-position' ] = $position;
+		$args[ 'menu-item-title' ] = $menu_item[ 'name' ];
+		unset( $menu_item[ 'data' ][ 'ID' ] );
 		$menu_item_db_id = wp_update_nav_menu_item( $menu_id, $id, $args );
 
 		if ( is_wp_error( $menu_item_db_id ) ) {
@@ -1213,6 +1457,26 @@ class De_Store {
 			foreach( $menu_item[ 'items' ] as $item ) {
 				self::write_menu_recursive( $menu_id, $item, $menu_item_db_id, $position, $menu_items );
 			}
+		}
+	}
+	
+	public static function menu_is_editable( $item ) {
+		if ( ( $item->type == 'post_type' && $item->object == 'page' && ! de_is_de_archive( $item->object_id ) ) || ( $item->type == 'custom' && $item->object == 'custom' && $item->url == home_url() ) ) {
+			return get_option( 'de_menu_editor_pages' );
+		} elseif ( $item->type == 'post_type' && $item->object == 'page' && de_is_de_archive( $item->object_id ) ) {
+			return get_option( 'de_menu_editor_de_archive_pages' );
+		} elseif ( $item->type == 'post_type' && $item->object == 'de_webform' ) {
+			return get_option( 'de_menu_editor_de_webforms' );
+		} elseif( $item->type == 'taxonomy' && $item->object == 'category' ) {
+			return get_option( 'de_menu_editor_categories' );
+		} elseif ( $item->type == 'taxonomy' ) {
+			return get_option( 'de_menu_editor_taxonomies_' . $item->object );
+		} elseif ( $item->type == 'post_type' && $item->object == 'post' ) {
+			return get_option( 'de_menu_editor_posts' );
+		} elseif ( $item->type == 'post_type' ) {
+			return get_option( 'de_menu_editor_posts_' . $item->object );
+		} else {
+			return false;
 		}
 	}
 }
