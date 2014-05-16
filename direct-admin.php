@@ -61,37 +61,39 @@ function de_plugin_menu() {
 		if ( isset( $_REQUEST['action'] ) && 'upgrade' == $_REQUEST['action'] ) {
 			$upgrade_url = 'http://directedit.co/downloads/direct-edit-upgrade.zip?key=' . urlencode( $_POST[ 'upgrade_key' ] ) . '&url=' . urlencode( get_option( 'siteurl' ) ) . '&activity=upgrade';
 			$upgrade_path = download_url( $upgrade_url );
-			if ( $upgrade_path && WP_Filesystem() ) {
-				$result = unzip_file( $upgrade_path, DIRECT_PATH );
-				unlink( $upgrade_path );
-				
-				if ( ! is_wp_error($result) ) {
-					/* Add PRO options to json options file
-					 * It seems it's not needed for now
+			if ( ! is_wp_error( $upgrade_path ) ) {
+				if ( $upgrade_path && WP_Filesystem() ) {
+					$result = unzip_file( $upgrade_path, DIRECT_PATH );
+					unlink( $upgrade_path );
 					
-					if ( file_exists( get_stylesheet_directory() . '/direct-edit' ) && file_exists( get_stylesheet_directory() . '/direct-edit/options/direct-options.json' ) ) {
-						$options = json_decode( file_get_contents( get_stylesheet_directory_uri() . '/direct-edit/options/direct-options.json' ), true );
-						$options_upgrade = json_decode( file_get_contents( DIRECT_PATH . 'pro/upgrade/theme/options/direct-options.json' ), true );
+					if ( ! is_wp_error($result) ) {
+						/* Add PRO options to json options file
+						 * It seems it's not needed for now
 						
-						$changed = false;
-						foreach( $options_upgrade as $key_upgrade => $option_upgrade ) {
-							if ( empty( $options[ $key_upgrade ] ) ) {
-								$options[ $key_upgrade ] = $option_upgrade;
-								$changed = true;
+						if ( file_exists( get_stylesheet_directory() . '/direct-edit' ) && file_exists( get_stylesheet_directory() . '/direct-edit/options/direct-options.json' ) ) {
+							$options = json_decode( file_get_contents( get_stylesheet_directory_uri() . '/direct-edit/options/direct-options.json' ), true );
+							$options_upgrade = json_decode( file_get_contents( DIRECT_PATH . 'pro/upgrade/theme/options/direct-options.json' ), true );
+							
+							$changed = false;
+							foreach( $options_upgrade as $key_upgrade => $option_upgrade ) {
+								if ( empty( $options[ $key_upgrade ] ) ) {
+									$options[ $key_upgrade ] = $option_upgrade;
+									$changed = true;
+								}
+							}
+							
+							if ( $changed ) {
+								file_put_contents ( get_stylesheet_directory() . '/direct-edit/options/direct-options.json', de_print_json( json_encode( $options ) ) );
 							}
 						}
+						*/
 						
-						if ( $changed ) {
-							file_put_contents ( get_stylesheet_directory() . '/direct-edit/options/direct-options.json', de_print_json( json_encode( $options ) ) );
-						}
+						// Save the key
+						update_option( 'automatic_updates_key', $_POST[ 'upgrade_key' ] );
+						
+						wp_redirect( home_url( '/wp-admin/plugins.php?page=direct-edit&saved=true' ) );
+						die();
 					}
-					*/
-					
-					// Save the key
-					update_option( 'automatic_updates_key', $_POST[ 'upgrade_key' ] );
-					
-					wp_redirect( home_url( '/wp-admin/plugins.php?page=direct-edit&saved=true' ) );
-					die();
 				}
 			}
 			
