@@ -8,7 +8,7 @@ Author: Carlo Roosen, Elena Mukhina
 Author URI: http://carloroosen.com/
 */
 
-define( 'DIRECT_VERSION', '1.0.3' );
+define( 'DIRECT_VERSION', '1.0.4' );
 define( 'DIRECT_PATH', plugin_dir_path( __FILE__ ) );
 define( 'DIRECT_URL', plugin_dir_url( __FILE__ ) );
 
@@ -167,7 +167,10 @@ function de_set_de_page() {
 	global $direct_queried_object;
 	
 	if ( empty( $direct_queried_object ) ) {
-		$direct_queried_object = get_queried_object();
+		$d = get_queried_object();
+		if ( $d instanceof WP_Post ) {
+			$direct_queried_object = $d;
+		}
 	}
 }
 
