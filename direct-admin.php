@@ -253,7 +253,7 @@ function de_metaboxes_save( $post_id, $post ) {
 	if ( ! current_user_can( 'edit_posts' )  )
 		return false;
 
-	if ( basename( $_SERVER['PHP_SELF'] ) == 'post.php' || basename( $_SERVER['PHP_SELF'] ) == 'post-new.php' && $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+	if ( ( basename( $_SERVER['PHP_SELF'] ) == 'post.php' || basename( $_SERVER['PHP_SELF'] ) == 'post-new.php' ) && $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		if( $post->post_title )
 			De_Url::register_url( $post->ID, sanitize_title( $post->post_title ) );
 		else
