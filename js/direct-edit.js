@@ -86,6 +86,10 @@ var directEdit, directNotify, directTranslate;
 						editor = element.data("directEdit-directFileUploader");
 						break;
 					case 'image':
+						link = element.closest('a');
+						if (link.length === 1) {
+							link.directLinkEditor({'buttonFollowLink':true});
+						}
 						element.directImageEditor(thisOptions);
 						editor = element.data("directEdit-directImageEditor");
 						break;

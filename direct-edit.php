@@ -9,8 +9,17 @@ Author URI: http://carloroosen.com/
 */
 
 define( 'DIRECT_VERSION', '1.0.4' );
-define( 'DIRECT_PATH', plugin_dir_path( __FILE__ ) );
-define( 'DIRECT_URL', plugin_dir_url( __FILE__ ) );
+// Does it work as a plugin or as a part of dE theme?
+if ( ! defined ( 'DIRECT_MODE' ) ) {
+	define( 'DIRECT_MODE', 'PLUGIN' );
+}
+if ( DIRECT_MODE == 'PLUGIN' ) {
+	define( 'DIRECT_PATH', plugin_dir_path( __FILE__ ) );
+	define( 'DIRECT_URL', plugin_dir_url( __FILE__ ) );
+} else {
+	define( 'DIRECT_PATH', get_template_directory() . '/include/' );
+	define( 'DIRECT_URL', get_template_directory_uri() . '/include/' );
+}
 
 // Global variables
 global $de_global_options;
@@ -38,9 +47,9 @@ function de_autoload( $class ) {
 add_action( 'admin_bar_menu', 'de_adjust_menu', 100 );
 add_action( 'de_cron', 'de_images_remove' );
 add_action( 'init', 'de_load_global_options' );
-add_action( 'init', 'de_session_init', 0 );
-add_action( 'plugins_loaded', 'de_extensions_default', 100 );
-add_action( 'plugins_loaded', 'de_load_translation_file' );
+add_action( 'init', 'de_session_init', 3 );
+add_action( 'init', 'de_extensions_default', 10 );
+add_action( 'init', 'de_load_translation_file', 5 );
 add_action( 'switch_theme', 'de_on_switch_theme' );
 add_action( 'template_include', 'de_define_current_template', 1000 );
 add_action( 'template_redirect', 'de_set_de_page', 0 );
@@ -51,8 +60,10 @@ add_action( 'wp_print_footer_scripts', 'de_footer_scripts', 10 );
 
 add_filter( 'sanitize_title', 'de_transliterate', 5, 3 );
 
-register_activation_hook( __FILE__, 'de_plugin_setup' );
-register_deactivation_hook( __FILE__, 'de_plugin_deactivate' );
+if ( DIRECT_MODE == 'PLUGIN' ) {
+	register_activation_hook( __FILE__, 'de_plugin_setup' );
+	register_deactivation_hook( __FILE__, 'de_plugin_deactivate' );
+}
 
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 // Core functionality
@@ -64,7 +75,7 @@ de_pro_include( DIRECT_PATH . 'pro/direct-pro.php' );
 // Template functions definition
 de_pro_include( DIRECT_PATH . 'pro/core/template-functions.php' );
 // Include backend functionality if is_admin()
-if ( is_admin() ) {
+if ( DIRECT_MODE == 'PLUGIN' && is_admin() ) {
 	de_pro_include( DIRECT_PATH . 'pro/direct-admin.php', DIRECT_PATH . 'direct-admin.php' );
 }
 // Additional functionality
@@ -281,8 +292,6 @@ function de_wrap_the_title( $content ) {
 				'unwrap' => true
 			);
 			$item = new $class( 'wptitle', $settings );
-			
-			$content = $content;
 
 			$result = $item->output( $content );
 		} catch ( Exception $e ) {
@@ -307,8 +316,6 @@ function de_wrap_the_content( $content ) {
 				'unwrap' => true
 			);
 			$item = new $class( 'wpcontent', $settings );
-			
-			$content = $content;
 
 			$result = $item->output( $content );
 		} catch ( Exception $e ) {
@@ -333,8 +340,6 @@ function de_wrap_the_excerpt( $content ) {
 				'unwrap' => false
 			);
 			$item = new $class( 'wpexcerpt', $settings );
-			
-			$content = $content;
 
 			$result = $item->output( $content );
 		} catch ( Exception $e ) {
