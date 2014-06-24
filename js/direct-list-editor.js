@@ -153,12 +153,13 @@
 				}
 				$.extend(this.additionalData, returnData.data);
 				if (returnData.newItemContent && returnData.newItemIdentifier) {
-					// return element can be wrapped or not, assume it is
-					if ($(returnData.newItemContent).is(this.options.listSelector)) {
-						newItem = $(returnData.newItemContent).children().last();
-					} else {
-						newItem = $(returnData.newItemContent).find(this.options.listSelector).children().last();
-					}
+
+
+
+
+					// element.find(selector) does not work if the selector should select the element itself, therefor wrap it
+					newItem = $('<div>' + returnData.newItemContent + '</div>').find(this.options.listSelector).children().last();
+
 					if (!newItem.length) {
 						newItem = $(returnData.newItemContent);
 					}
