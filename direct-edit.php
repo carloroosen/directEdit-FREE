@@ -17,8 +17,8 @@ if ( DIRECT_MODE == 'PLUGIN' ) {
 	define( 'DIRECT_PATH', plugin_dir_path( __FILE__ ) );
 	define( 'DIRECT_URL', plugin_dir_url( __FILE__ ) );
 } else {
-	define( 'DIRECT_PATH', get_template_directory() . '/include/' );
-	define( 'DIRECT_URL', get_template_directory_uri() . '/include/' );
+	define( 'DIRECT_PATH', get_template_directory() . '/include/directedit/' );
+	define( 'DIRECT_URL', get_template_directory_uri() . '/include/directedit/' );
 }
 
 // Global variables

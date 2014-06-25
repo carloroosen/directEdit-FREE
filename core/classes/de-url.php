@@ -105,77 +105,79 @@ class De_Url {
 		global $post;
 
 		// dE slug
-		if ( get_option( 'de_smart_urls' ) && get_option( 'permalink_structure' ) == '/%postname%/' ) {
-			if( $de_url )
-				$de_url_array = explode( '/', $de_url );
+		if( $de_url )
+			$de_url_array = explode( '/', $de_url );
 
-			if ( De_Language_Wrapper::has_multilanguage() && is_array( $de_url_array ) && count( $de_url_array ) ) {
-				if ( in_array( $de_url_array[ 0 ], De_Language_Wrapper::get_languages() ) ) {
-					$de_curlang = array_shift( $de_url_array );
-				}
+		if ( De_Language_Wrapper::has_multilanguage() && is_array( $de_url_array ) && count( $de_url_array ) ) {
+			if ( in_array( $de_url_array[ 0 ], De_Language_Wrapper::get_languages() ) ) {
+				$de_curlang = array_shift( $de_url_array );
 			}
+		}
 
-			if ( is_array( $de_url_array ) && count( $de_url_array ) ) {
-				$i = 0;
-				$de_post_parent = 0;
+		if ( is_array( $de_url_array ) && count( $de_url_array ) ) {
+			$i = 0;
+			$de_post_parent = 0;
 
-				while ( $i < count( $de_url_array ) ) {
-					if ( $de_post_parent ) {
-						$querystr = "
-							SELECT wposts.*
-							FROM $wpdb->posts wposts, $wpdb->postmeta deslug, $wpdb->postmeta depostparent
-							WHERE wposts.ID = deslug.post_id
-							AND deslug.meta_key = 'de_slug'
-							AND deslug.meta_value = '" . esc_sql( $de_url_array[ $i ] ) . "'
-							AND wposts.ID = depostparent.post_id
-							AND depostparent.meta_key = 'de_post_parent'
-							AND depostparent.meta_value = " . esc_sql( $de_post_parent ) . "
-						";
-						if ( ! ( current_user_can( 'edit_posts' ) || current_user_can( 'edit_de_frontend' ) ) ) {
-							$querystr .= " AND wposts.post_status != 'draft'";
-						}
-					} else {
-						$querystr = "
-							SELECT wposts.*
-							FROM $wpdb->posts wposts, $wpdb->postmeta deslug
-							WHERE wposts.ID = deslug.post_id
-							AND deslug.meta_key = 'de_slug'
-							AND deslug.meta_value = '" . esc_sql( $de_url_array[ $i ] ) . "'
-							AND not exists(
-								SELECT * from $wpdb->postmeta
-								WHERE post_id = wposts.ID
-								AND meta_key = 'de_post_parent'
-							)
-						";
-						if ( ! ( current_user_can( 'edit_posts' ) || current_user_can( 'edit_de_frontend' ) ) ) {
-							$querystr .= " AND wposts.post_status != 'draft'";
+			while ( $i < count( $de_url_array ) ) {
+				if ( $de_post_parent ) {
+					$querystr = "
+						SELECT wposts.*
+						FROM $wpdb->posts wposts, $wpdb->postmeta deslug, $wpdb->postmeta depostparent
+						WHERE wposts.ID = deslug.post_id
+						AND deslug.meta_key = 'de_slug'
+						AND deslug.meta_value = '" . esc_sql( $de_url_array[ $i ] ) . "'
+						AND wposts.ID = depostparent.post_id
+						AND depostparent.meta_key = 'de_post_parent'
+						AND depostparent.meta_value = " . esc_sql( $de_post_parent ) . "
+					";
+					if ( ! ( current_user_can( 'edit_posts' ) || current_user_can( 'edit_de_frontend' ) ) ) {
+						$querystr .= " AND wposts.post_status != 'draft'";
+					}
+				} else {
+					$querystr = "
+						SELECT wposts.*
+						FROM $wpdb->posts wposts, $wpdb->postmeta deslug
+						WHERE wposts.ID = deslug.post_id
+						AND deslug.meta_key = 'de_slug'
+						AND deslug.meta_value = '" . esc_sql( $de_url_array[ $i ] ) . "'
+						AND not exists(
+							SELECT * from $wpdb->postmeta
+							WHERE post_id = wposts.ID
+							AND meta_key = 'de_post_parent'
+						)
+					";
+					if ( ! ( current_user_can( 'edit_posts' ) || current_user_can( 'edit_de_frontend' ) ) ) {
+						$querystr .= " AND wposts.post_status != 'draft'";
+					}
+				}
+
+				if ( De_Language_Wrapper::has_multilanguage() && isset( $de_curlang ) ) {
+					unset( $result );
+					foreach( $wpdb->get_results( $querystr ) as $r ) {
+						if ( De_Language_Wrapper::get_post_language( $r->ID ) == $de_curlang ) {
+							$result = $r;
+							break;
 						}
 					}
+				} else {
+					$result = $wpdb->get_row( $querystr );
+				}
 
-					if ( De_Language_Wrapper::has_multilanguage() && isset( $de_curlang ) ) {
-						unset( $result );
-						foreach( $wpdb->get_results( $querystr ) as $r ) {
-							if ( De_Language_Wrapper::get_post_language( $r->ID ) == $de_curlang ) {
-								$result = $r;
-								break;
-							}
-						}
-					} else {
-						$result = $wpdb->get_row( $querystr );
-					}
-
-					if ( ! $result ) {
-						break;
-					}
-					
-					if ( $i == count( $de_url_array ) - 1 ) {
+				if ( ! $result ) {
+					break;
+				}
+				
+				if ( $i == count( $de_url_array ) - 1 ) {
+					if ( get_option( 'de_smart_urls' ) && get_option( 'permalink_structure' ) == '/%postname%/' || de_is_de_archive( $result->ID ) ) {
 						return get_post( $result->ID );
 					} else {
-						$de_post_parent = $result->ID;
+						break;
 					}
-					
-					$i ++;
+				} else {
+					$de_post_parent = $result->ID;
 				}
+				
+				$i ++;
 			}
 		}
 		
