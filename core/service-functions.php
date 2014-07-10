@@ -60,7 +60,7 @@ function de_is_hidden( $post_id ) {
 
 // Return true if the current user can see a post ( editor can see hidden posts )
 function de_is_accessible( $post_id ) {
-	return ( ! get_post_status( $post_id ) == 'draft' || current_user_can( 'edit_posts' ) || current_user_can( 'edit_de_frontend' ) );
+	return ( ! get_post_status( $post_id ) == 'draft' || current_user_can( 'edit_post', $post_id ) || current_user_can( 'edit_de_frontend' ) );
 }
 
 // Can the page be removed?

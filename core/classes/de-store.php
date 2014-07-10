@@ -38,10 +38,10 @@ class De_Store {
 			case 'wpexcerpt':
 			case 'post':
 			case 'postdate':
-				return ( current_user_can( 'edit_posts' ) || current_user_can( 'edit_de_frontend' ) );
+				return ( current_user_can( 'edit_post', $item->get_setting( 'postId' ) ) || current_user_can( 'edit_de_frontend' ) );
 			break;
 			case 'usermeta':
-				return ( current_user_can( 'edit_users' ) || current_user_can( 'edit_de_frontend' ) );
+				return ( current_user_can( 'edit_user', $item->get_setting( 'postId' ) ) || current_user_can( 'edit_de_frontend' ) );
 			break;
 			case 'option':
 				return ( current_user_can( 'edit_theme_options' ) || current_user_can( 'edit_de_frontend' ) );

@@ -282,7 +282,7 @@ function de_hooks() {
 function de_wrap_the_title( $content ) {
 	global $post;
 
-	if ( in_the_loop() && ( current_user_can( 'edit_posts' ) || current_user_can( 'edit_de_frontend' ) ) ) {
+	if ( in_the_loop() && ( current_user_can( 'edit_post', $post->ID ) || current_user_can( 'edit_de_frontend' ) ) ) {
 		$result = '';
 		
 		$class = 'De_Item_Text';
@@ -306,7 +306,7 @@ function de_wrap_the_title( $content ) {
 function de_wrap_the_content( $content ) {
 	global $post;
 
-	if ( in_the_loop() && ( current_user_can( 'edit_posts' ) || current_user_can( 'edit_de_frontend' ) ) ) {
+	if ( in_the_loop() && ( current_user_can( 'edit_post', $post->ID ) || current_user_can( 'edit_de_frontend' ) ) ) {
 		$result = '';
 		
 		$class = 'De_Item_Text';
@@ -330,7 +330,7 @@ function de_wrap_the_content( $content ) {
 function de_wrap_the_excerpt( $content ) {
 	global $post;
 
-	if ( in_the_loop() && ( current_user_can( 'edit_posts' ) || current_user_can( 'edit_de_frontend' ) ) ) {
+	if ( in_the_loop() && ( current_user_can( 'edit_post', $post->ID ) || current_user_can( 'edit_de_frontend' ) ) ) {
 		$result = '';
 		
 		$class = 'De_Item_Text';
