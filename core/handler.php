@@ -246,7 +246,7 @@ function de_save_page() {
 	}
 	
 	if ( De_Store::$redirect ) {
-		$response[ 'redirect' ] = esc_url( De_Store::$redirect );
+		$response[ 'redirect' ] = De_Store::$redirect;
 	}
 	
 	// Edit page options
@@ -316,7 +316,7 @@ function de_save_page() {
 			do_action( 'de_save_page_options', $_POST[ 'direct-page-options' ] );
 			
 			$response[ 'direct-page-options' ] = true;
-			$response[ 'redirect' ] = esc_url( De_Url::get_url( $post_id ) );
+			$response[ 'redirect' ] = De_Url::get_url( $post_id );
 		}
 	}
 	

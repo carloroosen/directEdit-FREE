@@ -101,6 +101,9 @@ function de_adjust_menu( $wp_admin_bar ) {
 					if ( ! in_array( $postType->name, array( 'post', 'page' ) ) && ( in_array( $postType->name, array( 'de_list_item', 'de_webform' ) ) || strpos( $postType->name, 'de_' ) !== 0 ) )
 						continue;
 
+					if ( $postType->name == 'page' && ! current_user_can( 'edit_pages' ) )
+						continue;
+
 					$wp_admin_bar->add_node( array(
 							'id' => 'new-' . $postType->name,
 							'title' => __( $postType->labels->singular_name, 'direct-edit' ),
