@@ -312,6 +312,10 @@ function de_save_page() {
 					update_post_meta( $post_id, 'de_navigation_label', stripslashes( $_POST[ 'direct-page-options' ][ 'de_navigation_label' ] ) );
 				}
 			}
+			if ( get_post_type( $post_id ) == 'post' ) {
+				$categories = array( $_POST[ 'direct-page-options' ][ 'de_category' ] );
+				wp_set_post_categories( $post_id, $categories, false );
+			}
 			
 			do_action( 'de_save_page_options', $_POST[ 'direct-page-options' ] );
 			
