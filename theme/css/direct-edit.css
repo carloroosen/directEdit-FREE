@@ -82,7 +82,7 @@
 
 .direct-list-editor-buttons {
     position: absolute;
-    top: 1.5em;
+	margin-top:10px;
     width: 100%;
 }
 .direct-list-editor-buttons a {

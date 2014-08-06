@@ -130,7 +130,7 @@
 		},
 		_setPlaceholder: function (show) {
 			if (show) {
-				if (/^((<br\s?\/?>|<p>|<\/p>|\s)*)$/.test(this.element.html())) {
+				if (/^((<br\s?\/?>|<p>|<\/p>|\s|&nbsp;)*)$/.test(this.element.html())) {
 					this.element.html(this.options.placeholder);
 					if (this.options.format === 'block') { this.element.contents().wrap('<p>'); }
 					this.hasPlaceholderContent = true;

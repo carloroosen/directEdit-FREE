@@ -1046,6 +1046,69 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
  }
 
+/*
+* jQuery UI Accordion 1.10.3
+*
+* Copyright 2013, AUTHORS.txt (http://jqueryui.com/about)
+* Dual licensed under the MIT or GPL Version 2 licenses.
+* http://jquery.org/license
+*
+* http://jqueryui.com/accordion/
+*/
+
+/* IE/Win - Fix animation bug - #4615 */
+.ui-accordion {
+width: 100%;
+}
+
+.ui-accordion .ui-accordion-li-fix {
+display: inline;
+}
+
+.ui-accordion .ui-accordion-header-active {
+border-bottom: 0 !important;
+}
+
+.ui-accordion .ui-accordion-header {
+display: block;
+cursor: pointer;
+position: relative;
+margin-top: 2px;
+padding: .5em .5em .5em .7em;
+min-height: 0; /* support: IE7 */
+}
+
+.ui-accordion .ui-accordion-icons {
+padding-left: 2.2em;
+}
+.ui-accordion .ui-accordion-noicons {
+padding-left: .7em;
+}
+.ui-accordion .ui-accordion-icons .ui-accordion-icons {
+padding-left: 2.2em;
+}
+.ui-accordion .ui-accordion-header .ui-accordion-header-icon {
+position: absolute;
+left: .5em;
+top: 50%;
+margin-top: -8px;
+}
+
+.ui-accordion .ui-accordion-content {
+padding: 1em 2.2em;
+    border-top: 0 none;
+margin-top: -3px;
+position: relative;
+top: 1px;
+margin-bottom: 2px;
+overflow: auto;
+display: none;
+}
+
+.ui-accordion .ui-accordion-content-active {
+display: block;
+}
+
 
 
 
