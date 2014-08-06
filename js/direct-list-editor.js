@@ -123,6 +123,7 @@
 						data : self.additionalData
 					}
 				};
+				// commands are processed by server
 				ajaxOptions.data[self.options.command[0]] = self.options.command[1] + commandString;
 
 				$.ajax(ajaxOptions);
@@ -144,10 +145,13 @@
 			return data;
 		},
 		setData: function (returnData, modified) {
-			var i, newItem, tempcontainer;
+			var i, newItem, tempContainer;
 			this.modified = modified || false; // if falsy then false
-			tempcontainer = $('<div id="tempcontainer">').appendTo('body');
-			if (returnData) {
+			tempContainer = $('<div>').appendTo('body');
+			
+			// currently the list is only re-initialized if returnData.definition is defined. returnData.content is ignored
+			// in practice it means the list is not re-initialized when the page is saved.
+			if (returnData && returnData.definition) {
 				if (returnData.definition) {
 					this.definition = returnData.definition;
 				}
@@ -165,12 +169,12 @@
 					}
 					// TODO preserve data format in dE options, now numbers become strings so the return param must be converted to string also
 					this.items[returnData.newItemIdentifier] = newItem;
-					tempcontainer.append(newItem);
+					tempContainer.append(newItem);
 					// init all editables inside newItem
 					directEdit(newItem);
 				}
 				// move items to a safe place
-				tempcontainer.append(this.list.contents());
+				tempContainer.append(this.list.contents());
 				// move items back into the list in the right order
 				for (i in this.definition) {
 					if (this.definition.hasOwnProperty(i)) {
@@ -179,7 +183,7 @@
 					}
 				}
 				// remove the garbage
-				tempcontainer.remove();
+				tempContainer.remove();
 				if (this.options.callback && typeof this.options.callback === 'function') {
 					this.options.callback.call(this, returnData.activeItem);
 				} else {
