@@ -1,5 +1,5 @@
 /*jslint nomen: true, browser: true */
-/*global jQuery: false, console: false */
+/*global jQuery: false, console: false, directTranslations: false */
 
 var directEdit, directNotify, directTranslate;
 
@@ -71,7 +71,7 @@ var directEdit, directNotify, directTranslate;
 					case 'text':
 						link = element.closest('a');
 						if (link.length === 1) {
-							link.directLinkEditor({'buttonFollowLink':true});
+							link.directLinkEditor({'buttonFollowLink': true});
 						} else if (thisOptions.unwrap) {
 							parentElement = element.parent();
 							parentElement.html(element.html());
@@ -88,7 +88,7 @@ var directEdit, directNotify, directTranslate;
 					case 'image':
 						link = element.closest('a');
 						if (link.length === 1) {
-							link.directLinkEditor({'buttonFollowLink':true});
+							link.directLinkEditor({'buttonFollowLink': true});
 						}
 						element.directImageEditor(thisOptions);
 						editor = element.data("directEdit-directImageEditor");
@@ -150,7 +150,7 @@ var directEdit, directNotify, directTranslate;
 			for (e in this.editors) {
 				if (this.editors.hasOwnProperty(e)) {
 					editor = this.editors[e];
-					if (editor.options.alwaysSave || (typeof editor.isTouched == 'function' ? editor.isTouched() : editor.isModified())) {
+					if (editor.options.alwaysSave || (typeof editor.isTouched === 'function' ? editor.isTouched() : editor.isModified())) {
 						data[e] = editor.getData();
 						taskCount += 1;
 					}
@@ -209,8 +209,9 @@ var directEdit, directNotify, directTranslate;
 			$.directEdit.fn.saveAll();
 			return false;
 		});
-		
+
 		// show notify message on page load when specified as ?de_message=saved
+		// todo does not validate js Lint
 		function getQueryParams(qs) {
 			var params = {}, tokens, re = /[?&]?([^=]+)=([^&]*)/g;
 
@@ -222,9 +223,11 @@ var directEdit, directNotify, directTranslate;
 		}
 
 		var query = getQueryParams(document.location.search);
-		if (query.de_message  === 'saved') directNotify(directTranslate("The page has been saved."));
+		if (query.de_message  === 'saved') {
+			directNotify(directTranslate("The page has been saved."));
+		}
 	};
-	
+
 	// ping server every 10 minutes to keep the session alive
 	setInterval(function () { $.post($.directEdit.fn.ajaxUrl); }, 600000);
 
@@ -256,8 +259,93 @@ var directEdit, directNotify, directTranslate;
 			$.fn.directOptionButton = function () {
 				$(this).click(openOptions);
 			};
+			this.createCategoryEditor();
 			this.element.find('input[type=submit]').click(saveAll);
 			this.element.hide();
+		},
+		createCategoryEditor : function () {
+			var categoryEditor, categoryInput, categories, category, categoryEditorList, addLink, editTitle, countNew, closeEditTitles, updateCategories, elementRemove, addCategory;
+
+			updateCategories = function () {
+				var element;
+				categories = [];
+				categoryEditorList.find('li').each(function () {
+					element = {};
+					element.id = $(this).attr('id');
+					element.name = $(this).find('.title-input').val();
+					categories.push(element);
+				});
+				categoryInput.val(JSON.stringify(categories));
+				console.log(JSON.stringify(categories));
+			};
+			closeEditTitles = function () {
+				categoryEditorList.find('li').each(function () {
+					var title, titleInput;
+					title = $(this).find('.title');
+					titleInput = $(this).find('.title-input');
+					title.html(titleInput.val());
+					title.show();
+					titleInput.hide();
+				});
+				$('html').unbind("click");
+				$(document).unbind("keypress");
+				updateCategories();
+			};
+			editTitle = function (element) {
+				return function () {
+					var title, titleInput;
+					title = element.find('.title').hide();
+					titleInput = element.find('.title-input').show();
+					titleInput.click(function (event) {event.stopPropagation(); });
+					$('html').click(closeEditTitles);
+					$(document).keypress(function (e) {
+						if (e.which === 13) {
+							closeEditTitles();
+						}
+					});
+				};
+			};
+			elementRemove = function (element) {
+				return function () {
+					element.remove();
+					closeEditTitles();
+				};
+			};
+			addCategory = function (name, id) {
+				var deleteLink, title, element;
+				if (!id) {
+					id = 'new-' + countNew;
+					countNew += 1;
+				}
+				name = name || '';
+				element = $('<li id="' + id + '"><input class="title-input somewidth" value="' + name + '" style="display:none;"></li>');
+				name = name || '<span style="color:grey;">New category</span>';
+				title = $('<span class="title somewidth">' + name + '</span>');
+				title.dblclick(editTitle(element));
+				deleteLink = $('<a class="pointer">delete</a>');
+				deleteLink.click(elementRemove(element));
+				element.append(title).append(deleteLink);
+				categoryEditorList.append(element);
+			};
+
+			// execution starts here
+			categoryInput = $('#categoryInput');
+			if (categoryInput && categoryInput.val()) {
+				categories = jQuery.parseJSON(categoryInput.val());
+				countNew = 0;
+				categoryEditor = $('#categoryEditor');
+				categoryInput = $('#categoryInput').hide();
+				categoryEditorList = $('<ul>').appendTo(categoryEditor);
+				for (category = 0; category < categories.length; category += 1) {
+					addCategory(categories[category].name, categories[category].id);
+				}
+				addLink = $('<a class="pointer add-new">add new</a>');
+				addLink.click(function () {
+					addCategory('test', '');
+					closeEditTitles();
+				});
+				$('<div>').append(addLink).insertAfter(categoryEditorList);
+			}
 		},
 		isModified: function () {
 			return (this.modified === true);
@@ -270,9 +358,8 @@ var directEdit, directNotify, directTranslate;
 		}
 	});
 
-	
+
 	$.fn.serializeObject = function () {
-		"use strict";
 		var o = {}, a = this.serializeArray();
 		jQuery.each(a, function () {
 			if (o[this.name] !== undefined) {
@@ -291,9 +378,11 @@ var directEdit, directNotify, directTranslate;
 	directEdit = $.directEdit.fn.directEdit;
 	directTranslate = function (m) {
 		var r;
-		if (typeof directTranslations === 'object')  {
+		if (typeof directTranslations === 'object') {
 			r = directTranslations[m];
-			if (!r) console.log ('not translated yet: ' + m);
+			if (!r) {
+				console.log('not translated yet: ' + m);
+			}
 		}
 		return r || m;
 	};
