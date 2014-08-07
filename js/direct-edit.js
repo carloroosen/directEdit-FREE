@@ -264,17 +264,31 @@ var directEdit, directNotify, directTranslate;
 			this.element.hide();
 		},
 		createCategoryEditor : function () {
-			var categoryEditor, categoryInput, categories, category, categoryEditorList, addLink, editTitle, countNew, closeEditTitles, updateCategories, elementRemove, addCategory;
+			var categoryEditor, categoryInput, categorySelect, categories, category, categoryEditorList, addLink, editTitle, countNew, closeEditTitles, updateCategories, elementRemove, addCategory;
 
 			updateCategories = function () {
-				var element;
+				var element, selected, options;
+				selected = categorySelect.val();
+				options = '';
+				
 				categories = [];
 				categoryEditorList.find('li').each(function () {
+					var isSelected;
+					isSelected = function (id) {
+						if (selected === id) {
+							return ' selected="selected"';
+						} else {
+							return '';
+						}
+					}
 					element = {};
 					element.id = $(this).attr('id');
 					element.name = $(this).find('.title-input').val();
+					options += '<option value="' + element.id + '"' + isSelected(element.id) + '>' + element.name + '</option>';
+					console.log(options);
 					categories.push(element);
 				});
+				categorySelect.html(options);
 				categoryInput.val(JSON.stringify(categories));
 				console.log(JSON.stringify(categories));
 			};
@@ -334,7 +348,7 @@ var directEdit, directNotify, directTranslate;
 				categories = jQuery.parseJSON(categoryInput.val());
 				countNew = 0;
 				categoryEditor = $('#categoryEditor');
-				categoryInput = $('#categoryInput').hide();
+				categorySelect = $(categoryInput[0].form).find('[name="de_category"]');
 				categoryEditorList = $('<ul>').appendTo(categoryEditor);
 				for (category = 0; category < categories.length; category += 1) {
 					addCategory(categories[category].name, categories[category].id);
