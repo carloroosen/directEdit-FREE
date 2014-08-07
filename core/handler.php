@@ -312,7 +312,29 @@ function de_save_page() {
 					update_post_meta( $post_id, 'de_navigation_label', stripslashes( $_POST[ 'direct-page-options' ][ 'de_navigation_label' ] ) );
 				}
 			}
+			// Save category list and post category
 			if ( get_post_type( $post_id ) == 'post' ) {
+				// Update category list
+				$categories = json_decode( stripslashes( $_POST[ 'direct-page-options' ][ 'de_category_input' ] ) );
+				$category_ids = array();
+				foreach( $categories as $category ) {
+					if ( strpos( $category->id, 'new-' ) === 0 ) {
+						$c = wp_insert_term( $category->name, 'category' );
+						$category_ids[ $category->id ] = $c[ 'term_id' ];
+					} else {
+						wp_update_term( $category->id, 'category', array( 'name' => $category->name ) );
+						$category_ids[ $category->id ] = $category->id;
+					}
+				}
+				$categories = get_categories( array( 'orderby' => 'name', 'hide_empty' => 0 ) );
+				foreach( $categories as $category ) {
+					if ( ! in_array( $category->term_id, $category_ids ) ) {
+						wp_delete_term( $category->term_id, 'category' );
+					}
+				}
+				$_POST[ 'direct-page-options' ][ 'de_category' ] = $category_ids[ $_POST[ 'direct-page-options' ][ 'de_category' ] ];
+
+				// Set post category
 				$categories = array( $_POST[ 'direct-page-options' ][ 'de_category' ] );
 				wp_set_post_categories( $post_id, $categories, false );
 			}
