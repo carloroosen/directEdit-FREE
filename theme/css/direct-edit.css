@@ -377,6 +377,10 @@ margin-left: -1px;
 
 /* Page options dialog */
 
+#categoryEditor .somewidth { width : 200px; display:inline-block; }
+#categoryEditor .pointer { cursor : pointer; }
+#categoryEditor .add-new { margin-left:200px; }
+
 #direct-page-options button,
 #direct-page-options input,
 #direct-page-options select,
