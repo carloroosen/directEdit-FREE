@@ -91,39 +91,39 @@ function de_plugin_menu() {
 						// Save the key
 						update_option( 'automatic_updates_key', $_POST[ 'upgrade_key' ] );
 						
-						wp_redirect( home_url( '/wp-admin/plugins.php?page=direct-edit&saved=true' ) );
+						wp_redirect( admin_url( '/plugins.php?page=direct-edit&saved=true' ) );
 						die();
 					}
 				}
 			}
 			
-			wp_redirect( home_url( '/wp-admin/plugins.php?page=direct-edit&error=upgrade' ) );
+			wp_redirect( admin_url( '/plugins.php?page=direct-edit&error=upgrade' ) );
 		} elseif ( isset( $_REQUEST['action'] ) && 'copy_files' == $_REQUEST['action'] ) {
 			if ( ! file_exists( get_stylesheet_directory() . '/direct-edit' ) ) {
 				$result = de_copy( DIRECT_PATH . 'theme', get_stylesheet_directory() . '/direct-edit' );
 				if ( ! $result ) {
 					@de_rmdir( get_stylesheet_directory() . '/direct-edit' );
-					wp_redirect( home_url( '/wp-admin/plugins.php?page=direct-edit&error=copy_files' ) );
+					wp_redirect( admin_url( '/plugins.php?page=direct-edit&error=copy_files' ) );
 					die();
 				}
 			}
 			
-			wp_redirect( home_url( '/wp-admin/plugins.php?page=direct-edit&saved=true' ) );
+			wp_redirect( admin_url( '/plugins.php?page=direct-edit&saved=true' ) );
 		} elseif ( isset( $_REQUEST['action'] ) && 'remove_files' == $_REQUEST['action'] ) {
 			if ( file_exists( get_stylesheet_directory() . '/direct-edit' ) ) {
 				de_rmdir( get_stylesheet_directory() . '/direct-edit' );
 			}
 			
-			wp_redirect( home_url( '/wp-admin/plugins.php?page=direct-edit&saved=true' ) );
+			wp_redirect( admin_url( '/plugins.php?page=direct-edit&saved=true' ) );
 		} elseif ( isset( $_REQUEST['action'] ) && 'wp_hooks' == $_REQUEST['action'] ) {
 			$options = $wpdb->escape( $_REQUEST[ 'wp_hooks' ] );
 			update_option( 'de_options_wp_hooks', base64_encode( serialize( $options ) ) );
 			
-			wp_redirect( home_url( '/wp-admin/plugins.php?page=direct-edit&saved=true' ) );
+			wp_redirect( admin_url( '/plugins.php?page=direct-edit&saved=true' ) );
 		} elseif ( isset( $_REQUEST[ 'action' ] ) && 'de_options' == $_REQUEST[ 'action' ] ) {
 			update_option( 'de_text_validation', $_REQUEST[ 'text_validation' ] );
 			
-			wp_redirect( home_url( '/wp-admin/plugins.php?page=direct-edit&saved=true' ) );
+			wp_redirect( admin_url( '/plugins.php?page=direct-edit&saved=true' ) );
 		}
 	}
 	

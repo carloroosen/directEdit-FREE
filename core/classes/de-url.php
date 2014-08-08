@@ -54,8 +54,8 @@ class De_Url {
 					if ( De_Language_Wrapper::has_multilanguage() ) {
 						$result = home_url( '/' . De_Language_Wrapper::get_post_language( $de_post_id ) . '/' );
 					} else {
-						// Return site url for homepage
-						$result = get_site_url();
+						// Return home url
+						$result = home_url();
 					}
 				} else {
 					$de_slug = get_post_meta( $de_post_id, 'de_slug', true );

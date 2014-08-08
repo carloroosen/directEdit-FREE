@@ -108,7 +108,7 @@ function de_adjust_menu( $wp_admin_bar ) {
 							'id' => 'new-' . $postType->name,
 							'title' => __( $postType->labels->singular_name, 'direct-edit' ),
 							'parent' => 'new-content',
-							'href' => add_query_arg( array( 'de_add' => $postType->name ), get_site_url() ),
+							'href' => add_query_arg( array( 'de_add' => $postType->name ), home_url() ),
 							'group' => '',
 							'meta' => array()
 						)
