@@ -377,9 +377,27 @@ margin-left: -1px;
 
 /* Page options dialog */
 
-#categoryEditor .somewidth { width : 200px; display:inline-block; }
-#categoryEditor .pointer { cursor : pointer; }
-#categoryEditor .add-new { margin-left:200px; }
+#direct-page-options #categoryEditor .somewidth { width : 200px; display:inline-block; }
+#direct-page-options #categoryEditor .pointer { cursor : pointer; }
+#direct-page-options #categoryEditor .add-new { margin-left:216px; }
+#direct-page-options #categoryEditor {
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 28px;
+}
+#direct-page-options #categoryEditor ul { 
+	list-style : none; 
+}
+#direct-page-options #categoryEditor .title { 
+	margin: 0 16px 0 0;
+}
+#direct-page-options #categoryEditor .title-input { 
+	margin: 0 2px 0 0;
+}
+#direct-page-options #categoryEditor li {
+	line-height: 21px;
+}
+
 
 #direct-page-options button,
 #direct-page-options input,
