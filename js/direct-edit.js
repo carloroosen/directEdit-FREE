@@ -295,7 +295,7 @@ var directEdit, directNotify, directTranslate;
 					var title, titleInput;
 					title = $(this).find('.title');
 					titleInput = $(this).find('.title-input');
-					title.html(titleInput.val());
+					title.html(titleInput.val() || '<span style="color:grey;">New category</span>');
 					title.show();
 					titleInput.hide();
 				});
@@ -329,9 +329,7 @@ var directEdit, directNotify, directTranslate;
 					id = 'new-' + countNew;
 					countNew += 1;
 				}
-				name = name || '';
 				element = $('<li id="' + id + '"><input class="title-input somewidth" value="' + name + '" style="display:none;"></li>');
-				name = name || '<span style="color:grey;">New category</span>';
 				title = $('<span class="title somewidth">' + name + '</span>');
 				title.dblclick(editTitle(element));
 				deleteLink = $('<a class="pointer">delete</a>');
@@ -353,7 +351,7 @@ var directEdit, directNotify, directTranslate;
 				}
 				addLink = $('<a class="pointer add-new">add new</a>');
 				addLink.click(function () {
-					addCategory('test', '');
+					addCategory('', '');
 					closeEditTitles();
 				});
 				$('<div>').append(addLink).insertAfter(categoryEditorList);
