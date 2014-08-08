@@ -285,12 +285,10 @@ var directEdit, directNotify, directTranslate;
 					element.id = $(this).attr('id');
 					element.name = $(this).find('.title-input').val();
 					options += '<option value="' + element.id + '"' + isSelected(element.id) + '>' + element.name + '</option>';
-					console.log(options);
 					categories.push(element);
 				});
 				categorySelect.html(options);
 				categoryInput.val(JSON.stringify(categories));
-				console.log(JSON.stringify(categories));
 			};
 			closeEditTitles = function () {
 				categoryEditorList.find('li').each(function () {
