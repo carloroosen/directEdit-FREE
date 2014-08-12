@@ -84,6 +84,8 @@
     position: absolute;
 	margin-top:10px;
     width: 100%;
+    z-index: 2147483647;
+
 }
 .direct-list-editor-buttons a {
     background: rgba(5, 5, 5, 0.8);
@@ -376,6 +378,9 @@ margin-left: -1px;
 }
 
 /* Page options dialog */
+#direct-page-options {
+    z-index: 2147483647;
+}
 
 #direct-page-options #categoryEditor .somewidth { width : 200px; display:inline-block; }
 #direct-page-options #categoryEditor .pointer { cursor : pointer; }
@@ -388,6 +393,7 @@ margin-left: -1px;
 #direct-page-options #categoryEditor ul { 
 	list-style : none; 
 	padding-left:0;
+
 }
 #direct-page-options #categoryEditor .title { 
 	margin: 0 16px 0 0;

@@ -24,6 +24,11 @@ Want to learn more? Visit <http://directedit.co>.
 
 In the WordPress backend, search for the plugin 'directedit'. Once you found it, activate it and you are done. 
 
+= switch between view and edit =
+In theory the website should look exactly the same when you are logged in and visit the front-end. The one exception is that links in text do not work. Use CTRL click to test them, they will open in  another tab. 
+
+If you want to be sure, there is a great plugin "user-switching". After you install it, in the front-end just below the log-out link you will find a new link "switch off". Click it and you will see the website as an anonymus visitor. At the bottom of the page there will be a link "switch back to admin". 
+
 == Changelog ==
 
 = 1.0 =
