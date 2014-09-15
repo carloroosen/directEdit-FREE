@@ -55,7 +55,6 @@ var directEditMenu, directMenuSaveButton;
 						itemList.push(items[item]);
 					}
 					reference = itemList.indexOf(items[item]);
-					var i = items;
 					items = items[item].items;
 					path = path ? path + ',' + item : '&quot;' + item + '&quot;';
 					if (level < startLevel) {
@@ -141,7 +140,7 @@ var directEditMenu, directMenuSaveButton;
 			$('.direct-menu-trash').droppable({
 				hoverClass: "drop-hover" ,
 				drop: function( e, ui ) {
-					var parentItemOld, indexOld, item, toParent; 
+					var parentItemOld, indexOld; 
 					
 					parentItemOld = itemList[ui.draggable.attr('data-parent-reference')];
 					indexOld = ui.draggable.attr('data-index');
