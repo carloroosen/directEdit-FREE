@@ -3,12 +3,12 @@
 Plugin Name: Direct Edit
 Plugin URI: http://directedit.co/
 Description: DirectEdit is the fastest and easiest way to keep your website up-to-date. Edit your website directly in the front-end: after setting up your website you can do all the editing without ever seeing the back-end again. No more flipping back between front-end and back-end to see the result. <strong><a href="http://directedit.co/">Visit the plugin website for more details.</a></strong>
-Version: 1.0.4
+Version: 1.0.5
 Author: Carlo Roosen, Elena Mukhina
 Author URI: http://carloroosen.com/
 */
 
-define( 'DIRECT_VERSION', '1.0.4' );
+define( 'DIRECT_VERSION', '1.0.5' );
 // Does it work as a plugin or as a part of dE theme?
 if ( ! defined ( 'DIRECT_MODE' ) ) {
 	define( 'DIRECT_MODE', 'PLUGIN' );
@@ -404,7 +404,7 @@ function de_scripts_and_styles() {
 			wp_enqueue_script( 'direct-link-editor', DIRECT_URL . 'js/direct-link-editor.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-slider', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-dialog', 'jquery-ui-button' ), DIRECT_VERSION, true );
 			wp_enqueue_script( 'direct-list-editor', DIRECT_URL . 'js/direct-list-editor.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-slider', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-dialog', 'jquery-ui-button' ), DIRECT_VERSION, true );
 			wp_enqueue_script( 'direct-date-editor', DIRECT_URL . 'js/direct-date-editor.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-slider', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-dialog', 'jquery-ui-button' ), DIRECT_VERSION, true );
-			if ( ( current_user_can( 'edit_theme_options' ) || current_user_can( 'edit_de_frontend' ) ) && is_object( $direct_queried_object ) && isset( $direct_queried_object->ID ) && get_option( 'de_menu_editor_enabled' ) && get_option( 'de_edit_menu_page' ) == $direct_queried_object->ID ) {
+			if ( ( current_user_can( 'edit_theme_options' ) || current_user_can( 'edit_de_frontend' ) ) && is_object( $direct_queried_object ) && isset( $direct_queried_object->ID ) && get_option( 'de_menu_editor_enabled' ) && de_get_current_template() == 'edit-menu.php' ) {
 				wp_enqueue_script( 'direct-menu-editor', DIRECT_URL . 'js/direct-menu-editor.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-slider', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-dialog', 'jquery-ui-button' ), DIRECT_VERSION, true );
 			}
 			wp_enqueue_script( 'direct-edit', DIRECT_URL . 'js/direct-edit.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-slider', 'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-dialog', 'jquery-ui-button' ), DIRECT_VERSION, true );

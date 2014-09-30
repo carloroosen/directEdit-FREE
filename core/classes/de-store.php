@@ -11,7 +11,7 @@ class De_Store {
 		}
 		
 		// Nothing is editable for Direct Menu Editor except for wpcontent on Edit Menu page only
-		if ( get_option( 'de_menu_editor_enabled' ) && get_option( 'de_edit_menu_page' ) == $item->get_setting( 'postId' ) && is_object( $direct_queried_object ) && $direct_queried_object->ID == $item->get_setting( 'postId' ) ) {
+		if ( get_option( 'de_menu_editor_enabled' ) && de_get_current_template() == 'edit-menu.php' ) {
 			switch( $item->store ) {
 				case 'wpcontent':
 					return ( current_user_can( 'edit_theme_options' ) || current_user_can( 'edit_de_frontend' ) );
@@ -24,7 +24,7 @@ class De_Store {
 		
 		// Menu has its own check
 		if ( $item instanceof De_Item_Menu ) {
-			if( is_object( $direct_queried_object ) && get_option( 'de_menu_editor_enabled' ) && get_option( 'de_edit_menu_page' ) == $direct_queried_object->ID && $item->get_setting( 'menu' ) ) {
+			if( get_option( 'de_menu_editor_enabled' ) && de_get_current_template() == 'edit-menu.php' && $item->get_setting( 'menu' ) ) {
 				return ( current_user_can( 'edit_theme_options' ) || current_user_can( 'edit_de_frontend' ) );
 			} else {
 				return false;

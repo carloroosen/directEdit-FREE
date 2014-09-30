@@ -40,7 +40,7 @@ class De_Item_Text extends De_Item {
 	public function output( $content = null ) {
 		$attr = array();
 
-		if ( get_option( 'de_menu_editor_enabled' ) && get_option( 'de_edit_menu_page' ) == $this->get_setting( 'postId' ) && De_Store::is_editable( $this ) ) {
+		if ( get_option( 'de_menu_editor_enabled' ) && de_get_current_template() == 'edit-menu.php' && De_Store::is_editable( $this ) ) {
 			// Direct Menu Editor output
 			$container = 'div';
 			if ( $this->get_setting( 'attr' ) && is_array( $this->get_setting( 'attr' ) ) ) {
