@@ -294,12 +294,36 @@ function de_save_page() {
 			if ( is_dir( dirname( get_stylesheet_directory() . '/' . $template ) ) && file_exists( dirname( get_stylesheet_directory() . '/' . $template ) . '/functions.php' ) ) {
 				require_once dirname( get_stylesheet_directory() . '/' . $template ) . '/functions.php';
 			}
-			
-			if ( direct_bloginfo( 'title', false, $post_id ) != stripslashes( $_POST[ 'direct-page-options' ][ 'de_title' ] ) ) {
-				update_post_meta( $post_id, 'de_title', stripslashes( $_POST[ 'direct-page-options' ][ 'de_title' ] ) );
-			}
-			if ( direct_bloginfo( 'description', false, $post_id ) != stripslashes( $_POST[ 'direct-page-options' ][ 'de_description' ] ) ) {
-				update_post_meta( $post_id, 'de_description', stripslashes( $_POST[ 'direct-page-options' ][ 'de_description' ] ) );
+			if ( get_option( 'de_use_seo' ) == '' ) {
+				if ( direct_bloginfo( 'title', false, $post_id ) != stripslashes( $_POST[ 'direct-page-options' ][ 'de_title' ] ) ) {
+					update_post_meta( $post_id, 'de_title', stripslashes( $_POST[ 'direct-page-options' ][ 'de_title' ] ) );
+				}
+				if ( direct_bloginfo( 'description', false, $post_id ) != stripslashes( $_POST[ 'direct-page-options' ][ 'de_description' ] ) ) {
+					update_post_meta( $post_id, 'de_description', stripslashes( $_POST[ 'direct-page-options' ][ 'de_description' ] ) );
+				}
+				if ( direct_bloginfo( 'keywords', false, $post_id ) != stripslashes( $_POST[ 'direct-page-options' ][ 'de_keywords' ] ) ) {
+					update_post_meta( $post_id, 'de_keywords', stripslashes( $_POST[ 'direct-page-options' ][ 'de_keywords' ] ) );
+				}
+			} elseif( is_plugin_active( 'all-in-one-seo-pack/all_in_one_seo_pack.php' ) && get_option( 'de_use_seo' ) == 'all-in-one-seo-pack' ) {
+				if ( get_post_meta( $post_id, '_aioseop_title', true ) != stripslashes( $_POST[ 'direct-page-options' ][ '_aioseop_title' ] ) ) {
+					update_post_meta( $post_id, '_aioseop_title', stripslashes( $_POST[ 'direct-page-options' ][ '_aioseop_title' ] ) );
+				}
+				if ( get_post_meta( $post_id, '_aioseop_description', true ) != stripslashes( $_POST[ 'direct-page-options' ][ '_aioseop_description' ] ) ) {
+					update_post_meta( $post_id, '_aioseop_description', stripslashes( $_POST[ 'direct-page-options' ][ '_aioseop_description' ] ) );
+				}
+				if ( get_post_meta( $post_id, '_aioseop_keywords', true ) != stripslashes( $_POST[ 'direct-page-options' ][ '_aioseop_keywords' ] ) ) {
+					update_post_meta( $post_id, '_aioseop_keywords', stripslashes( $_POST[ 'direct-page-options' ][ '_aioseop_keywords' ] ) );
+				}
+			} elseif( is_plugin_active( 'wordpress-seo/wp-seo.php' ) && get_option( 'de_use_seo' ) == 'wordpress-seo' ) {
+				if ( get_post_meta( $post_id, '_yoast_wpseo_title', true ) != stripslashes( $_POST[ 'direct-page-options' ][ '_yoast_wpseo_title' ] ) ) {
+					update_post_meta( $post_id, '_yoast_wpseo_title', stripslashes( $_POST[ 'direct-page-options' ][ '_yoast_wpseo_title' ] ) );
+				}
+				if ( get_post_meta( $post_id, '_yoast_wpseo_metadesc', true ) != stripslashes( $_POST[ 'direct-page-options' ][ '_yoast_wpseo_metadesc' ] ) ) {
+					update_post_meta( $post_id, '_yoast_wpseo_metadesc', stripslashes( $_POST[ 'direct-page-options' ][ '_yoast_wpseo_metadesc' ] ) );
+				}
+				if ( get_post_meta( $post_id, '_yoast_wpseo_focuskw', true ) != stripslashes( $_POST[ 'direct-page-options' ][ '_yoast_wpseo_focuskw' ] ) ) {
+					update_post_meta( $post_id, '_yoast_wpseo_focuskw', stripslashes( $_POST[ 'direct-page-options' ][ '_yoast_wpseo_focuskw' ] ) );
+				}
 			}
 			if ( get_option( 'de_smart_urls' ) && get_option( 'permalink_structure' ) == '/%postname%/' ) {
 				if ( sanitize_title( stripslashes( $_POST[ 'direct-page-options' ][ 'de_slug' ] ) ) && direct_bloginfo( 'slug', false, $post_id ) != De_Url::unique_slug( $post_id, sanitize_title( stripslashes( $_POST[ 'direct-page-options' ][ 'de_slug' ] ) ) ) ) {
