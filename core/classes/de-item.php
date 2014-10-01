@@ -39,7 +39,9 @@ class De_Item {
 		'localize',
 		'menu',
 		'startLevel',
-		'depth'
+		'depth',
+		'menu_id',
+		'menu_class'
 	);
 	
 	public function __construct( $store, $settings ) {
