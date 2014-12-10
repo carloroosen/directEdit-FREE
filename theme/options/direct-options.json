@@ -134,20 +134,21 @@
 			}
 		}
 	},
-	"list-divClasses": {
+	"carousel": {
 		"type": "list",
-		"listSelector" : "ul",
+		"callback" : "function(activeItem) {initCarouselReload(this, activeItem);}",
+		"listSelector" : "div.carousel-inner",
 		"divClasses" : { 
 			"right" : "group-right",
 			"left" : "group-left"
 		},
 		"commands" : {
 			"move-left" : {
-				"caption" : "move up",
+				"caption" : "move left",
 				"div" : "left"
 			},
 			"move-right" : {
-				"caption" : "move down",
+				"caption" : "move right",
 				"div" : "right"
 			},
 			"delete" : {
@@ -157,7 +158,29 @@
 			"add" : {
 				"caption" : "insert after",
 				"div" : "right"
+			},
+			"custom-edit-link" : {
+				"caption" : "edit link",
+				"div" : "left",
+				"action" : "function(element) { jQuery('.direct-link-editor', element).directLinkEditor('editLink'); }"
+			},
+			"custom-follow-link" : {
+				"caption" : "follow link",
+				"div" : "right",
+				"action" : "function(element) { jQuery('.direct-link-editor', element).directLinkEditor('followLink'); }"
 			}
+		}
+	},
+	"carousel-image": {
+		"type": "image",
+		"imgFileFormat": "jpg",
+		"imgQuality": 80,
+		"sourceMaxResize": 1200,
+		"constraints" : {
+			"minWidth": 400,
+			"maxWidth": 400,
+			"minHeight": 300,
+			"maxHeight": 300
 		}
 	}
 }

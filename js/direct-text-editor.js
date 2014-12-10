@@ -411,7 +411,7 @@
 			}
 
 			// inline styling is allowed for images only
-			if (node.prop("nodeName").toLowerCase() !== 'img') {
+			if (node != this.element && node.prop("nodeName").toLowerCase() !== 'img') {
 				node.removeAttr('style');
 			}
 			// recursively search the DOM tree
