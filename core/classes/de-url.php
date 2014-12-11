@@ -168,7 +168,7 @@ class De_Url {
 				}
 				
 				if ( $i == count( $de_url_array ) - 1 ) {
-					if ( get_option( 'de_smart_urls' ) && get_option( 'permalink_structure' ) == '/%postname%/' || de_is_de_archive( $result->ID ) ) {
+					if ( ( get_option( 'de_smart_urls' ) && get_option( 'permalink_structure' ) == '/%postname%/' || de_is_de_archive( $result->ID ) ) && current_user_can( 'read', $result->ID ) ) {
 						return get_post( $result->ID );
 					} else {
 						break;
@@ -182,7 +182,7 @@ class De_Url {
 		}
 		
 		// WP slug
-		if ( is_singular() ) {
+		if ( is_singular() && current_user_can( 'read', $post->ID ) ) {
 			return $post;
 		} else {
 			return null;
