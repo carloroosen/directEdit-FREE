@@ -228,6 +228,12 @@ function de_add_de_page() {
 					}
 				}
 			}
+			
+			// WordPress SEO plugin fix
+			if ( class_exists ( 'WPSEO_Frontend' ) && ! empty( $GLOBALS['wpseo_front'] ) && $GLOBALS['wpseo_front'] instanceof WPSEO_Frontend ) {
+				remove_action( 'wp_head', array( $GLOBALS['wpseo_front'], 'head' ), 1 );
+			}
+			
 			if ( file_exists ( get_stylesheet_directory() . '/single-' . $post_type . '.php' ) ) {
 				$de_current_template = 'single-' . $post_type . '.php';
 				include( get_stylesheet_directory() . '/single-' . $post_type . '.php' );

@@ -168,7 +168,7 @@ class De_Url {
 				}
 				
 				if ( $i == count( $de_url_array ) - 1 ) {
-					if ( ( get_option( 'de_smart_urls' ) && get_option( 'permalink_structure' ) == '/%postname%/' || de_is_de_archive( $result->ID ) ) && in_array( $result->post_type, get_post_types( array( 'publicly_queryable' => true ) ) ) ) {
+					if ( ( get_option( 'de_smart_urls' ) && get_option( 'permalink_structure' ) == '/%postname%/' || de_is_de_archive( $result->ID ) ) && ( in_array( $result->post_type, get_post_types( array( 'public' => true ) ) ) || in_array( $result->post_type, get_post_types( array( 'publicly_queryable' => true ) ) ) ) ) {
 						return get_post( $result->ID );
 					} else {
 						break;
