@@ -190,6 +190,7 @@ function de_set_de_page() {
 
 function de_add_de_page() {
 	global $wp_query;
+	global $wp_the_query;
 	global $post_type;
 	global $post;
 	global $wp;
@@ -211,6 +212,7 @@ function de_add_de_page() {
 			$direct_queried_object = $post;
 			$wp_query->posts = array( $post );
 			$wp_query->post_count = 1;
+			$wp_the_query = $wp_query;
 
 			if ( get_option( 'de_options_custom_page_types' ) )
 				$options = unserialize( base64_decode( get_option( 'de_options_custom_page_types' ) ) );
@@ -227,11 +229,6 @@ function de_add_de_page() {
 						exit;
 					}
 				}
-			}
-			
-			// WordPress SEO plugin fix
-			if ( class_exists ( 'WPSEO_Frontend' ) && ! empty( $GLOBALS['wpseo_front'] ) && $GLOBALS['wpseo_front'] instanceof WPSEO_Frontend ) {
-				remove_action( 'wp_head', array( $GLOBALS['wpseo_front'], 'head' ), 1 );
 			}
 			
 			if ( file_exists ( get_stylesheet_directory() . '/single-' . $post_type . '.php' ) ) {
