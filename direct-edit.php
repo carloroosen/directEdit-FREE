@@ -6,7 +6,14 @@ Description: DirectEdit is the fastest and easiest way to keep your website up-t
 Version: 1.0.5
 Author: Carlo Roosen, Elena Mukhina
 Author URI: http://carloroosen.com/
+Text Domain: direct-edit
+Domain Path: /translations
 */
+
+// No direct access
+if ( ! function_exists( 'add_action' ) ) {
+	exit();
+}
 
 define( 'DIRECT_VERSION', '1.0.5' );
 // Does it work as a plugin or as a part of dE theme?

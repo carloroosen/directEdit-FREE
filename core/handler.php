@@ -142,10 +142,19 @@ function de_hide_post() {
 		$item = De_Items::get( $_POST[ 'data' ][ 'reference' ] );
 
 		if ( $item instanceof De_Item && De_Store::is_editable( $item ) && $item->get_setting( 'postId' ) && de_is_hideable( $item->get_setting( 'postId' ) ) ) {
-			$p = array();
-			$p[ 'ID' ] = $item->get_setting( 'postId' );
-			$p[ 'post_status' ] = 'draft';
-			wp_update_post( $p );
+			if ( De_Language_Wrapper::has_multilanguage() && De_Language_Wrapper::get_language_posts( $item->get_setting( 'postId' ) ) ) {
+				foreach( De_Language_Wrapper::get_language_posts( $item->get_setting( 'postId' ) ) as $lang_post ) {
+					$p = array();
+					$p[ 'ID' ] = $lang_post->ID;
+					$p[ 'post_status' ] = 'draft';
+					wp_update_post( $p );
+				}
+			} else {
+				$p = array();
+				$p[ 'ID' ] = $item->get_setting( 'postId' );
+				$p[ 'post_status' ] = 'draft';
+				wp_update_post( $p );
+			}
 			
 			$response = array( 'action' => 'addclass', 'cssClass' => 'direct-hidden' );
 		}
@@ -396,10 +405,19 @@ function de_show_post() {
 		$item = De_Items::get( $_POST[ 'data' ][ 'reference' ] );
 
 		if ( $item instanceof De_Item && De_Store::is_editable( $item ) && $item->get_setting( 'postId' ) && de_is_hideable( $item->get_setting( 'postId' ) ) ) {
-			$p = array();
-			$p[ 'ID' ] = $item->get_setting( 'postId' );
-			$p[ 'post_status' ] = 'publish';
-			wp_update_post( $p );
+			if ( De_Language_Wrapper::has_multilanguage() && De_Language_Wrapper::get_language_posts( $item->get_setting( 'postId' ) ) ) {
+				foreach( De_Language_Wrapper::get_language_posts( $item->get_setting( 'postId' ) ) as $lang_post ) {
+					$p = array();
+					$p[ 'ID' ] = $lang_post->ID;
+					$p[ 'post_status' ] = 'publish';
+					wp_update_post( $p );
+				}
+			} else {
+				$p = array();
+				$p[ 'ID' ] = $item->get_setting( 'postId' );
+				$p[ 'post_status' ] = 'publish';
+				wp_update_post( $p );
+			}
 			
 			$response = array( 'action' => 'removeclass', 'cssClass' => 'direct-hidden' );
 		}

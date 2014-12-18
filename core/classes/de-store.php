@@ -174,7 +174,7 @@ class De_Store {
 			case 'postdate':
 				// $store = 'date' is available for dates only
 				if ( $item instanceof De_Item_Date ) {
-					$content = get_the_time( 'Y-m-d H:i:s', $item->get_setting( 'postId' ) );;
+					$content = get_the_time( 'Y-m-d H:i:s', $item->get_setting( 'postId' ) );
 				} else {
 					return null;
 				}
@@ -835,7 +835,7 @@ class De_Store {
 					break;
 				}
 				
-				if ( $sourcewidth == $scaledimagewidth && $sourcewidth == $containerwidth && ! $left && ! $top && $type == $f ) {
+				if ( $sourcewidth == $scaledimagewidth && $sourcewidth == $containerwidth && $sourceheight == $scaledimageheight && $sourceheight == $containerheight && ! $left && ! $top && $type == $f ) {
 					copy( $sourcefilepath, $destfilepath );
 				} else {
 					$scaledimage = imagecreatetruecolor( $containerwidth, $containerheight );
