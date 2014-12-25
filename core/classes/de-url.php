@@ -5,18 +5,18 @@ class De_Url {
 		
 		if ( $de_post ) {
 			if( get_option( 'de_page_for_' . $de_post->post_type ) ) {
-				if ( De_Language_Wrapper::has_multilanguage() && De_Language_Wrapper::get_post_language( $de_post ) ) {
+				if ( De_Language_Wrapper::has_multilanguage() && De_Language_Wrapper::get_post_language( $de_post->ID ) ) {
 					$parent_post_id = get_option( 'de_page_for_' . $de_post->post_type );
 					
 					if ( ! De_Language_Wrapper::get_post_language( $parent_post_id ) ) {
 						De_Language_Wrapper::set_post_language( $parent_post_id, De_Language_Wrapper::get_default_language() );
 					}
 					
-					if ( ! De_Language_Wrapper::get_language_post( $parent_post_id, De_Language_Wrapper::get_post_language( $de_post ) ) ) {
+					if ( ! De_Language_Wrapper::get_language_post( $parent_post_id, De_Language_Wrapper::get_post_language( $de_post->ID ) ) ) {
 						De_Language_Wrapper::create_language_posts( $parent_post_id );
 					}
 					
-					$de_post_parent = De_Language_Wrapper::get_language_post( $parent_post_id, De_Language_Wrapper::get_post_language( $de_post ) )->ID;
+					$de_post_parent = De_Language_Wrapper::get_language_post( $parent_post_id, De_Language_Wrapper::get_post_language( $de_post->ID ) )->ID;
 				} else {
 					$de_post_parent = get_option( 'de_page_for_' . $de_post->post_type );
 				}
