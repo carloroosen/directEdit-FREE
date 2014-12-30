@@ -19,7 +19,11 @@
 				height: '500',
 				title: "Edit image",
 				modal: false,
-				position: ['center','middle'],
+				position: {
+					my: "center",
+					at: "center",	
+					of: window
+				},
 				resizable: false,
 				draggable: true,
 				dialogClass: 'direct-edit'
@@ -43,7 +47,7 @@
 
 			this.options.dialogOptions.autoOpen = false;
 			this.options.dialogOptions.minWidth = this.options.dialogOptions.width;
-			
+			console.log(this.options.dialogOptions);
 			this.dialog = $('<div id="direct-image-editor-dialog"></div>').dialog(this.options.dialogOptions);
 			self.dialog.parent().css({'min-width': self.options.dialogOptions.width + 'px'});
 			
@@ -377,10 +381,10 @@
 			setTimeout (function () {
 				self.dialog.parent().addClass('transition');;
 				self.dialog.dialog({
-					position: { 'my': 'center', 'at': 'center' },
+					position: { 'my': 'center', 'at': 'center', 'of': window },
 					width: width || 'auto',
 					height: height || 'auto'
-				})
+				});
 			}, 10);
 			setTimeout (function () {
 				self.dialog.parent().removeClass('transition');;

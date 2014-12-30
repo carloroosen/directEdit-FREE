@@ -98,8 +98,8 @@
 	},
 	"link-post": {
 		"type": "link",
-		"buttonDelete": true,
-		"buttonShowHide": true,
+		"buttonDelete": false,
+		"buttonShowHide": false,
 		"buttonFollowLink": true
 	},
 	"date": {
