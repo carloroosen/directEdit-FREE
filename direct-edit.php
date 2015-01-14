@@ -441,7 +441,7 @@ function de_footer_scripts() {
 <script>
 	jQuery(document).ready(function() {
 		directEdit(<?php echo de_json_encode( $de_global_options ); ?>);
-		<?php if ( ! is_admin() && ( current_user_can('edit_posts') || current_user_can( 'edit_users' ) || current_user_can( 'edit_theme_options' ) || current_user_can( 'edit_de_frontend' ) ) ) { // Save button is only for users who can edit posts ?>
+		<?php if ( current_user_can('edit_posts') || current_user_can( 'edit_de_frontend' ) ) { // Save button is only for users who can edit posts ?>
 			jQuery('li#wp-admin-bar-save-page a').directSaveButton({ajaxUrl: '<?php echo admin_url( 'admin-ajax.php' ); ?>', success: function (m) {console.log(m)}});
 		<?php } ?>
 	});
