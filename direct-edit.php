@@ -367,7 +367,7 @@ function de_wrap_the_excerpt( $content ) {
 function de_scripts_and_styles() {
 	global $direct_queried_object;
 	
-	if ( ! is_admin() && ( current_user_can('edit_posts') || current_user_can( 'edit_users' ) || current_user_can( 'edit_theme_options' ) || current_user_can( 'edit_de_frontend' ) ) ) {
+	if ( current_user_can('edit_posts') || current_user_can( 'edit_users' ) || current_user_can( 'edit_theme_options' ) || current_user_can( 'edit_de_frontend' ) ) {
 		if ( file_exists( get_stylesheet_directory() . '/direct-edit' ) && file_exists( get_stylesheet_directory() . '/direct-edit/css/direct-edit.css' ) ) {
 			wp_enqueue_style( 'directEdit', get_stylesheet_directory_uri() . '/direct-edit/css/direct-edit.css' );
 		} else {
@@ -382,7 +382,7 @@ function de_scripts_and_styles() {
 	
 	wp_enqueue_script( 'jquery' );
 
-	if ( ! is_admin() && ( current_user_can('edit_posts') || current_user_can( 'edit_users' ) || current_user_can( 'edit_theme_options' ) || current_user_can( 'edit_de_frontend' ) ) ) {
+	if ( current_user_can('edit_posts') || current_user_can( 'edit_users' ) || current_user_can( 'edit_theme_options' ) || current_user_can( 'edit_de_frontend' ) ) {
 		$locale = get_locale();
 		if ( empty( $locale ) ) {
 			$locale = 'en_US';
@@ -436,7 +436,7 @@ function de_footer_scripts() {
 	global $de_global_options;
 	global $direct_queried_object;
 	
-	if ( ! is_admin() && ( current_user_can('edit_posts') || current_user_can( 'edit_users' ) || current_user_can( 'edit_theme_options' ) || current_user_can( 'edit_de_frontend' ) ) ) {
+	if ( current_user_can('edit_posts') || current_user_can( 'edit_users' ) || current_user_can( 'edit_theme_options' ) || current_user_can( 'edit_de_frontend' ) ) {
 	?>
 <script>
 	jQuery(document).ready(function() {
