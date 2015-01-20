@@ -15,7 +15,6 @@ if ( ! function_exists( 'add_action' ) ) {
 	exit();
 }
 
-define( 'DIRECT_VERSION', '1.0.5' );
 // Does it work as a plugin or as a part of dE theme?
 if ( ! defined ( 'DIRECT_MODE' ) ) {
 	define( 'DIRECT_MODE', 'PLUGIN' );
@@ -57,6 +56,7 @@ add_action( 'init', 'de_load_global_options' );
 add_action( 'init', 'de_session_init', 3 );
 add_action( 'init', 'de_extensions_default', 10 );
 add_action( 'init', 'de_load_translation_file', 5 );
+add_action( 'plugins_loaded', 'de_define_direct_version' );
 add_action( 'switch_theme', 'de_on_switch_theme' );
 add_action( 'template_include', 'de_define_current_template', 1000 );
 add_action( 'template_redirect', 'de_set_de_page', 0 );
@@ -171,6 +171,11 @@ function de_extensions_default() {
 
 function de_load_translation_file() {
 	load_plugin_textdomain( 'direct-edit', '', DIRECT_PATH . 'translations' );
+}
+
+function de_define_direct_version() {
+	$data = get_file_data( __FILE__, array( 'Version' => 'Version' ) );
+	define( 'DIRECT_VERSION', $data[ 'Version' ] );
 }
 
 function de_on_switch_theme() {
