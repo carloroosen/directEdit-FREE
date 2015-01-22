@@ -240,6 +240,8 @@ function de_list_move_right() {
 function de_save_page() {
 	global $user_ID;
 	
+	check_ajax_referer( 'de_nonce_check', '_de_nonce' );
+	
 	$response = array();
 	
 	foreach( $_POST as $key => $field ) {
