@@ -131,7 +131,9 @@ class De_Url {
 						AND depostparent.meta_value = " . esc_sql( $de_post_parent ) . "
 					";
 					if ( ! ( current_user_can( 'edit_posts' ) || current_user_can( 'edit_de_frontend' ) ) ) {
-						$querystr .= " AND wposts.post_status != 'draft'";
+						$querystr .= " AND wposts.post_status = 'publish'";
+					} else {
+						$querystr .= " AND (wposts.post_status = 'publish' OR wposts.post_status = 'draft')";
 					}
 				} else {
 					$querystr = "
@@ -147,7 +149,9 @@ class De_Url {
 						)
 					";
 					if ( ! ( current_user_can( 'edit_posts' ) || current_user_can( 'edit_de_frontend' ) ) ) {
-						$querystr .= " AND wposts.post_status != 'draft'";
+						$querystr .= " AND wposts.post_status = 'publish'";
+					} else {
+						$querystr .= " AND (wposts.post_status = 'publish' OR wposts.post_status = 'draft')";
 					}
 				}
 
