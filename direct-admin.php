@@ -48,25 +48,48 @@ function de_wp_hooks_meta_box( $post ) {
 }
 
 function de_plugin_menu() {
+	add_options_page( __( 'Direct Edit Options', 'direct-edit' ), __( 'Direct Edit', 'direct-edit' ), 'manage_options', 'direct-edit', 'de_plugin_page' );
+}
+
+function de_plugin_page() {
 	global $wpdb;
 	global $options;
 	global $user_ID;
+	
+	// Check permissions
+	if ( ! current_user_can( 'manage_options' ) )  {
+		wp_die( __( 'You do not have sufficient permissions to access this page.', 'direct-edit' ) );
+	}
 
-	if ( basename( $_SERVER[ 'SCRIPT_FILENAME' ] ) == 'plugins.php' && isset( $_GET[ 'page' ] ) && $_GET[ 'page' ] == 'direct-edit' ) {
-		// Check permissions
-		if ( ! current_user_can( 'manage_options' ) )  {
-			wp_die( __( 'You do not have sufficient permissions to access this page.', 'direct-edit' ) );
-		}
-
-		if ( isset( $_REQUEST['action'] ) && 'upgrade' == $_REQUEST['action'] ) {
-			$upgrade_url = 'http://directedit.co/downloads/direct-edit-upgrade.zip?key=' . urlencode( $_POST[ 'upgrade_key' ] ) . '&url=' . urlencode( get_option( 'siteurl' ) ) . '&activity=upgrade';
+	// Save options
+	if ( isset( $_REQUEST['action'] ) ) {
+		if ( 'upgrade' == $_REQUEST['action'] ) {
+			check_admin_referer( 'de_nonce_upgrade', '_de_nonce' );
+			
+			$upgrade_url = 'http://directedit.co/downloads/direct-edit-upgrade.zip?key=' . urlencode( sanitize_text_field( $_POST[ 'upgrade_key' ] ) ) . '&url=' . urlencode( get_option( 'siteurl' ) ) . '&activity=upgrade';
 			$upgrade_path = download_url( $upgrade_url );
-			if ( ! is_wp_error( $upgrade_path ) ) {
-				if ( $upgrade_path && WP_Filesystem() ) {
-					$result = unzip_file( $upgrade_path, DIRECT_PATH );
+			if ( is_wp_error( $upgrade_path ) ) {
+				add_settings_error( 'direct-edit', 'de-error', __( 'Upgrade error.', 'direct-edit' ) );
+			} else {
+				if ( $upgrade_path ) {
+					$url = wp_nonce_url( basename( $_SERVER['PHP_SELF'] ) . '?page=direct-edit', 'de_nonce_copy_files', '_de_nonce' );
+					if ( false === ( $creds = request_filesystem_credentials( $url, '', false, get_stylesheet_directory(), array( 'action' => 'upgrade', 'upgrade_key' => sanitize_text_field( $_POST[ 'upgrade_key' ] ) ) ) ) ) {
+						return;
+					}
+					if ( ! WP_Filesystem( $creds ) ) {
+						request_filesystem_credentials( $url, '', true, get_stylesheet_directory(), array( 'action' => 'copy_files' ) );
+						return;
+					}
+
+					global $wp_filesystem;
+					$plugin_path = str_replace( ABSPATH, $wp_filesystem->abspath(), DIRECT_PATH );
+
+					$result = unzip_file( $upgrade_path, $plugin_path );
 					unlink( $upgrade_path );
 					
-					if ( ! is_wp_error($result) ) {
+					if ( is_wp_error( $result ) ) {
+						add_settings_error( 'direct-edit', 'de-error', __( 'Upgrade error.', 'direct-edit' ) );
+					} else {
 						/* Add PRO options to json options file
 						 * It seems it's not needed for now
 						
@@ -91,81 +114,71 @@ function de_plugin_menu() {
 						// Save the key
 						update_option( 'automatic_updates_key', $_POST[ 'upgrade_key' ] );
 						
-						wp_redirect( admin_url( '/plugins.php?page=direct-edit&saved=true' ) );
-						die();
+						add_settings_error( 'direct-edit', 'de-updated', __( 'Settings saved.', 'direct-edit' ), 'updated' );
 					}
 				}
 			}
+		} elseif ( 'copy_files' == $_REQUEST['action'] ) {
+			check_admin_referer( 'de_nonce_copy_files', '_de_nonce' );
 			
-			wp_redirect( admin_url( '/plugins.php?page=direct-edit&error=upgrade' ) );
-		} elseif ( isset( $_REQUEST['action'] ) && 'copy_files' == $_REQUEST['action'] ) {
-			if ( ! file_exists( get_stylesheet_directory() . '/direct-edit' ) ) {
-				$result = de_copy( DIRECT_PATH . 'theme', get_stylesheet_directory() . '/direct-edit' );
-				if ( ! $result ) {
-					@de_rmdir( get_stylesheet_directory() . '/direct-edit' );
-					wp_redirect( admin_url( '/plugins.php?page=direct-edit&error=copy_files' ) );
-					die();
-				}
+			$url = wp_nonce_url( basename( $_SERVER['PHP_SELF'] ) . '?page=direct-edit', 'de_nonce_copy_files', '_de_nonce' );
+			if ( false === ( $creds = request_filesystem_credentials( $url, '', false, get_stylesheet_directory(), array( 'action' => 'copy_files' ) ) ) ) {
+				return;
 			}
+			if ( ! WP_Filesystem( $creds ) ) {
+				request_filesystem_credentials( $url, '', true, get_stylesheet_directory(), array( 'action' => 'copy_files' ) );
+				return;
+			}
+
+			global $wp_filesystem;
+			$plugin_path = str_replace( ABSPATH, $wp_filesystem->abspath(), DIRECT_PATH );
+			$theme_path = trailingslashit( get_stylesheet_directory() );
+
+			if ( ! $wp_filesystem->is_dir( $theme_path . 'direct-edit' ) ) {
+				de_copy( $plugin_path . 'theme', $theme_path . 'direct-edit' );
+			}
+
+			add_settings_error( 'direct-edit', 'de-updated', __( 'Settings saved.', 'direct-edit' ), 'updated' );
+		} elseif ( 'remove_files' == $_REQUEST['action'] ) {
+			check_admin_referer( 'de_nonce_remove_files', '_de_nonce' );
 			
-			wp_redirect( admin_url( '/plugins.php?page=direct-edit&saved=true' ) );
-		} elseif ( isset( $_REQUEST['action'] ) && 'remove_files' == $_REQUEST['action'] ) {
 			if ( file_exists( get_stylesheet_directory() . '/direct-edit' ) ) {
 				de_rmdir( get_stylesheet_directory() . '/direct-edit' );
 			}
 			
-			wp_redirect( admin_url( '/plugins.php?page=direct-edit&saved=true' ) );
-		} elseif ( isset( $_REQUEST['action'] ) && 'wp_hooks' == $_REQUEST['action'] ) {
-			$options = $wpdb->escape( $_REQUEST[ 'wp_hooks' ] );
+			add_settings_error( 'direct-edit', 'de-updated', __( 'Settings saved.', 'direct-edit' ), 'updated' );
+		} elseif ( 'wp_hooks' == $_REQUEST['action'] ) {
+			check_admin_referer( 'de_nonce_wp_hooks', '_de_nonce' );
+			
+			$options = array_map( 'sanitize_text_field', ( array ) $_REQUEST[ 'wp_hooks' ] );
 			update_option( 'de_options_wp_hooks', base64_encode( serialize( $options ) ) );
 			
-			wp_redirect( admin_url( '/plugins.php?page=direct-edit&saved=true' ) );
-		} elseif ( isset( $_REQUEST[ 'action' ] ) && 'de_options' == $_REQUEST[ 'action' ] ) {
+			add_settings_error( 'direct-edit', 'de-updated', __( 'Settings saved.', 'direct-edit' ), 'updated' );
+		} elseif ( 'de_options' == $_REQUEST[ 'action' ] ) {
+			check_admin_referer( 'de_nonce_de_options', '_de_nonce' );
+			
 			update_option( 'de_text_validation', $_REQUEST[ 'text_validation' ] );
 			
-			wp_redirect( admin_url( '/plugins.php?page=direct-edit&saved=true' ) );
+			add_settings_error( 'direct-edit', 'de-updated', __( 'Settings saved.', 'direct-edit' ), 'updated' );
 		}
 	}
-	
-	add_plugins_page( 'Direct Edit Options', 'Direct Edit', 'manage_options', 'direct-edit', 'de_plugin_page' );
-}
 
-function de_plugin_page() {
-	global $wpdb;
-	global $options;
-	global $user_ID;
+	settings_errors();
 
-	// Check permissions
-	if ( ! current_user_can( 'manage_options' ) )  {
-		wp_die( __( 'You do not have sufficient permissions to access this page.', 'direct-edit' ) );
-	}
-
-	if ( isset( $_REQUEST[ 'saved' ] ) ) {
-		echo '<div id="message" class="updated fade"><p><strong> Settings saved.</strong></p></div>';
-	} elseif ( isset( $_REQUEST[ 'error' ] ) ) {
-		if ( $_REQUEST[ 'error' ] == 'upgrade' ) {
-			echo '<div id="message" class="updated fade"><p><strong> Upgrade error.</strong></p></div>';
-		} elseif ( $_REQUEST[ 'error' ] == 'copy_files' ) {
-			echo '<div id="message" class="updated fade"><p><strong> Settings could not be saved. Check folder permissions.</strong></p></div>';
-		}
-	}
-		
 	if ( get_option( 'de_options_wp_hooks' ) )
 		$options_wp_hooks = unserialize( base64_decode( get_option( 'de_options_wp_hooks' ) ) );
 	else
 		$options_wp_hooks = array( 'title' => 1, 'content' => 1, 'excerpt' => 1 );
 	?>
 	<div class="wrap">
-		<div id="icon-themes" class="icon32">
-			<br>
-		</div>
-		<h2>Direct Edit <?php _e( 'Options', 'direct-edit' ); ?></h2>
+		<h2><?php _e( 'Direct Edit Options', 'direct-edit' ); ?></h2>
 		<div class="inside">
 			<iframe src="http://directedit.co/iframe/" frameborder="0" scrolling="no" style="width: 50%; height: 550px; float:right;"></iframe>
 		</div>
 		<h3><i><?php _e( 'upgrade to PRO', 'direct-edit' );?></i></h3>
 		<div class="inside">
 			<form method="post">
+				<?php wp_nonce_field( 'de_nonce_upgrade', '_de_nonce' ); ?>
 				<input type="hidden" name="action" value="upgrade" />
 				<table border="0">
 					<tbody>
@@ -182,6 +195,7 @@ function de_plugin_page() {
 		<h3><?php _e( 'copy files to current theme', 'direct-edit' );?></h3>
 		<div class="inside">
 			<form method="post">
+				<?php wp_nonce_field( 'de_nonce_copy_files', '_de_nonce' ); ?>
 				<input type="hidden" name="action" value="copy_files" />
 				<table border="0">
 					<tbody>
@@ -196,6 +210,7 @@ function de_plugin_page() {
 		<h3><?php _e( 'remove /direct-edit folder from theme', 'direct-edit' );?></h3>
 		<div class="inside">
 			<form method="post">
+				<?php wp_nonce_field( 'de_nonce_remove_files', '_de_nonce' ); ?>
 				<input type="hidden" name="action" value="remove_files" />
 				<table border="0">
 					<tbody>
@@ -210,6 +225,7 @@ function de_plugin_page() {
 		<h3><i><?php _e( 'hooks on standard wp-functions', 'direct-edit' );?></i></h3>
 		<div class="inside">
 			<form method="post">
+				<?php wp_nonce_field( 'de_nonce_wp_hooks', '_de_nonce' ); ?>
 				<input type="hidden" name="action" value="wp_hooks" />
 				<table border="0">
 					<tbody>
@@ -232,6 +248,7 @@ function de_plugin_page() {
 		<h3><i><?php _e( 'options', 'direct-edit' );?></i></h3>
 		<div class="inside">
 			<form method="post">
+				<?php wp_nonce_field( 'de_nonce_de_options', '_de_nonce' ); ?>
 				<input type="hidden" name="action" value="de_options" />
 				<table border="0">
 					<tbody>

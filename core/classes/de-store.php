@@ -47,7 +47,12 @@ class De_Store {
 				return ( current_user_can( 'edit_theme_options' ) || current_user_can( 'edit_de_frontend' ) );
 			break;
 			default:
-				return false;
+				$classname = 'De_Store_' . ucfirst( $item->store );
+				if ( class_exists( $classname ) ) {
+					return $classname::is_editable( $item );
+				} else {
+					return false;
+				}
 			break;
 		}
 	}
@@ -468,7 +473,12 @@ class De_Store {
 					}
 				break;
 				default:
-					return null;
+					$classname = 'De_Store_' . ucfirst( $item->store );
+					if ( class_exists( $classname ) ) {
+						return $classname::write( $item, $field, $content );
+					} else {
+						return null;
+					}
 				break;
 			}
 		}

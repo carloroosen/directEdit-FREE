@@ -107,27 +107,19 @@ function de_wrap_the_title_remove ( $result = null ) {
 
 // Recursively copy some folder
 function de_copy( $source, $target ) {
-	 if ( is_dir( $source ) ) {
-		umask( 0 );
-		$result = mkdir( $target, 0777 );
-		if ( ! $result )
-			return false;
+	global $wp_filesystem;
+	
+	if ( $wp_filesystem->is_dir( $source ) ) {
+		$wp_filesystem->mkdir( $target );
 		
-		$d = dir( $source );
-		while ( FALSE !== ( $entry = $d->read() ) ) {
-			if ( $entry == '.' || $entry == '..' )
+		$d = $wp_filesystem->dirlist( $source, true, false );
+		foreach( $d as $entry ) {
+			if ( $entry['name'] == '.' || $entry['name'] == '..' )
 				continue;
-			$result = de_copy( "$source/$entry", "$target/$entry" );
-			if ( ! $result )
-				return false;
+			de_copy( implode( DIRECTORY_SEPARATOR, array( $source, $entry['name'] ) ), implode( DIRECTORY_SEPARATOR, array( $target, $entry['name'] ) ) );
 		}
-		$d->close();
 	} else {
-		$result = copy( $source, $target );
-		if ( ! $result )
-			return false;
-
-		chmod( $target, 0777 );
+		$wp_filesystem->copy( $source, $target );
 	}
 	
 	return true;
@@ -135,20 +127,10 @@ function de_copy( $source, $target ) {
 
 // Delete directory with files in it
 function de_rmdir( $source ) {
-	if ( is_dir( $source ) ) {
-		$d = dir( $source );
-		while ( FALSE !== ( $entry = $d->read() ) ) {
-			if ( $entry == '.' || $entry == '..' )
-				continue;
-
-			if ( is_dir( "$source/$entry" ) ) {
-				de_rmdir( "$source/$entry" );
-			} else {
-				unlink( "$source/$entry" );
-			}
-		}
-		$d->close();
-		rmdir( $source );
+	global $wp_filesystem;
+	
+	if ( $wp_filesystem->is_dir( $source ) ) {
+		$wp_filesystem->rmdir( $source, true );
 	}
 }
 
