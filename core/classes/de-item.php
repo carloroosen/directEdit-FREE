@@ -81,9 +81,7 @@ class De_Item {
 			}
 		}
 		
-		if ( De_Store::is_editable( $this ) ) {
-			De_Items::add( $this );
-		}
+		De_Items::add( $this );
 	}
 	
 	public function update() {
