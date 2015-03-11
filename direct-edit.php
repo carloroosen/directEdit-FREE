@@ -170,7 +170,7 @@ function de_extensions_default() {
 }
 
 function de_load_translation_file() {
-	load_plugin_textdomain( 'direct-edit', '', DIRECT_PATH . 'translations' );
+	load_plugin_textdomain( 'direct-edit', '', dirname( plugin_basename( __FILE__ ) ) . '/translations' );
 }
 
 function de_define_direct_version() {
