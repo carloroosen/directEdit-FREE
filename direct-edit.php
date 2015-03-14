@@ -291,8 +291,7 @@ function de_hooks() {
 			add_filter( 'the_content', 'de_wrap_the_content' );
 		}
 		if ( ! empty( $de_wp_hooks[ 'excerpt' ] ) && $de_wp_hooks[ 'excerpt' ] == 1 || empty( $de_wp_hooks[ 'excerpt' ] ) && ! empty( $options_wp_hooks[ 'excerpt' ] ) ) {
-			add_filter( 'get_the_excerpt', 'de_wrap_the_excerpt' );
-			add_filter( 'the_excerpt', 'de_wrap_the_excerpt' );
+			add_filter( 'get_the_excerpt', 'de_wrap_the_excerpt', 9 );
 		}
 	}
 }
@@ -349,17 +348,35 @@ function de_wrap_the_excerpt( $content ) {
 	global $post;
 
 	if ( in_the_loop() && ( current_user_can( 'edit_post', $post->ID ) || current_user_can( 'edit_de_frontend' ) ) ) {
+		if ( empty( $content ) ) {
+			// Get excerpt
+			if ( $post->post_excerpt ) {
+				$content = $post->post_excerpt;
+				$excerpt_more = '';
+			} else {
+				remove_filter( 'the_content', 'de_wrap_the_content' );
+				$content = $post->post_content;
+				$content = strip_shortcodes( $content );
+				$content = apply_filters( 'the_content', $content );
+				$content = str_replace(']]>', ']]&gt;', $content);
+				$excerpt_length = apply_filters( 'excerpt_length', 55 );
+				$excerpt_more = apply_filters( 'excerpt_more', ' ' . '[&hellip;]' );
+				$content = wp_trim_words( $content, $excerpt_length, '' );
+				add_filter( 'the_content', 'de_wrap_the_content' );
+			}
+		}
 		$result = '';
 		
 		$class = 'De_Item_Text';
 		try {
 			$settings = array(
 				'postId' => $post->ID,
-				'unwrap' => false
+				'unwrap' => true
 			);
 			$item = new $class( 'wpexcerpt', $settings );
 
-			$result = $item->output( $content );
+			$result = $item->output( $content ) . $excerpt_more;
+			$result = apply_filters( 'wp_trim_excerpt', $result . $excerpt_more, $result );
 		} catch ( Exception $e ) {
 		}
 	} else {
