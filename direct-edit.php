@@ -375,7 +375,7 @@ function de_wrap_the_excerpt( $content ) {
 			);
 			$item = new $class( 'wpexcerpt', $settings );
 
-			$result = $item->output( $content ) . $excerpt_more;
+			$result = $item->output( $content );
 			$result = apply_filters( 'wp_trim_excerpt', $result . $excerpt_more, $result );
 		} catch ( Exception $e ) {
 		}
