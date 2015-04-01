@@ -114,7 +114,7 @@ class De_Url {
 			}
 		}
 
-		if ( is_array( $de_url_array ) && count( $de_url_array ) ) {
+		if ( isset( $de_url_array ) && is_array( $de_url_array ) && count( $de_url_array ) ) {
 			$i = 0;
 			$de_post_parent = 0;
 
