@@ -228,7 +228,7 @@ class De_Store {
 						'post_type' => $item->get_setting( 'postType' ),
 						'post_category' => array( 0 )
 					);
-					self::$new_post_id = wp_insert_post( $new_post, $wp_error );
+					self::$new_post_id = wp_insert_post( $new_post );
 
 					$new_post_title = 'New ' . $obj->labels->singular_name . ' ' . self::$new_post_id;
 					$new_post = array(
@@ -893,7 +893,7 @@ class De_Store {
 					}
 				}
 
-				if( $imageOptions[ 'copies' ] ) {
+				if( ! empty( $imageOptions[ 'copies' ] ) ) {
 					$copies = $imageOptions[ 'copies' ];
 
 					if ( is_array( $copies ) ) {
@@ -1040,7 +1040,7 @@ class De_Store {
 		unlink( $sourcefilepath );
 		
 		$dataCopy = array();
-		if ( is_array( $data[ 'sizes' ][ 'preview' ][ 'copies' ] ) ) {
+		if ( ! empty( $data[ 'sizes' ][ 'preview' ][ 'copies' ] ) && is_array( $data[ 'sizes' ][ 'preview' ][ 'copies' ] ) ) {
 			foreach( $data[ 'sizes' ][ 'preview' ][ 'copies' ] as $k => $v ) {
 				$info2Copy = pathinfo( $v[ 'file' ] );
 				$ext2Copy = $info2Copy['extension'];

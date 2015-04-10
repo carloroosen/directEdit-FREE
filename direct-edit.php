@@ -87,6 +87,7 @@ if ( DIRECT_MODE == 'PLUGIN' && is_admin() ) {
 }
 // Additional functionality
 de_pro_include( DIRECT_PATH . 'pro/direct-webform.php' );
+de_pro_include( DIRECT_PATH . 'pro/direct-security.php' );
 
 function de_adjust_menu( $wp_admin_bar ) {
 	global $current_user;
