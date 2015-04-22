@@ -509,7 +509,7 @@ class De_Store {
 					'post_category' => array(0)
 				);
 				$id = wp_insert_post( $new_post );
-				$new_post_title = 'New ' . $obj->labels->singular_name . ' ' . $i;
+				$new_post_title = 'New ' . $obj->labels->singular_name . ' ' . $id;
 				$new_post = array(
 					'ID' => $id,
 					'post_title' => $new_post_title,
