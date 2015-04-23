@@ -46,7 +46,7 @@
 		"format": "block",
 		"buttons": {
 			"format": ["b", "i"],
-			"block": ["p", "h1", "h2", "h3", "h4", "blockquote"],
+			"block": ["p", "h2", "h3", "h4", "blockquote"],
 			"align": ["left", "center", "right"],
 			"list": ["ul", "ol"],
 			"insert": ["link", "image", "file", "video"]
