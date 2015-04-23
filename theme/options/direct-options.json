@@ -59,15 +59,21 @@
 				"styles" : {
 					"left" : {
 						"constraints" : { "minWidth": 150, "maxWidth": 600, "minHeight": 100, "maxHeight": 400 },
+						"imgHasRelativeScale" : true,
+						"imgWidth100" : 800,
 						"class" : "alignleft",
 						"isDefault" : true
 					},
 					"right" : {
 						"constraints" : { "minWidth": 100, "maxWidth": 400, "minHeight": 100, "maxHeight": 400 },
+						"imgHasRelativeScale" : true,
+						"imgWidth100" : 800,
 						"class" : "alignright"
 					},
 					"full" : {
 						"constraints" : { "minWidth": 800, "maxWidth": 800, "minHeight": 100, "maxHeight": 400 },
+						"imgHasRelativeScale" : true,
+						"imgWidth100" : 800,
 						"class" : "alignleft"
 					}
 				}
