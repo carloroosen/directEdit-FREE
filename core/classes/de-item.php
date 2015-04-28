@@ -175,7 +175,7 @@ class De_Item {
 			// Inline images are inserted into rich text, so they should not get item settings. But they should get proper css class
 			// Image options are stored in 'buttonOptions' 'image' item for inline images, and in root for standalone images
 			if ( $this instanceof De_Item_Text ) {
-				$direct_image[ 'class' ] = ( isset( $direct_image[ 'class' ] ) ? $direct_image[ 'class' ] . ' direct-image-inline' : 'direct-image-inline' );
+				$direct_image[ 'class' ] = 'direct-image-inline';
 				
 				$buttonOptions = $this->get_setting( 'buttonOptions' );
 				$imageOptions = $buttonOptions[ 'image' ];
