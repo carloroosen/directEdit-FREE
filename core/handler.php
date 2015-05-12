@@ -337,7 +337,7 @@ function de_save_page() {
 				}
 			}
 			if ( get_option( 'de_smart_urls' ) && get_option( 'permalink_structure' ) == '/%postname%/' ) {
-				if ( sanitize_title( stripslashes( $_POST[ 'direct-page-options' ][ 'de_slug' ] ) ) && direct_bloginfo( 'slug', false, $post_id ) != De_Url::unique_slug( $post_id, sanitize_title( stripslashes( $_POST[ 'direct-page-options' ][ 'de_slug' ] ) ) ) ) {
+				if ( isset( $_POST[ 'direct-page-options' ][ 'de_slug' ] ) && sanitize_title( stripslashes( $_POST[ 'direct-page-options' ][ 'de_slug' ] ) ) && direct_bloginfo( 'slug', false, $post_id ) != De_Url::unique_slug( $post_id, sanitize_title( stripslashes( $_POST[ 'direct-page-options' ][ 'de_slug' ] ) ) ) ) {
 					De_Url::register_url( $post_id, sanitize_title( stripslashes( $_POST[ 'direct-page-options' ][ 'de_slug' ] ) ) );
 				}
 			}
