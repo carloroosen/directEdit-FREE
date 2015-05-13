@@ -628,6 +628,9 @@ class De_Store {
 						}
 
 						$scaledimage = imagecreatetruecolor( $new_width, $new_height );
+						if ( function_exists( 'imagesetinterpolation' ) ) {
+							imagesetinterpolation( $scaledimage, IMG_BICUBIC );
+						}
 						imageAlphaBlending( $scaledimage, true );
 						$white = imageColorExact ( $scaledimage, 255, 255, 255 );
 						imageFill ( $scaledimage, 0, 0, $white );
@@ -849,6 +852,9 @@ class De_Store {
 					copy( $sourcefilepath, $destfilepath );
 				} else {
 					$scaledimage = imagecreatetruecolor( $containerwidth, $containerheight );
+					if ( function_exists( 'imagesetinterpolation' ) ) {
+						imagesetinterpolation( $scaledimage, IMG_BICUBIC );
+					}
 					if( $f == 'png' ) {
 						imageAlphaBlending( $scaledimage, false );
 						imageSaveAlpha( $scaledimage, true);
@@ -937,6 +943,9 @@ class De_Store {
 							$topCopy = $top * $scale;
 							
 							$scaledimageCopy = imagecreatetruecolor( $containerwidthCopy, $containerheightCopy );
+							if ( function_exists( 'imagesetinterpolation' ) ) {
+								imagesetinterpolation( $scaledimageCopy, IMG_BICUBIC );
+							}
 							if( $f == 'png' ) {
 								imageAlphaBlending( $scaledimageCopy, false );
 								imageSaveAlpha( $scaledimageCopy, true);
