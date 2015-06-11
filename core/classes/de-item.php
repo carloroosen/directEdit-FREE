@@ -163,6 +163,21 @@ class De_Item {
 			$direct_image[ 'data-source' ] = wp_get_attachment_url( $id );
 		}
 		
+		// Image options are stored in 'buttonOptions' 'image' item for inline images, and in root for standalone images
+		if ( $this instanceof De_Item_Text ) {
+			$buttonOptions = $this->get_setting( 'buttonOptions' );
+			$imageOptions = $buttonOptions[ 'image' ];
+		} else {
+			$imageOptions = array(
+				'imgHasRelativeScale' => $this->get_setting( 'imgHasRelativeScale' ),
+				'imgWidth100' => $this->get_setting( 'imgWidth100' ),
+				'imgFileFormat' => $this->get_setting( 'imgFileFormat' ),
+				'imgQuality' => $this->get_setting( 'imgQuality' ),
+				'copies' => $this->get_setting( 'copies' ),
+				'styles' => $this->get_setting( 'styles' )
+			);
+		}
+
 		if ( De_Store::is_editable( $this ) ) {
 			// Data reference and id are needed for standalone images only
 			if( $this instanceof De_Item_Image ) {
@@ -171,27 +186,12 @@ class De_Item {
 					$direct_image[ 'id' ] = $this->reference;
 			}
 			
-			// Difference between standalone and inline images
-			// Inline images are inserted into rich text, so they should not get item settings. But they should get proper css class
-			// Image options are stored in 'buttonOptions' 'image' item for inline images, and in root for standalone images
 			if ( $this instanceof De_Item_Text ) {
 				$direct_image[ 'class' ] = 'direct-image-inline';
-				
-				$buttonOptions = $this->get_setting( 'buttonOptions' );
-				$imageOptions = $buttonOptions[ 'image' ];
 			} else {
 				$direct_image[ 'class' ] = ( isset( $direct_image[ 'class' ] ) ? $direct_image[ 'class' ] . ' direct-editable' : 'direct-editable' );
 				$direct_image[ 'data-global-options' ] = $this->get_setting( 'options' );
 				$direct_image[ 'data-local-options' ] = $this->build_local_options();
-				
-				$imageOptions = array(
-					'imgHasRelativeScale' => $this->get_setting( 'imgHasRelativeScale' ),
-					'imgWidth100' => $this->get_setting( 'imgWidth100' ),
-					'imgFileFormat' => $this->get_setting( 'imgFileFormat' ),
-					'imgQuality' => $this->get_setting( 'imgQuality' ),
-					'copies' => $this->get_setting( 'copies' ),
-					'styles' => $this->get_setting( 'styles' )
-				);
 			}
 			
 			if ( ! empty( $data ) ) {
@@ -254,9 +254,16 @@ class De_Item {
 				$direct_image[ 'data-status' ] = $mode;
 			}
 		}
-		
+
 		$direct_image[ 'src' ] = $content;
-		
+
+		if ( ! empty( $data ) ) {
+			if ( ! empty( $imageOptions[ 'imgHasRelativeScale' ] ) && ! empty( $imageOptions[ 'imgWidth100' ] ) && intval( $imageOptions[ 'imgWidth100' ] ) ) {
+				$width = round( $data[ 'sizes' ][ $mode ][ 'container-width' ] / $imageOptions[ 'imgWidth100' ] * 100 );
+				$direct_image[ 'style' ] = ( isset( $direct_image[ 'style' ] ) ? $direct_image[ 'style' ] . '; width: ' . $width . '%;' : 'width: ' . $width . '%;' );
+			}
+		}
+
 		if ( $this->get_setting( 'snippet' ) ) {
 			$de_snippet_image->mode = $mode;
 			$result = $de_snippet_image->snippet( $this, $this->get_setting( 'snippet' ) );
