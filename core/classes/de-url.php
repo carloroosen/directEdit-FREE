@@ -108,7 +108,7 @@ class De_Url {
 		if( $de_url )
 			$de_url_array = explode( '/', $de_url );
 
-		if ( De_Language_Wrapper::has_multilanguage() && is_array( $de_url_array ) && count( $de_url_array ) ) {
+		if ( De_Language_Wrapper::has_multilanguage() && ! empty( $de_url_array ) && count( $de_url_array ) ) {
 			if ( in_array( $de_url_array[ 0 ], De_Language_Wrapper::get_languages() ) ) {
 				$de_curlang = array_shift( $de_url_array );
 			}

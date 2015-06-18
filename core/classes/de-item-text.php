@@ -6,7 +6,7 @@ class De_Item_Text extends De_Item {
 		parent::__construct( $store, $settings );
 
 		if ( $this->store == 'wptitle' ) {
-			if ( ( ! $this->get_setting( 'postId' ) || $direct_queried_object->ID == $this->get_setting( 'postId' ) ) && ! $this->get_setting( 'redirect' ) ) {
+			if ( ( ! $this->get_setting( 'postId' ) || is_object( $direct_queried_object ) && isset( $direct_queried_object->ID ) && $direct_queried_object->ID == $this->get_setting( 'postId' ) ) && ! $this->get_setting( 'redirect' ) ) {
 				$this->set_setting( 'redirect', true );
 			}
 		}

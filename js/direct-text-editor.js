@@ -81,10 +81,7 @@
 			}*/
 
 			this.element.attr("contentEditable", true);
-			try {
-				document.execCommand('enableObjectResizing', false, 'false');
-			} catch(e) {
-			}
+			document.execCommand('enableObjectResizing', false, 'false');
 			this._styleWithCSS();
 			// attach event handlers
 			if (!this.enabled) {

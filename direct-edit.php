@@ -274,7 +274,7 @@ function de_hooks() {
 		} else {
 			$options_wp_hooks = array( 'title' => 1, 'content' => 1, 'excerpt' => 1 );
 		}
-		if ( get_post_meta( $direct_queried_object->ID, 'de_wp_hooks', true ) ) {
+		if ( $direct_queried_object && get_post_meta( $direct_queried_object->ID, 'de_wp_hooks', true ) ) {
 			$de_wp_hooks = unserialize( base64_decode( get_post_meta( $direct_queried_object->ID, 'de_wp_hooks', true ) ) );
 		} else {
 			$de_wp_hooks = array();

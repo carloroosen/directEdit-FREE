@@ -914,7 +914,7 @@ class De_Store {
 							$destfileurlCopy = $wp_upload_dir[ 'baseurl' ] . '/' . $dir . '/' . $destfilenameCopy;
 							$destfilepathCopy = $wp_upload_dir[ 'basedir' ] . '/' . $dir . '/' . $destfilenameCopy;
 
-							if ( $copy[ 'scale' ] ) {
+							if ( ! empty( $copy[ 'scale' ] ) ) {
 								$containerwidthCopy = $containerwidth * $copy[ 'scale' ];
 								$containerheightCopy = $containerheight * $copy[ 'scale' ];
 								$scale = $copy[ 'scale' ];
@@ -984,7 +984,7 @@ class De_Store {
 							//imagestring( $scaledimageCopy, 5, 11, 21, $text, $white );
 
 							if( $f_copy == 'jpg' ) {
-								if ( $copy[ 'imgQuality' ] ) {
+								if ( ! empty( $copy[ 'imgQuality' ] ) ) {
 									$q_copy = (int) $copy[ 'imgQuality' ];
 								} elseif ( ! empty( $imageOptions[ 'imgQuality' ] ) ) {
 									$q_copy = (int) $imageOptions[ 'imgQuality' ];

@@ -262,10 +262,12 @@ function de_save_page() {
 	
 	// Edit page options
 	if ( isset( $_POST[ 'direct-page-options' ] ) && is_array( $_POST[ 'direct-page-options' ] ) ) {
+		if ( empty( $_POST[ 'direct-page-options' ][ 'postId' ] ) && ! empty( De_Store::$new_post_id ) ) {
+			$_POST[ 'direct-page-options' ][ 'postId' ] = De_Store::$new_post_id;
+		}
+
 		if ( ! empty( $_POST[ 'direct-page-options' ][ 'postId' ] ) ) {
 			$post_id = $_POST[ 'direct-page-options' ][ 'postId' ];
-		} elseif ( ! empty( De_Store::$new_post_id ) ) {
-			$post_id = De_Store::$new_post_id;
 		} else {
 			if ( ! empty( $_POST[ 'direct-page-options' ][ 'postType' ] ) && in_array( $_POST[ 'direct-page-options' ][ 'postType' ], get_post_types( array('show_ui' => true ) ) ) ) {
 				$new_post_title = stripslashes( $_POST[ 'direct-page-options' ][ 'de_title' ] );
@@ -279,7 +281,7 @@ function de_save_page() {
 					'post_type' => $_POST[ 'direct-page-options' ][ 'postType' ],
 					'post_category' => array( 0 )
 				);
-				$post_id = wp_insert_post( $new_post, $wp_error );
+				$post_id = wp_insert_post( $new_post );
 
 				$new_post = array(
 					'ID' => $post_id,
@@ -296,6 +298,9 @@ function de_save_page() {
 				} else {
 					De_Url::register_url( $post_id, sanitize_title( $new_post_title ) );
 				}
+
+				$_POST[ 'direct-page-options' ][ 'postId' ] = $post_id;
+				$response[ 'redirect' ] = add_query_arg( array( 'de_message' => 'saved' ), De_Url::get_url( $post_id ) );
 			}
 		}
 
@@ -389,7 +394,9 @@ function de_save_page() {
 			do_action( 'de_save_page_options', $_POST[ 'direct-page-options' ] );
 			
 			$response[ 'direct-page-options' ] = true;
-			$response[ 'redirect' ] = De_Url::get_url( $post_id );
+			if ( empty( $response[ 'redirect' ] ) ) {
+				$response[ 'redirect' ] = De_Url::get_url( $post_id );
+			}
 		}
 	}
 	
