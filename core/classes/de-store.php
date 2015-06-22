@@ -10,6 +10,8 @@ class De_Store {
 			return false;
 		}
 		
+		/* Menu editor is hidden. Probably it will be removed at all in future versions. */
+		/*
 		// Menu has its own check
 		if ( $item instanceof De_Item_Menu ) {
 			if( get_option( 'de_menu_editor_enabled' ) && de_get_current_template() == 'edit-menu.php' && $item->get_setting( 'menu' ) ) {
@@ -30,6 +32,7 @@ class De_Store {
 				break;
 			}
 		}
+		*/
 		
 		switch( $item->store ) {
 			case 'postmeta':
@@ -1097,6 +1100,8 @@ class De_Store {
 		return true;
 	}
 	
+	/* Menu editor is hidden. Probably it will be removed at all in future versions. */
+	/*
 	public static function read_menus() {
 		$response = array(
 			'ajaxUrl' => admin_url( 'admin-ajax.php' ),
@@ -1498,4 +1503,5 @@ class De_Store {
 			return false;
 		}
 	}
+	*/
 }

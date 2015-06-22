@@ -40,6 +40,8 @@ class De_Item_Text extends De_Item {
 	public function output( $content = null ) {
 		$attr = array();
 
+		/* Menu editor is hidden. Probably it will be removed at all in future versions. */
+		/*
 		if ( get_option( 'de_menu_editor_enabled' ) && de_get_current_template() == 'edit-menu.php' && De_Store::is_editable( $this ) ) {
 			// Direct Menu Editor output
 			$container = 'div';
@@ -55,6 +57,7 @@ class De_Item_Text extends De_Item {
 			
 			$result = '<' . $container . self::attr_to_string( $attr ) . '></' . $container . '>';
 		} else {
+		*/
 			if ( $this->get_setting( 'container' ) ) {
 				$container = $this->get_setting( 'container' );
 			} elseif( $this->get_setting( 'format' ) == 'inline' ) {
@@ -78,7 +81,9 @@ class De_Item_Text extends De_Item {
 			
 			$content_partial =  $this->output_partial( $content );
 			$result = '<' . $container . self::attr_to_string( $attr ) . '>' . $content_partial[ 'content' ] . '</' . $container . '>';
+		/*
 		}
+		*/
 		
 		return $result;
 	}
