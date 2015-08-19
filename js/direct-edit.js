@@ -94,6 +94,12 @@ var directEdit, directNotify, directTranslate;
 						editor = element.data("directEdit-directImageEditor");
 						break;
 					case 'link':
+						if (thisOptions.orderCount && thisOptions.orderIndex) {
+							thisOptions.buttonShow = false;
+							thisOptions.buttonHide = false;
+							thisOptions.buttonDelete = false;
+							thisOptions.buttonSort = true;
+						}
 						element.directLinkEditor(thisOptions);
 						editor = element.data("directEdit-directLinkEditor");
 						break;

@@ -41,7 +41,9 @@ class De_Item {
 		'startLevel',
 		'depth',
 		'menu_id',
-		'menu_class'
+		'menu_class',
+		'orderIndex',
+		'orderCount'
 	);
 	
 	public function __construct( $store, $settings ) {

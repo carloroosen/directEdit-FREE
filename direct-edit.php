@@ -238,31 +238,35 @@ function de_add_de_page() {
 						include get_stylesheet_directory() . '/custom/' . sanitize_title( $option->name ) . '/functions.php';
 					}
 					if ( is_dir( get_stylesheet_directory() . '/custom/' . sanitize_title( $option->name ) ) && file_exists( get_stylesheet_directory() . '/custom/' . sanitize_title( $option->name ) . '/single.php' ) ) {
-						include get_stylesheet_directory() . '/custom/' . sanitize_title( $option->name ) . '/single.php';
-						exit;
+						$de_current_template = 'custom/' . sanitize_title( $option->name ) . '/single.php';
+						add_action( 'template_include', 'de_use_current_template', 0 );
 					}
 				}
 			}
 			
 			if ( file_exists ( get_stylesheet_directory() . '/single-' . $post_type . '.php' ) ) {
 				$de_current_template = 'single-' . $post_type . '.php';
-				include( get_stylesheet_directory() . '/single-' . $post_type . '.php' );
-				exit;
+				add_action( 'template_include', 'de_use_current_template', 0 );
 			} elseif ( $post_type == 'page' && file_exists ( get_stylesheet_directory() . '/page.php' ) ) {
 				$de_current_template = 'page.php';
-				include( get_stylesheet_directory() . '/page.php' );
-				exit;
+				add_action( 'template_include', 'de_use_current_template', 0 );
 			} elseif( $post_type != 'page' && file_exists ( get_stylesheet_directory() . '/single.php' ) ) {
 				$de_current_template = 'single.php';
-				include( get_stylesheet_directory() . '/single.php' );
-				exit;
+				add_action( 'template_include', 'de_use_current_template', 0 );
 			} elseif( file_exists ( get_stylesheet_directory() . '/index.php' ) ) {
 				$de_current_template = 'index.php';
-				include( get_stylesheet_directory() . '/index.php' );
-				exit;
+				add_action( 'template_include', 'de_use_current_template', 0 );
 			}
 		}
 	}
+}
+
+function de_use_current_template( $template ) {
+	global $de_current_template;
+
+	$template = get_stylesheet_directory() . '/' . $de_current_template;
+	
+	return $template;
 }
 
 function de_hooks() {

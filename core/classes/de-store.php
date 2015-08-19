@@ -458,8 +458,14 @@ class De_Store {
 					}
 				break;
 				case 'post':
-					// Is not editable
-					return null;
+					if ( $item instanceof De_Item_Link && isset( $field[ 'index' ] ) && isset( $field[ 'count' ] ) ) {
+						// Save post order
+						update_post_meta( $item->get_setting( 'postId' ), sanitize_text_field( $field[ 'index' ] ), absint( $field[ 'count' ] ) );
+						return absint( $field[ 'count' ] );
+					} else {
+						// Is not editable
+						return null;
+					}
 				break;
 				case 'postdate':
 					if ( $content == mysql2date( 'Y-m-d H:i:s', $content ) ) {

@@ -11,6 +11,8 @@
 			buttonTextDelete: 'delete',
 			buttonTextShow: 'show',
 			buttonTextHide: 'hide',
+			buttonTextMoveUp: 'move up',
+			buttonTextMoveDown: 'move down',
 			deleteCommand : ['action', 'direct-delete-post'],
 			hideCommand : ['action', 'direct-hide-post'],
 			showCommand : ['action', 'direct-show-post']
@@ -43,13 +45,36 @@
 						this.showButton.hide();
 					}
 				}
-
 				if (this.options.buttonDelete === true) {
 					$('<a>' + this.options.buttonTextDelete + '</a>').click(this.postCommand('delete')).appendTo(buttons);
 				}
+
+				if (this.options.buttonSort === true ) {
+					this.orderCount = this.element.attr('data-count');
+					this.moveUp = $('<a>' + this.options.buttonTextMoveUp + '</a>').click(function() {var elem = self.element; var prev = elem.prev(); var count = self.options.orderCount; elem.insertBefore(prev); self.adjustOrderParams(count - 1); prev.data('directEdit-directLinkEditor').adjustOrderParams(count);}).appendTo(buttons);
+					this.moveDown = $('<a>' + this.options.buttonTextMoveDown + '</a>').click(function() {var elem = self.element; var next = elem.next(); var count = self.options.orderCount; elem.insertAfter(next); self.adjustOrderParams(count + 1); next.data('directEdit-directLinkEditor').adjustOrderParams(count);}).appendTo(buttons);
+					this.adjustOrderParams();
+				}
+				
 				this.element.prepend(buttons);
 			}
 			this.createDialog();
+		},
+		adjustOrderParams : function (newOrderCount) {
+			if (newOrderCount) {
+				this.options.orderCount = newOrderCount;
+			}
+			
+			if (this.element.prev().is('a')) {
+				this.moveUp.show();
+			} else {
+				this.moveUp.hide();
+			}
+			if (this.element.next().is('a')) {
+				this.moveDown.show();
+			} else {
+				this.moveDown.hide();
+			}
 		},
 		postCommand : function (command) {
 			var self = this;
@@ -250,16 +275,27 @@
 			return this.dialog;
 		},
 		isModified: function () {
-			return this.originalLink !== this.link;
+			return (this.originalLink !== this.link || this.options.orderCount != this.orderCount);
 		},
 		getData: function () {
 			var result = {};
-			result.link = this.link;
+			if (this.originalLink !== this.link) {
+				result.link = this.link;
+			}
+			if (this.options.buttonSort && this.options.orderCount != this.orderCount) {
+				result.index = this.options.orderIndex;
+				result.count = this.options.orderCount;
+			}
 			result.data = this.additionalData;
 			return result;
 		},
 		setData: function (result) {
-			this.link = result.url;
+			if (result.url !== undefined) {
+				this.link = result.url;
+			}
+			if (result.count !== undefined) {
+				this.orderCount = result.count;
+			}
 			$.extend(this.additionalData, result.data);
 			this.originalLink = this.link;
 		},
