@@ -19,7 +19,7 @@
 			format: 'block', // ["block","inline","plain","title"]
 			placeholder: 'empty',
 			formatRules : {
-				'div' : 'h1,h2,h3,h4,h5,h6,p,blockquote,ol,ul',
+				'div' : 'h1,h2,h3,h4,p,blockquote,ol,ul',
 				'p'   : 'b,i,a,br,img',
 				'ul'  : 'li',
 				'ol'  : 'li',

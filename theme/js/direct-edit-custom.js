@@ -80,18 +80,6 @@
 			tooltip: 'header 4',
 			icon: 'direct-icon-h4'
 		},
-		h5 : {
-			command: 'formatBlock',
-			commandValue : 'H5',
-			tooltip: 'header 5',
-			icon: 'direct-icon-h5'
-		},
-		h6 : {
-			command: 'formatBlock',
-			commandValue : 'H6',
-			tooltip: 'header 6',
-			icon: 'direct-icon-h6'
-		},
 		ul : {
 			command: 'insertUnorderedList',
 			tooltip: 'bullet list',
