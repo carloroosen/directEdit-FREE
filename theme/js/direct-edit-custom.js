@@ -23,38 +23,22 @@
 			command: 'formatBlock',
 			commandValue : 'P',
 			tooltip: 'paragraph',
-			icon: 'direct-icon-p',
+			icon: 'direct-icon-p'
 		},
-		'p-normal' : {
-			// use in combination with p-lead, otherwise use 'p'
-			icon: 'direct-icon-p',
-			tooltip: 'normal paragraph',
-			command : function () {
-				if (document.queryCommandValue("formatBlock") && document.queryCommandValue("formatBlock").toUpperCase() !== 'P') {
-					document.execCommand('formatBlock', false, 'P');
-				}
-				$(this.lastSelection.startContainer.parentNode).removeClass('lead');
-			},
-			queryState : function () {
-				var state;
-				state = document.queryCommandValue("formatBlock").toUpperCase() === 'P' && !$(window.getSelection().getRangeAt(0).startContainer.parentNode).hasClass('lead');
-				return state;
-			}
+		left : {
+			command: 'justifyLeft',
+			tooltip: 'align left',
+			icon: 'direct-icon-align-left'
 		},
-		'p-lead' : {
-			icon : 'direct-icon-p-lead',
-			tooltip: 'introduction paragraph',
-			command : function () {
-				if (document.queryCommandValue("formatBlock") && document.queryCommandValue("formatBlock").toUpperCase() !== 'P') {
-					document.execCommand('formatBlock', false, 'P');
-				}
-				$(this.lastSelection.startContainer.parentNode).addClass('lead');
-			},
-			queryState : function () {
-				var state;
-				state = document.queryCommandValue("formatBlock").toUpperCase() === 'P' && $(window.getSelection().getRangeAt(0).startContainer.parentNode).hasClass('lead');
-				return state;
-			}
+		center : {
+			command: 'justifyCenter',
+			tooltip: 'align center',
+			icon: 'direct-icon-align-center'
+		},
+		right : {
+			command: 'justifyRight',
+			tooltip: 'align right',
+			icon: 'direct-icon-align-right'
 		},
 		h1 : {
 			command: 'formatBlock',
@@ -101,6 +85,12 @@
 			command: 'insertOrderedList',
 			tooltip: 'numbered list',
 			icon: 'direct-icon-list-ol'
+		},
+		blockquote: {
+			command: 'formatBlock',
+			commandValue: 'blockquote',
+			tooltip: 'quotation',
+			icon: 'direct-icon-quote'
 		},
 		image : {
 			icon : 'direct-icon-image',
@@ -220,33 +210,6 @@
 }(jQuery));
 
 /* other buttons
-		left : {
-			command: 'justifyLeft',
-			tooltip: 'align left',
-			icon: 'direct-icon-align-left'
-		},
-		center : {
-			command: 'justifyCenter',
-			tooltip: 'align center',
-			icon: 'direct-icon-align-center'
-		},
-		right : {
-			command: 'justifyRight',
-			tooltip: 'align right',
-			icon: 'direct-icon-align-right'
-		},
-		h1 : {
-			command: 'formatBlock',
-			commandValue : 'H1',
-			tooltip: 'header 1',
-			icon: 'direct-icon-h1'
-		},
-		h4 : {
-			command: 'formatBlock',
-			commandValue : 'H4',
-			tooltip: 'header 4',
-			icon: 'direct-icon-h4'
-		},
 		undo : {
 			command: 'undo',
 			tooltip: 'undo',
@@ -259,21 +222,36 @@
 			queryState : false,
 			icon : 'direct-icon-redo'
 		},
-		blockquote: {
-			command: 'formatBlock',
-			commandValue: 'blockquote',
-			tooltip: 'quotation',
-			icon: 'direct-icon-quote'
+		'p-normal' : {
+			// use in combination with p-lead, otherwise use 'p'
+			icon: 'direct-icon-p',
+			tooltip: 'normal paragraph',
+			command : function () {
+				if (document.queryCommandValue("formatBlock") && document.queryCommandValue("formatBlock").toUpperCase() !== 'P') {
+					document.execCommand('formatBlock', false, 'P');
+				}
+				$(this.lastSelection.startContainer.parentNode).removeClass('lead');
+			},
+			queryState : function () {
+				var state;
+				state = document.queryCommandValue("formatBlock").toUpperCase() === 'P' && !$(window.getSelection().getRangeAt(0).startContainer.parentNode).hasClass('lead');
+				return state;
+			}
 		},
-		ul : {
-			command: 'insertUnorderedList',
-			tooltip: 'bullet list',
-			icon: 'direct-icon-list-ul'
-		},
-		ol : {
-			command: 'insertOrderedList',
-			tooltip: 'numbered list',
-			icon: 'direct-icon-list-ol'
+		'p-lead' : {
+			icon : 'direct-icon-p-lead',
+			tooltip: 'introduction paragraph',
+			command : function () {
+				if (document.queryCommandValue("formatBlock") && document.queryCommandValue("formatBlock").toUpperCase() !== 'P') {
+					document.execCommand('formatBlock', false, 'P');
+				}
+				$(this.lastSelection.startContainer.parentNode).addClass('lead');
+			},
+			queryState : function () {
+				var state;
+				state = document.queryCommandValue("formatBlock").toUpperCase() === 'P' && $(window.getSelection().getRangeAt(0).startContainer.parentNode).hasClass('lead');
+				return state;
+			}
 		},
 		'yellow' : {
 			icon : 'direct-icon-color yellow',
