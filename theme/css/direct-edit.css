@@ -3,6 +3,12 @@
 .ui-dialog.direct-edit{
     z-index: 2147483647;
 }
+
+.ui-dialog.direct-edit label{
+    display:inline;
+}
+
+
 .ui-dialog.direct-edit.transition{
 	transition: width .5s, top .5s, left .5s;
 	-webkit-transition: top .5s, left .5s;
@@ -11,9 +17,14 @@
 	-webkit-box-sizing: content-box;
 	-moz-box-sizing: content-box;
 	box-sizing: content-box;
+	text-transform: none;
 }
 .direct-hidden:not(.direct-show-all) {
 	display: none;
+}
+
+.direct-edit button, .direct-edit input[type=submit] {
+	min-width:0;
 }
 
 /* directNotify */
@@ -94,12 +105,13 @@
     color: #bbbbbb;
     cursor: pointer;
     display: block;
+	white-space: nowrap;
     font-family: Arial;
     font-size: 0.9375em;
     line-height: 1.125em;
     margin-bottom: 0.25em;
     margin-left: 0.6em;
-    opacity: 1;
+    opacity: 0;
     padding: 0.375em 0.5em;
     text-decoration: none;
     transition: all 0.3s ease 0s, opacity 0.3s 1s;	
@@ -124,7 +136,6 @@ a.direct-link-editor .direct-link-editor-buttons {
 	transition: opacity 0.3s 1s;
 }
 a.direct-link-editor:hover .direct-link-editor-buttons {
-
 
     opacity: 1;
 	transition: opacity 0.3s 0s;
@@ -848,3 +859,4 @@ margin-left: -1px;
   padding: 0;
   border: 0;
 }
+
