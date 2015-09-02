@@ -597,6 +597,14 @@ class De_Store {
 					$min_width = min( $sourcewidth, ( ! empty( $imageOptions[ 'sourceMinWidth' ] ) ? $imageOptions[ 'sourceMinWidth' ] : 0 ) );
 					$min_height = min( $sourceheight, ( ! empty( $imageOptions[ 'sourceMinHeight' ] ) ? $imageOptions[ 'sourceMinHeight' ] : 0 ) );
 					
+					// this will scale the image down such that the SMALLEST side equals sourceMaxResize
+					// this way the other side will never be too small
+					$scale = min( max( $max_width / $sourcewidth , $max_height / $sourceheight) , 1);
+
+					$new_width = (int) $sourcewidth * $scale;
+					$new_height = (int) $sourceheight * $scale;	
+
+					/*
 					$new_width = $sourcewidth;
 					$new_height = $sourceheight;
 					if ( $sourcewidth > $max_width ) {
@@ -614,6 +622,7 @@ class De_Store {
 							$new_height = ( int ) ( $min_width * $sourceheight / $sourcewidth );
 						}
 					}
+					*/
 					
 					$info = getimagesize( $file );
 					if ( $new_width < $sourcewidth || $info[ 'mime' ] == 'image/png' ) {
