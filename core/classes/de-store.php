@@ -963,6 +963,12 @@ class De_Store {
 							$scaledimageheightCopy = $scaledimageheight * $scale;
 							$leftCopy = $left * $scale;
 							$topCopy = $top * $scale;
+							if ( $containerwidthCopy < $scaledimagewidthCopy ) {
+								$leftCopy -= ( $scaledimagewidthCopy - $containerwidthCopy ) / 2;
+							}
+							if ( $containerheightCopy < $scaledimageheightCopy ) {
+								$topCopy -= ( $scaledimageheightCopy - $containerheightCopy ) / 2;
+							}
 							
 							$scaledimageCopy = imagecreatetruecolor( $containerwidthCopy, $containerheightCopy );
 							if ( function_exists( 'imagesetinterpolation' ) ) {
