@@ -594,8 +594,10 @@ class De_Store {
 					list( $sourcewidth, $sourceheight ) = getimagesize( $file );
 					$max_width = max( $imageOptions[ 'sourceMaxResize' ], ( ! empty( $imageOptions[ 'sourceMinWidth' ] ) ? $imageOptions[ 'sourceMinWidth' ] : 0 ) );
 					$max_height = max( $imageOptions[ 'sourceMaxResize' ], ( ! empty( $imageOptions[ 'sourceMinHeight' ] ) ? $imageOptions[ 'sourceMinHeight' ] : 0 ) );
+					/*
 					$min_width = min( $sourcewidth, ( ! empty( $imageOptions[ 'sourceMinWidth' ] ) ? $imageOptions[ 'sourceMinWidth' ] : 0 ) );
 					$min_height = min( $sourceheight, ( ! empty( $imageOptions[ 'sourceMinHeight' ] ) ? $imageOptions[ 'sourceMinHeight' ] : 0 ) );
+					*/
 					
 					// this will scale the image down such that the SMALLEST side equals sourceMaxResize
 					// this way the other side will never be too small
