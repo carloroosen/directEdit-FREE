@@ -103,6 +103,16 @@ var directEdit, directNotify, directTranslate;
 						element.directLinkEditor(thisOptions);
 						editor = element.data("directEdit-directLinkEditor");
 						break;
+					case 'postwrapper':
+						if (thisOptions.orderCount && thisOptions.orderIndex) {
+							thisOptions.buttonShow = false;
+							thisOptions.buttonHide = false;
+							thisOptions.buttonDelete = false;
+							thisOptions.buttonSort = true;
+						}
+						element.directPostwrapperEditor(thisOptions);
+						editor = element.data("directEdit-directPostwrapperEditor");
+						break;
 					case 'list':
 						element.directListEditor(thisOptions);
 						editor = element.data("directEdit-directListEditor");

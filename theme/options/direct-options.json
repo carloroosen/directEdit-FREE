@@ -106,7 +106,14 @@
 		"type": "link",
 		"buttonDelete": false,
 		"buttonShowHide": false,
-		"buttonFollowLink": true
+		"buttonFollowLink": true,
+		"showOrder": true
+	},
+	"postwrapper": {
+		"type": "postwrapper",
+		"buttonDelete": false,
+		"buttonShowHide": false,
+		"showOrder": true
 	},
 	"date": {
 		"type": "date",

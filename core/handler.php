@@ -252,7 +252,7 @@ function de_save_page() {
 		if ( $item instanceof De_Item && De_Store::is_editable( $item ) ) {
 			$content = De_Store::write( $item, $field );
 			
-			if ( $item instanceof De_Item_Link && $item->store == 'post' ) {
+			if ( ( $item instanceof De_Item_Link || $item instanceof De_Item_Postwrapper ) && $item->store == 'post' ) {
 				$response[ $key ] = array( 'count' => $content );
 			} else {
 				$response[ $key ] = $item->output_partial( $content );

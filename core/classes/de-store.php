@@ -33,7 +33,7 @@ class De_Store {
 			}
 		}
 		*/
-		
+
 		switch( $item->store ) {
 			case 'postmeta':
 			case 'wptitle':
@@ -175,6 +175,8 @@ class De_Store {
 				// $store = 'post' is available for links only
 				if ( $item instanceof De_Item_Link ) {
 					$content = get_permalink( $item->get_setting( 'postId' ) );
+				} elseif ( $item instanceof De_Item_Postwrapper ) {
+					return true;
 				} else {
 					return null;
 				}
@@ -458,7 +460,7 @@ class De_Store {
 					}
 				break;
 				case 'post':
-					if ( $item instanceof De_Item_Link && isset( $field[ 'index' ] ) && isset( $field[ 'count' ] ) ) {
+					if ( ( $item instanceof De_Item_Link || $item instanceof De_Item_Postwrapper ) && isset( $field[ 'index' ] ) && isset( $field[ 'count' ] ) ) {
 						// Save post order
 						update_post_meta( $item->get_setting( 'postId' ), sanitize_text_field( $field[ 'index' ] ), absint( $field[ 'count' ] ) );
 						return absint( $field[ 'count' ] );

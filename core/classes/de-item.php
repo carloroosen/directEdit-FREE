@@ -43,7 +43,8 @@ class De_Item {
 		'menu_id',
 		'menu_class',
 		'orderIndex',
-		'orderCount'
+		'orderCount',
+		'showOrder'
 	);
 	
 	public function __construct( $store, $settings ) {
@@ -59,7 +60,7 @@ class De_Item {
 		if ( in_array( $this->store, array( 'wptitle', 'wpcontent', 'wpexcerpt' ) ) && ! $this instanceof De_Item_Text ) {
 			$this->settings[ 'disableEdit' ] = true;
 		}
-		if ( in_array( $this->store, array( 'post' ) ) && ! $this instanceof De_Item_Link ) {
+		if ( in_array( $this->store, array( 'post' ) ) && ! $this instanceof De_Item_Link && ! $this instanceof De_Item_Postwrapper ) {
 			$this->settings[ 'disableEdit' ] = true;
 		}
 		if ( in_array( $this->store, array( 'postdate' ) ) && ! $this instanceof De_Item_Date ) {
