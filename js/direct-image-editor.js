@@ -530,7 +530,7 @@
 		},
 		_fetchSourceSize : function (tempImage) {
 			if (tempImage.width() === 0 || tempImage.height() === 0) { throw ('Could not fetch image size'); }
-			var sourceRescale = this.options.sourceMaxResize ? this.options.sourceMaxResize / Math.min(tempImage.width(), tempImage.height()) : 1;
+			var sourceRescale = this.options.sourceMaxResize ? Math.min(1, this.options.sourceMaxResize / Math.min(tempImage.width(), tempImage.height())) : 1;
 			this.imageSrcW = tempImage.width() * sourceRescale;
 			this.imageSrcH = tempImage.height() * sourceRescale;
 			tempImage.remove();
