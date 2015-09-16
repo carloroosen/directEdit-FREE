@@ -107,7 +107,7 @@
 		"buttonDelete": false,
 		"buttonShowHide": false,
 		"buttonFollowLink": true,
-		"showOrder": true
+		"showOrder": false
 	},
 	"postwrapper": {
 		"type": "postwrapper",
