@@ -132,7 +132,8 @@ class De_Store {
 					
 					if ( '' == $content ) {
 						$text = str_replace("</p>", "</p>\n", $text);
-						$text = wp_trim_words( $text, 55, '...' );
+						$excerpt_length = apply_filters( 'excerpt_length', 55 );
+						$text = wp_trim_words( $text, $excerpt_length, '...' );
 						$content = wpautop( $text );
 					}
 					
