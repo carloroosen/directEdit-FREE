@@ -47,7 +47,6 @@
 
 			this.options.dialogOptions.autoOpen = false;
 			this.options.dialogOptions.minWidth = this.options.dialogOptions.width;
-			console.log(this.options.dialogOptions);
 			this.dialog = $('<div id="direct-image-editor-dialog"></div>').dialog(this.options.dialogOptions);
 			self.dialog.parent().css({'min-width': self.options.dialogOptions.width + 'px'});
 			
