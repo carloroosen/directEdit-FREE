@@ -13,7 +13,7 @@
 		originalValidatedContentSet: false,
 		additionalData: null,
 		options: {
-			debug: false,
+			debug: true,
 			validate: false,
 			instanceID: 0,
 			format: 'block', // ["block","inline","plain","title"]
@@ -100,6 +100,7 @@
 		_destroy: function () {
 			this.toolbar.remove();
 			this._setPlaceholder(false);
+			$(document).unbind('mouseup', this.eventHandlers.bindingBlurOnText);
 			this.element.unbind("focus", this.eventHandlers.focusOnText)
 				.unbind("blur", this.eventHandlers.blurOnText)
 				.unbind("keydown", this.eventHandlers.keyDown)
@@ -201,6 +202,11 @@
 		_createEventHandlers : function () {
 			var self = this;
 			this.eventHandlers = {
+				bindingBlurOnText : function() {
+					self.element.bind("blur", self.eventHandlers.blurOnText);
+					$(document).unbind('mouseup', self.eventHandlers.bindingBlurOnText);
+					if (self.options.debug) { console.log('binding blurOnText'); }
+				},
 				focusOnText : function () {
 					switch (self.state) {
 					case 'inactive':
@@ -237,8 +243,10 @@
 				toolbarMouseDown : function (event) {
 					switch (self.state) {
 					case 'active':
-						event.preventDefault();
-						if (self.options.debug) { console.log('preventDefault mouseDown on Toolbar'); }
+						//event.preventDefault();
+						self.element.unbind("blur", self.eventHandlers.blurOnText);
+						$(document).bind('mouseup', self.eventHandlers.bindingBlurOnText);
+						if (self.options.debug) { console.log('unbinding blurOnText'); }
 						break;
 					case 'pluginHasFocus':
 						// do nothing
