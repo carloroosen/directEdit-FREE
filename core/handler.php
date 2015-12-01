@@ -108,7 +108,7 @@ function de_delete_post() {
 	if ( ! empty( $_POST[ 'data' ][ 'reference' ] ) ) {
 		$item = De_Items::get( $_POST[ 'data' ][ 'reference' ] );
 
-		if ( $item instanceof De_Item && De_Store::is_editable( $item ) && $item->get_setting( 'postId' ) && de_is_deleteable( $item->get_setting( 'postId' ) ) ) {
+		if ( $item instanceof De_Item && De_Store::is_editable( $item ) && $item->get_setting( 'postId' ) && de_is_deleteable( $item->get_setting( 'postId' ) ) && current_user_can( 'delete_post', $item->get_setting( 'postId' ) ) ) {
 			// Delete posts in all languages if needed
 			if ( De_Language_Wrapper::has_multilanguage() && De_Language_Wrapper::get_language_posts( $item->get_setting( 'postId' ) ) ) {
 				foreach( De_Language_Wrapper::get_language_posts( $item->get_setting( 'postId' ) ) as $lang_post ) {
@@ -308,7 +308,7 @@ function de_save_page() {
 			}
 		}
 
-		if ( ! empty( $post_id ) && get_post( $post_id ) ) {
+		if ( ! empty( $post_id ) && get_post( $post_id ) && current_user_can( 'edit_post', $post_id ) ) {
 			// Include custom functions.php if needed
 			$template = $_POST[ 'direct-page-options' ][ 'templateName' ];
 			if ( is_dir( dirname( get_stylesheet_directory() . '/' . $template ) ) && file_exists( dirname( get_stylesheet_directory() . '/' . $template ) . '/functions.php' ) ) {
