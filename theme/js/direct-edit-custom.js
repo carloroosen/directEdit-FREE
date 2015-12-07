@@ -99,7 +99,8 @@
 				var self = this, imageEditorOptions = this.options.buttonOptions.image;
 				imageEditorOptions.callback = function (result) {
 					self.eventHandlers.restoreSelection();
-					document.execCommand('inserthtml', false, result.content);
+					//document.execCommand('inserthtml', false, result.content);
+					self.pasteHtmlAtCaret(result.content);
 				};
 				this.element.directImageEditor(imageEditorOptions);
 				return this.element.directImageEditor('getDialog');
