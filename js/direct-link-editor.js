@@ -142,6 +142,8 @@
 		createDialog: function () {
 			var dialogOptions, dialog, saveLink, urlInput, saveLinkButton, removeLinkButton, p, prefix, prefixesHTML,
 				changePrefix, changePrefixCallback, createLinkInSelection, setSingleRange, currentRange, self = this;
+			var data = {};
+
 			dialogOptions = {
 				autoOpen: false,
 				width: 540,
@@ -226,7 +228,8 @@
 					return false;
 				};
 			};
-			dialog = $('<div><form class="linkForm"><br><br><span id="prefix">/</span><input class="url" type="text" name="url" /><input type="button" id="saveLinkButton" value="Save" /></form></div>');
+			dialog = $('<div><form class="linkForm"><br><span id="prefix">/</span><input class="url" type="text" name="url" /><input type="button" id="saveLinkButton" value="Save" /></form></div>');
+			dialog.find('span#prefix').before('<div id="internalLinksDiv">internal links: <select id="internalLinks"><option value="">&nbsp;</option></select><br><br></div>');
 			if (this.options.textContainer) {
 				dialog.find('form.linkForm').append('<input type="button" id="removeLinkButton" value="Remove" />');
 			}
@@ -254,6 +257,11 @@
 				}
 				if (self.options.prefixes) {
 					$('input:radio[value="' + self.options.prefixes[0][0] + '"]', dialog).prop('checked', true);
+					if (self.options.prefixes[0][0] == '/') {
+						$('div#internalLinksDiv', dialog).show();
+					} else {
+						$('div#internalLinksDiv', dialog).hide();
+					}
 				}
 				// get default prefix
 				changePrefix('/');
@@ -262,13 +270,51 @@
 					for (p in self.options.prefixes) {
 						if (self.options.prefixes.hasOwnProperty(p) && self.link && self.link.indexOf(self.options.prefixes[p][0]) === 0) {
 							$('input:radio[value="' + self.options.prefixes[p][0] + '"]', dialog).prop('checked', true);
+							if (self.options.prefixes[p][0] == '/') {
+								$('div#internalLinksDiv', dialog).show();
+							} else {
+								$('div#internalLinksDiv', dialog).hide();
+							}
 							changePrefix(self.options.prefixes[p][0]);
 							plainLink = self.link.substring(self.prefix.length);
 						}
 					}
 				}
 				$('input[name=url]', dialog).val(plainLink);
+				$('select#internalLinks option[value="'+plainLink+'"]', dialog).prop('selected', true);
 			});
+			$('input:radio[name="prefix"]', dialog).bind('change', function () {
+				if ($(this).val() == '/') {
+					$('div#internalLinksDiv', dialog).show();
+					$('select#internalLinks option[value="'+$('input[name="url"]', dialog).val()+'"]', dialog).prop('selected', true);
+				} else {
+					$('div#internalLinksDiv', dialog).hide();
+				}
+			});
+			$('select#internalLinks', dialog).bind('change', function () {
+				$('input[name="url"]', dialog).val($(this).val());
+			});
+
+			// The list of internal links
+			data['action'] = 'direct-get-internal-links';
+			$.ajax({
+				url: self.options.ajaxUrl || $.directEdit.fn.ajaxUrl,
+				type: 'POST',
+				error: function () {
+				},
+				dataType: 'json',
+				success: function (result) {
+					if (typeof (result) === 'object') {
+						//console.log(result);
+						for(var index in result) { 
+							//console.log(result[index]);
+							dialog.find('select#internalLinks').append('<option value="' + result[index] + '">' + index + '</option');
+						}
+					}
+				},
+				data: data
+			});
+
 			this.dialog = dialog;
 		},
 		getDialog: function () {

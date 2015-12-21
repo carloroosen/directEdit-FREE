@@ -48,8 +48,11 @@ var directEdit, directNotify, directTranslate;
 			notifyContainer.append(notice);
 			setTimeout(noticeRemove(notice), 3500);
 		},
-		directEdit: function (arg1) {
+		directEdit: function (arg1, arg2) {
 			var self = $.directEdit.fn;
+
+			self.ajaxUrl = arg2 || '';
+			
 			function createEditor(element) {
 				var optionSelector, thisOptions, thisGlobalOptions, thisLocalOptions, editorType, parentElement, additionalData, editor, link;
 				optionSelector = element.attr('data-global-options');
@@ -218,7 +221,6 @@ var directEdit, directNotify, directTranslate;
 
 	$.fn.directSaveButton = function (options) {
 		if (options) {
-			$.directEdit.fn.ajaxUrl = options.ajaxUrl || '';
 			$.directEdit.fn.command = options.command || ['action', 'direct-save-page'];
 		}
 		this.click(function () {

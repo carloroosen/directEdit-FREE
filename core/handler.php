@@ -16,6 +16,7 @@ add_action( 'wp_ajax_direct-add', 'de_list_add' );
 add_action( 'wp_ajax_direct-delete', 'de_list_delete' );
 add_action( 'wp_ajax_direct-delete-post', 'de_delete_post' );
 add_action( 'wp_ajax_direct-edit-image', 'de_edit_image' );
+add_action( 'wp_ajax_direct-get-internal-links', 'de_internal_links' );
 add_action( 'wp_ajax_direct-hide-post', 'de_hide_post' );
 add_action( 'wp_ajax_direct-move-left', 'de_list_move_left' );
 add_action( 'wp_ajax_direct-move-right', 'de_list_move_right' );
@@ -133,6 +134,22 @@ function de_edit_image() {
 	echo json_encode( De_Store::edit_image() );
 	
 	die();
+}
+
+function de_internal_links() {
+	$response = array();
+
+	$the_query = new WP_Query( array( 'post_type' => 'any' ) );
+	while ( $the_query->have_posts() ) {
+		$the_query->the_post();
+		$response[ get_the_title() ] = str_replace( home_url( '/' ), '', get_permalink( get_the_ID() ) );
+	}
+	wp_reset_postdata();
+
+	ksort( $response, SORT_STRING | SORT_FLAG_CASE );
+	echo json_encode( $response );
+	
+	die();	
 }
 
 function de_hide_post() {
