@@ -58,23 +58,23 @@
 
 /* Component containers
 ----------------------------------*/
-.ui-widget {   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size:13px; }
-.ui-widget .ui-widget { font-size: 1em; }
-.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 1em; }
-.ui-widget-content { border: 1px solid #aaaaaa; background: #ffffff url(images/ui-bg_glass_75_ffffff_1x400.png) 50% 50% repeat-x; color: #404040; }
-.ui-widget-content a { color: #404040; }
-.ui-widget-header {
+.direct-edit.ui-widget {   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size:13px; }
+.direct-edit.ui-widget .ui-widget { font-size: 1em; }
+.direct-edit .ui-widget input, .direct-edit .ui-widget select, .direct-edit .ui-widget textarea, .direct-edit .ui-widget button { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 1em; }
+.direct-edit.ui-widget-content { border: 1px solid #aaaaaa; background: #ffffff url(images/ui-bg_glass_75_ffffff_1x400.png) 50% 50% repeat-x; color: #404040; }
+.direct-edit .ui-widget-content a { color: #404040; }
+.direct-edit .ui-widget-header {
   font-weight:bold;
   border-color: #0064cd #0064cd #003f81;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   border:1px solid #666;
 
  }
-.ui-widget-header a { color: #222222; }
+.direct-edit .ui-widget-header a { color: #222222; }
 
 /* Interaction states
 ----------------------------------*/
-.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+.direct-edit .ui-state-default, .direct-edit .ui-widget-content .ui-state-default, .direct-edit .ui-widget-header .ui-state-default {
 
   background-color: #e6e6e6;
   background-repeat: no-repeat;
@@ -106,18 +106,18 @@
  }
 
 
-.ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited { color: #555555; text-decoration: none; }
-.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
+.direct-edit .ui-state-default a, .direct-edit .ui-state-default a:link, .direct-edit .ui-state-default a:visited { color: #555555; text-decoration: none; }
+.direct-edit .ui-state-hover, .direct-edit .ui-widget-content .ui-state-hover, .direct-edit .ui-widget-header .ui-state-hover, .direct-edit .ui-state-focus, .direct-edit .ui-widget-content .ui-state-focus, .direct-edit .ui-widget-header .ui-state-focus {
   background-position: 0 -15px;
   color: #333;
   text-decoration: none;
 
 
  }
-.ui-state-hover a, .ui-state-hover a:hover { color: #212121; text-decoration: none; }
-.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active { border: 1px solid #aaaaaa;  font-weight: normal; color: #212121; }
-.ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited { color: #212121; text-decoration: none; }
-.ui-widget :active { outline: none; }
+.direct-edit .ui-state-hover a, .ui-state-hover a:hover { color: #212121; text-decoration: none; }
+.direct-edit .ui-state-active, .direct-edit .ui-widget-content .ui-state-active, .direct-edit .ui-widget-header .ui-state-active { border: 1px solid #aaaaaa;  font-weight: normal; color: #212121; }
+.direct-edit .ui-state-active a, .direct-edit .ui-state-active a:link, .direct-edit .ui-state-active a:visited { color: #212121; text-decoration: none; }
+.direct-edit .ui-widget :active { outline: none; }
 
 /* Interaction Cues
 ----------------------------------*/
@@ -394,10 +394,10 @@
 ----------------------------------*/
 
 /* Corner radius */
-.ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl { -moz-border-radius-topleft: 4px; -webkit-border-top-left-radius: 4px; -khtml-border-top-left-radius: 4px; border-top-left-radius: 4px; }
-.ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr { -moz-border-radius-topright: 4px; -webkit-border-top-right-radius: 4px; -khtml-border-top-right-radius: 4px; border-top-right-radius: 4px; }
-.ui-corner-all, .ui-corner-bottom, .ui-corner-left, .ui-corner-bl { -moz-border-radius-bottomleft: 4px; -webkit-border-bottom-left-radius: 4px; -khtml-border-bottom-left-radius: 4px; border-bottom-left-radius: 4px; }
-.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br { -moz-border-radius-bottomright: 4px; -webkit-border-bottom-right-radius: 4px; -khtml-border-bottom-right-radius: 4px; border-bottom-right-radius: 4px; }
+.direct-edit .ui-corner-all, .direct-edit .ui-corner-top, .direct-edit .ui-corner-left, .direct-edit .ui-corner-tl { -moz-border-radius-topleft: 4px; -webkit-border-top-left-radius: 4px; -khtml-border-top-left-radius: 4px; border-top-left-radius: 4px; }
+.direct-edit .ui-corner-all, .direct-edit .ui-corner-top, .direct-edit .ui-corner-right, .direct-edit .ui-corner-tr { -moz-border-radius-topright: 4px; -webkit-border-top-right-radius: 4px; -khtml-border-top-right-radius: 4px; border-top-right-radius: 4px; }
+.direct-edit .ui-corner-all, .direct-edit .ui-corner-bottom, .direct-edit .ui-corner-left, .direct-edit .ui-corner-bl { -moz-border-radius-bottomleft: 4px; -webkit-border-bottom-left-radius: 4px; -khtml-border-bottom-left-radius: 4px; border-bottom-left-radius: 4px; }
+.direct-edit .ui-corner-all, .direct-edit .ui-corner-bottom, .direct-edit .ui-corner-right, .direct-edit .ui-corner-br { -moz-border-radius-bottomright: 4px; -webkit-border-bottom-right-radius: 4px; -khtml-border-bottom-right-radius: 4px; border-bottom-right-radius: 4px; }
 
 
 
@@ -806,86 +806,7 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .ui-slider-vertical .ui-slider-handle { left: -.3em; margin-left: 0; margin-bottom: -.6em; }
 .ui-slider-vertical .ui-slider-range { left: 0; width: 100%; }
 .ui-slider-vertical .ui-slider-range-min { bottom: 0; }
-.ui-slider-vertical .ui-slider-range-max { top: 0; }/*
- * jQuery UI Tabs 1.8.16
- *
- * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
- * Dual licensed under the MIT or GPL Version 2 licenses.
- * http://jquery.org/license
- *
- * http://docs.jquery.com/UI/Tabs#theming
- */
- .ui-tabs .ui-tabs-nav{ background:none; border-color: #ddd;
-  border-style: solid;
-  border-width: 0 0 1px;}
-.ui-tabs { position: relative; padding: .2em; zoom: 1; border:0px;} /* position: relative prevents IE scroll bug (element with position: relative inside container with overflow: auto appear as "fixed") */
-
-
-.ui-tabs .ui-tabs-nav li:hover, .ui-tabs .ui-tabs-nav li a:hover{
-  background:whiteSmoke;
-  border-bottom:1px solid #ddd;
-  padding-bottom:0px;
-   color:#00438A;
-}
-
-
-.ui-tabs .ui-tabs-nav { margin: 0; padding: .2em .2em 0; border-bottom:1px solid #DDD; }
-.ui-tabs .ui-tabs-nav li {  text-decoration: none; list-style: none; float: left; position: relative; top: 1px; padding: 0px 0px 1px 0px; white-space: nowrap; background:none; border:0px; 
-
-}
-
-.ui-tabs-nav .ui-state-default{
-  -webkit-box-shadow: 0px 0px 0px #ffffff; /* Saf3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
-     -moz-box-shadow: 0px 0px 0px #ffffff; /* FF3.5 - 3.6 */
-          box-shadow: 0px 0px 0px #ffffff; /* Opera 10.5, IE9, FF4+, Chrome 6+, iOS 5 */
-}
-.ui-tabs .ui-tabs-nav li a {
-
-  float: left;
-  text-decoration: none;
-  cursor: text;
-  padding: 0 15px;
-  margin-right: 2px;
-  line-height: 34px;
-  border: 1px solid transparent;
-  -webkit-border-radius: 4px 4px 0 0;
-  -moz-border-radius: 4px 4px 0 0;
-  border-radius: 4px 4px 0 0;
-
-
- }
-.ui-tabs .ui-tabs-nav li.ui-tabs-selected { margin-bottom: 0; padding-bottom: 0px; outline:none;}
-
-.ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-state-processing a {
-
-  background-color: #ffffff;
-  border: 1px solid #ddd;
-  border-bottom-color: #ffffff;
-  cursor: default;
-  color:gray;
-  outline:none;
-}
-
-
-.ui-tabs .ui-tabs-nav li.ui-tabs-selected:hover{
-  background:#ffffff;
-  outline:none;
-}
-
-.ui-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a { cursor: pointer; color:#0069D6; background:none; font-weight:normal; margin-bottom:-1px;} 
-/* first selector in group seems obsolete, but required to overcome bug in Opera applying cursor: text overall if defined elsewhere... */
-.ui-tabs .ui-tabs-panel { display: block; border-width: 0; padding: 1em 1.4em; background: none; }
-.ui-tabs-panel .ui-button{text-decoration:none;}
-.ui-tabs .ui-tabs-hide { display: none !important; }
-
-
-/* IE fix for background inheritance from ui-widget*/
-.ui-tabs .ui-tabs-nav li{
-  filter:none;
-}
-
-
-
+.direct-edit.ui-slider-vertical .ui-slider-range-max { top: 0; }/*
 /*
  * jQuery UI Datepicker 1.8.16
  *
@@ -1329,14 +1250,9 @@ div.wijmo-wijmenu .wijmo-wijmenu-child .wijmo-wijmenu-text
 }
 
 
-.wijmo-wijmenu .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+.wijmo-wijmenu .ui-state-default {
   text-shadow:none;
-}
-
-
-.wijmo-wijmenu .ui-state-default{
   box-shadow: none;
   color:#BFBFBF;
   filter: none;
 }
-

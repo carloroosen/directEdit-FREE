@@ -4,9 +4,9 @@
     z-index: 2147483647;
 }
 
-.ui-dialog.direct-edit label{
-    display:inline;
-}
+
+
+
 
 
 .ui-dialog.direct-edit.transition{
@@ -17,15 +17,15 @@
 	-webkit-box-sizing: content-box;
 	-moz-box-sizing: content-box;
 	box-sizing: content-box;
-	text-transform: none;
+
 }
 .direct-hidden:not(.direct-show-all) {
 	display: none;
 }
 
-.direct-edit button, .direct-edit input[type=submit] {
-	min-width:0;
-}
+
+
+
 
 /* directNotify */
 
@@ -41,7 +41,7 @@
     border-radius: 0.375em 0.375em 0.375em 0.375em;
 	padding:10px;
     font-family: Arial;
-    font-size: 0.9375em;
+    font-size: 12px;
     background: rgba(5, 5, 5, 0.8);
 	margin-bottom: 5px;
 	overflow:hidden;
@@ -65,7 +65,7 @@
     display: block;
     float: left;
     font-family: Arial;
-    font-size: 0.9375em;
+    font-size: 12px;
     line-height: 1.125em;
     margin-right: 0.25em;
     opacity: 0;
@@ -94,7 +94,8 @@
 .direct-list-editor-buttons {
     position: absolute;
 	margin-top:10px;
-    width: auto;
+
+	right: 0;
     z-index: 2147483647;
 
 }
@@ -105,16 +106,18 @@
     color: #bbbbbb;
     cursor: pointer;
     display: block;
-	white-space: nowrap;
+
     font-family: Arial;
-    font-size: 0.9375em;
+    font-size: 12px;
     line-height: 1.125em;
     margin-bottom: 0.25em;
     margin-left: 0.6em;
-    opacity: 0;
+
+    opacity: 1;
     padding: 0.375em 0.5em;
     text-decoration: none;
-    transition: all 0.3s ease 0s, opacity 0.3s 1s;	
+
+    transition: all 0.3s ease 0s;
 }
 .direct-list-editor-buttons a:hover, .direct-list-editor-buttons a:focus {
     background: none repeat scroll 0 0 black;
@@ -123,23 +126,83 @@
 }
 .direct-list-editor-item div:hover a, .direct-list-editor-buttons:hover a {
     opacity: 1;
-	transition: opacity 0.3s 0s;
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.direct-list-editor-buttons .group-float a {
+  float: left;
+}
+
+
+
+
+p.direct-list-editor-item {
+	display: block;
+	clear: both;
+	min-height: 30px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+p.direct-list-editor-item .direct-list-editor-buttons {
+	margin-top: 0;
+}
+
+
+
+.packages_block .direct-list-editor-buttons {
+	right: -100px;
+	margin-top: -23px;
+}
+
 
 /* directLinkEditor */
 
+
+
 a.direct-link-editor .direct-link-editor-buttons {
-    margin-top: 23px;
     opacity: 0;
     position: absolute;
     z-index: 2147483647;
-	transition: opacity 0.3s 1s;
-}
-a.direct-link-editor:hover .direct-link-editor-buttons {
 
-    opacity: 1;
-	transition: opacity 0.3s 0s;
 }
+
+a.direct-link-editor:hover .direct-link-editor-buttons {
+    margin-top: 23px;
+    opacity: 1;
+
+}
+
 a.direct-link-editor .direct-link-editor-buttons a {
     background: none repeat scroll 0 0 rgba(0, 0, 0, 0.6);
     border: 0 none;
@@ -149,7 +212,7 @@ a.direct-link-editor .direct-link-editor-buttons a {
     display: block;
     float: left;
     font-family: "FuturaMedium", Helvetica,Arial;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: normal !important;
     line-height: 1.125em;
     margin-right: 0.25em;
@@ -157,42 +220,8 @@ a.direct-link-editor .direct-link-editor-buttons a {
     text-decoration: none;
     transition: all 0.3s ease 0s;
 }
+
 a.direct-link-editor .direct-link-editor-buttons a:hover {
-    background-color: #333333;
-    color: #EEEEEE;
-}
-
-/* directPostwrapperEditor */
-
-.direct-postwrapper-editor .direct-postwrapper-editor-buttons {
-    margin-top: 23px;
-    opacity: 0;
-    position: absolute;
-    z-index: 2147483647;
-	transition: opacity 0.3s 1s;
-}
-.direct-postwrapper-editor:hover .direct-postwrapper-editor-buttons {
-    opacity: 1;
-	transition: opacity 0.3s 0s;
-}
-.direct-postwrapper-editor .direct-postwrapper-editor-buttons a {
-    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.6);
-    border: 0 none;
-    border-radius: 4px;
-    color: #bbbbbb;
-    cursor: pointer;
-    display: block;
-    float: left;
-    font-family: "FuturaMedium", Helvetica,Arial;
-    font-size: 13px;
-    font-weight: normal !important;
-    line-height: 1.125em;
-    margin-right: 0.25em;
-    padding: 0.375em 0.5em;
-    text-decoration: none;
-    transition: all 0.3s ease 0s;
-}
-.direct-postwrapper-editor .direct-postwrapper-editor-buttons a:hover {
     background-color: #333333;
     color: #EEEEEE;
 }
@@ -223,7 +252,7 @@ a.direct-link-editor .direct-link-editor-buttons a:hover {
     background-color: #eeeeec;
     border-radius: 6px;
 	cursor:move;
-    font-size: 12pt;
+    font-size: 12px;
     line-height: 12px;
 }
 
@@ -281,7 +310,7 @@ a.direct-link-editor .direct-link-editor-buttons a:hover {
 .direct-icon-h3 { background-position : -320px 0; }
 .direct-icon-h4 { background-position : -336px 0; }
 .direct-icon-h5{ background-position : -352px 0; }
-.direct-icon-h6{ background-position : -368px 0; }
+
 .direct-icon-p-lead{ background-position : -400px 0; }
 
 
@@ -306,7 +335,7 @@ a.direct-link-editor .direct-link-editor-buttons a:hover {
 
 #direct-image-editor-dialog .spinner {
 	float:right;
-	font-size:.85em;
+	font-size: 12px;
 	color:#ccc;
 	margin:4px 0;
 	padding-right: 22px;
@@ -438,7 +467,7 @@ margin-left: -1px;
 #direct-page-options #categoryEditor .pointer { cursor : pointer; }
 #direct-page-options #categoryEditor .add-new { margin-left:216px; }
 #direct-page-options #categoryEditor {
-	font-size: 14px;
+	font-size: 12px;
 	font-weight: normal;
 	line-height: 28px;
 }
@@ -567,7 +596,7 @@ margin-left: -1px;
 }
 
 #direct-page-options h6 {
-  font-size: 11.9px;
+  font-size: 12px;
 }
 
 #direct-page-options form {
@@ -585,7 +614,7 @@ margin-left: -1px;
   width: 100%;
   padding: 0;
   margin-bottom: 20px;
-  font-size: 21px;
+  font-size: 12px;
   line-height: 40px;
   color: #333333;
   border: 0;
@@ -597,7 +626,7 @@ margin-left: -1px;
 #direct-page-options button,
 #direct-page-options select,
 #direct-page-options textarea {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: normal;
   line-height: 20px;
 }
@@ -634,7 +663,7 @@ margin-left: -1px;
   height: 20px;
   padding: 4px 6px;
   margin-bottom: 10px;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 20px;
   color: #555555;
   vertical-align: middle;
@@ -795,7 +824,7 @@ margin-left: -1px;
   padding: 4px 12px;
   margin-bottom: 0;
   *margin-left: .3em;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 20px;
   color: #333333;
   text-align: center;
@@ -893,5 +922,28 @@ margin-left: -1px;
 #direct-page-options input[type="submit"].btn::-moz-focus-inner {
   padding: 0;
   border: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+#slider2 {
+  min-height: 300px;
+}
+
+
+
+
+
+#demoheader .direct-link-editor-buttons {
+	margin-top:30px;
 }
 
