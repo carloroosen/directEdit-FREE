@@ -415,9 +415,9 @@ function de_save_page() {
 			do_action( 'de_save_page_options', $_POST[ 'direct-page-options' ] );
 			
 			$response[ 'direct-page-options' ] = true;
-			if ( empty( $response[ 'redirect' ] ) ) {
-				$response[ 'redirect' ] = De_Url::get_url( $post_id );
-			}
+			//if ( empty( $response[ 'redirect' ] ) ) {
+				$response[ 'redirect' ] = add_query_arg( array( 'de_message' => 'saved' ), De_Url::get_url( $post_id ) );
+			//}
 		}
 	}
 	
