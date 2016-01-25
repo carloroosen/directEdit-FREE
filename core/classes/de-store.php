@@ -338,7 +338,7 @@ class De_Store {
 					
 					wp_update_post( $myPost );
 					
-					if ( empty( $currentSlug ) || ( get_post_type( $item->get_setting( 'postId' ) ) != 'de_webform' && $currentSlug == wp_unique_post_slug( sanitize_title( $currentTitle ), $item->get_setting( 'postId' ), 'publish', $currentType, $currentParent ) ) ) {
+					if ( sanitize_title( $content ) && ( empty( $currentSlug ) || ( get_post_type( $item->get_setting( 'postId' ) ) != 'de_webform' && $currentSlug == wp_unique_post_slug( sanitize_title( $currentTitle ), $item->get_setting( 'postId' ), 'publish', $currentType, $currentParent ) ) ) ) {
 						$newSlug = sanitize_title( $content );
 						$myPost = array();
 						$myPost[ 'ID' ] = $item->get_setting( 'postId' );
@@ -352,7 +352,7 @@ class De_Store {
 						//}
 					}
 					
-					if ( empty( $currentDeSlug ) || $currentDeSlug == De_Url::unique_slug( $item->get_setting( 'postId' ), sanitize_title( $currentTitle ) ) ) {
+					if ( sanitize_title( $content ) && ( empty( $currentDeSlug ) || $currentDeSlug == De_Url::unique_slug( $item->get_setting( 'postId' ), sanitize_title( $currentTitle ) ) ) ) {
 						De_Url::register_url( $item->get_setting( 'postId' ), sanitize_title( $content ) );
 
 						if ( $item->get_setting( 'redirect' ) && $item->get_setting( 'redirect' ) !== 'false' && $item->get_setting( 'redirect' ) !== 'no' ) {
