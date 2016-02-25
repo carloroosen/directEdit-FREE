@@ -204,6 +204,7 @@ class De_Url {
 			if ( $de_post_parent ) {
 				$args = array(
 					'post_type' => 'any',
+					'post_status' => 'any',
 					'post__not_in' => array(
 						$de_post_id
 					),
@@ -221,6 +222,7 @@ class De_Url {
 			} else {
 				$args = array(
 					'post_type' => 'any',
+					'post_status' => 'any',
 					'post__not_in' => array(
 						$de_post_id
 					),
@@ -251,6 +253,7 @@ class De_Url {
 				if ( $de_post_parent ) {
 					$args = array(
 						'post_type' => 'any',
+						'post_status' => 'any',
 						'post__not_in' => array(
 							$de_post_id
 						),
@@ -268,6 +271,7 @@ class De_Url {
 				} else {
 					$args = array(
 						'post_type' => 'any',
+						'post_status' => 'any',
 						'post__not_in' => array(
 							$de_post_id
 						),
