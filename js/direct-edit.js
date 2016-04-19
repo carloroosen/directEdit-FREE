@@ -51,7 +51,9 @@ var directEdit, directNotify, directTranslate;
 		directEdit: function (arg1, arg2) {
 			var self = $.directEdit.fn;
 
-			self.ajaxUrl = arg2 || '';
+			if (arg2 || !self.ajaxUrl) {
+				self.ajaxUrl = arg2 || '';
+			}
 			
 			function createEditor(element) {
 				var optionSelector, thisOptions, thisGlobalOptions, thisLocalOptions, editorType, parentElement, additionalData, editor, link;
