@@ -405,6 +405,13 @@ class De_Store {
 						}
 					}
 
+					// Read it back
+					$p = get_post( $item->get_setting( 'postId' ) );
+					if ( $p ) {
+						$content = $p->post_content;
+					}
+					apply_filters( 'the_content', $content );
+
 					return $content;
 				break;
 				case 'wpexcerpt':
