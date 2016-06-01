@@ -139,7 +139,7 @@ function de_edit_image() {
 function de_internal_links() {
 	$response = array();
 
-	$the_query = new WP_Query( array( 'post_type' => 'any' ) );
+	$the_query = new WP_Query( array( 'post_type' => 'any', 'posts_per_page' => -1 ) );
 	while ( $the_query->have_posts() ) {
 		$the_query->the_post();
 		$response[ get_the_title() ] = str_replace( home_url( '/' ), '', get_permalink( get_the_ID() ) );
