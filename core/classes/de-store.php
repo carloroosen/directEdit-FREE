@@ -658,9 +658,6 @@ class De_Store {
 						}
 
 						$scaledimage = imagecreatetruecolor( $new_width, $new_height );
-						if ( function_exists( 'imagesetinterpolation' ) ) {
-							imagesetinterpolation( $scaledimage, IMG_BICUBIC );
-						}
 						imageAlphaBlending( $scaledimage, true );
 						$white = imageColorExact ( $scaledimage, 255, 255, 255 );
 						imageFill ( $scaledimage, 0, 0, $white );
@@ -821,7 +818,8 @@ class De_Store {
 						'imgFileFormat' => $item->get_setting( 'imgFileFormat' ),
 						'imgQuality' => $item->get_setting( 'imgQuality' ),
 						'copies' => $item->get_setting( 'copies' ),
-						'styles' => $item->get_setting( 'styles' )
+						'styles' => $item->get_setting( 'styles' ),
+						'sharpen' => $item->get_setting( 'sharpen' )
 					);
 				}
 
@@ -882,9 +880,6 @@ class De_Store {
 					copy( $sourcefilepath, $destfilepath );
 				} else {
 					$scaledimage = imagecreatetruecolor( $containerwidth, $containerheight );
-					if ( function_exists( 'imagesetinterpolation' ) ) {
-						imagesetinterpolation( $scaledimage, IMG_BICUBIC );
-					}
 					if( $f == 'png' ) {
 						imageAlphaBlending( $scaledimage, false );
 						imageSaveAlpha( $scaledimage, true);
@@ -909,6 +904,22 @@ class De_Store {
 						min( $k * $containerheight, $sourceheight )
 					);
 
+					if ( ! empty( $imageOptions[ 'sharpen' ] ) && function_exists( 'imageconvolution' ) ) {
+					    // Sharpen the image based on two things:
+					    //    (1) the difference between the original size and the final size
+					    //    (2) the final size
+					    $sharpness = de_find_sharp( $sourcewidth, $scaledimagewidth );
+
+					    $sharpenMatrix = array(
+					        array(-1, -2, -1),
+					        array(-2, $sharpness + 12, -2),
+					        array(-1, -2, -1)
+					    );
+					    $divisor = $sharpness;
+					    $offset = 0;
+					    imageconvolution( $scaledimage, $sharpenMatrix, $divisor, $offset );
+					}
+
 					// TODO: it would be cool to add image size text in dev mode
 					//$text = $containerwidth . ' x ' . $containerheight;
 					//$white = imagecolorallocate( $scaledimage, 255, 255, 255 );
@@ -918,7 +929,7 @@ class De_Store {
 						if ( ! empty( $imageOptions[ 'imgQuality' ] ) ) {
 							$q = (int) $imageOptions[ 'imgQuality' ];
 						} else {
-							$q = 60;
+							$q = 100;
 						}
 
 						imagejpeg( $scaledimage, $destfilepath, $q );
@@ -979,9 +990,6 @@ class De_Store {
 							}
 							
 							$scaledimageCopy = imagecreatetruecolor( $containerwidthCopy, $containerheightCopy );
-							if ( function_exists( 'imagesetinterpolation' ) ) {
-								imagesetinterpolation( $scaledimageCopy, IMG_BICUBIC );
-							}
 							if( $f == 'png' ) {
 								imageAlphaBlending( $scaledimageCopy, false );
 								imageSaveAlpha( $scaledimageCopy, true);
@@ -1006,6 +1014,22 @@ class De_Store {
 								min( $kCopy * $containerheightCopy, $sourceheight )
 							);
 
+							if ( ! empty( $copy[ 'sharpen' ] ) && function_exists( 'imageconvolution' ) ) {
+							    // Sharpen the image based on two things:
+							    //    (1) the difference between the original size and the final size
+							    //    (2) the final size
+							    $sharpness = de_find_sharp( $sourcewidth, $scaledimagewidthCopy );
+
+							    $sharpenMatrix = array(
+							        array(-1, -2, -1),
+							        array(-2, $sharpnessCopy + 12, -2),
+							        array(-1, -2, -1)
+							    );
+							    $divisor = $sharpness;
+							    $offset = 0;
+							    imageconvolution( $scaledimageCopy, $sharpenMatrix, $divisor, $offset );
+							}
+
 							if ( ! empty( $copy[ 'filter' ] ) ) {
 								switch( $copy[ 'filter' ] ) {
 									case 'monochrome':
@@ -1025,7 +1049,7 @@ class De_Store {
 								} elseif ( ! empty( $imageOptions[ 'imgQuality' ] ) ) {
 									$q_copy = (int) $imageOptions[ 'imgQuality' ];
 								} else {
-									$q_copy = 60;
+									$q_copy = 100;
 								}
 
 								imagejpeg( $scaledimageCopy, $destfilepathCopy, $q_copy );

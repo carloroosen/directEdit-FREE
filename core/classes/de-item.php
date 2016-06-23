@@ -34,6 +34,7 @@ class De_Item {
 		'sourceMaxResize',
 		'sourceMinWidth',
 		'sourceMinHeight',
+		'sharpen',
 		'validate',
 		'maxLength',
 		'localize',
@@ -177,7 +178,8 @@ class De_Item {
 				'imgFileFormat' => $this->get_setting( 'imgFileFormat' ),
 				'imgQuality' => $this->get_setting( 'imgQuality' ),
 				'copies' => $this->get_setting( 'copies' ),
-				'styles' => $this->get_setting( 'styles' )
+				'styles' => $this->get_setting( 'styles' ),
+				'sharpen' => $this->get_setting( 'sharpen' )
 			);
 		}
 
@@ -221,6 +223,9 @@ class De_Item {
 					if ( ! empty( $imageOptions[ 'styles' ][ $s ][ 'imgQuality' ] ) ) {
 						$imageOptions[ 'imgQuality' ] = $imageOptions[ 'styles' ][ $s ][ 'imgQuality' ];
 					}
+					if ( ! empty( $imageOptions[ 'styles' ][ $s ][ 'sharpen' ] ) ) {
+						$imageOptions[ 'sharpen' ] = $imageOptions[ 'styles' ][ $s ][ 'sharpen' ];
+					}
 				}
 				
 				// Merge image options with copy options for copy ( if exist )
@@ -236,6 +241,9 @@ class De_Item {
 					}
 					if ( ! empty( $data[ 'sizes' ][ $mode ][ 'copies' ][ $this->get_setting( 'useCopy' ) ][ 'imgQuality' ] ) ) {
 						$imageOptions[ 'imgQuality' ] = $data[ 'sizes' ][ $mode ][ 'copies' ][ $this->get_setting( 'useCopy' ) ][ 'imgQuality' ];
+					}
+					if ( ! empty( $data[ 'sizes' ][ $mode ][ 'copies' ][ $this->get_setting( 'useCopy' ) ][ 'sharpen' ] ) ) {
+						$imageOptions[ 'sharpen' ] = $data[ 'sizes' ][ $mode ][ 'copies' ][ $this->get_setting( 'useCopy' ) ][ 'sharpen' ];
 					}
 				}
 				

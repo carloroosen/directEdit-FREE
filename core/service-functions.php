@@ -316,6 +316,18 @@ if ( ! function_exists( 'array_replace_recursive' ) ) {
 	}
 }
 
+// function from Ryan Rud (http://adryrun.com)
+function de_find_sharp( $orig, $final ) {
+    $final    = $final * (750.0 / $orig);
+    $a        = 52;
+    $b        = -0.27810650887573124;
+    $c        = .00047337278106508946;
+
+    $result = $a + $b * $final + $c * $final * $final;
+
+    return max(round($result), 0);
+}
+
 if ( ! function_exists( 'array_replace' ) ) {
 	function array_replace(){
 		$array=array();
