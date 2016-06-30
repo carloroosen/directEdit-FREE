@@ -947,3 +947,7 @@ margin-left: -1px;
 	margin-top:30px;
 }
 
+/* login form */
+#send {
+  cursor: pointer;
+}
