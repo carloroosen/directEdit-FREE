@@ -296,24 +296,14 @@
 			});
 
 			// The list of internal links
-			data['action'] = 'direct-get-internal-links';
-			$.ajax({
-				url: self.options.ajaxUrl || $.directEdit.fn.ajaxUrl,
-				type: 'POST',
-				error: function () {
-				},
-				dataType: 'json',
-				success: function (result) {
-					if (typeof (result) === 'object') {
-						//console.log(result);
-						for(var index in result) { 
-							//console.log(result[index]);
-							dialog.find('select#internalLinks').append('<option value="' + result[index] + '">' + index + '</option');
-						}
-					}
-				},
-				data: data
-			});
+			var result = $.directEdit.fn.internalLinks;
+			if (typeof (result) === 'object') {
+				//console.log(result);
+				for(var index in result) { 
+					//console.log(result[index]);
+					dialog.find('select#internalLinks').append('<option value="' + result[index] + '">' + index + '</option');
+				}
+			}
 
 			this.dialog = dialog;
 		},
