@@ -55,7 +55,115 @@ var directEdit, directNotify, directTranslate;
 			if (arg2 || !self.ajaxUrl) {
 				self.ajaxUrl = arg2 || '';
 			}
-			
+
+			function createEditor(element) {
+				var optionSelector, thisOptions, thisGlobalOptions, thisLocalOptions, editorType, parentElement, additionalData, editor, link;
+				optionSelector = element.attr('data-global-options');
+				if (optionSelector && self.globalOptions) {
+					thisOptions = {};
+					if (optionSelector === 'page-options') {
+						editorType = 'options';
+					} else {
+						thisGlobalOptions = self.globalOptions[optionSelector];
+						if (element.attr('data-local-options')) {
+							thisLocalOptions = JSON.parse(element.attr('data-local-options')) || {};
+						}
+						$.extend(true, thisOptions, thisGlobalOptions, thisLocalOptions);
+						editorType = thisOptions.type;
+						additionalData = self.getData(element);
+					}
+
+					switch (editorType) {
+					case 'text':
+						link = element.closest('a');
+						if (link.length === 1) {
+							link.directLinkEditor({'buttonFollowLink': true});
+						} else if (thisOptions.unwrap) {
+							parentElement = element.parent();
+							parentElement.html(element.html());
+							element = parentElement;
+						}
+						thisOptions.instanceID = self.counter;
+						element.directTextEditor(thisOptions);
+						editor = element.data("directEdit-directTextEditor");
+						break;
+					case 'file':
+						element.directFileUploader(thisOptions);
+						editor = element.data("directEdit-directFileUploader");
+						break;
+					case 'image':
+						link = element.closest('a');
+						if (link.length === 1) {
+							link.directLinkEditor({'buttonFollowLink': true});
+						}
+						element.directImageEditor(thisOptions);
+						editor = element.data("directEdit-directImageEditor");
+						break;
+					case 'link':
+						if (thisOptions.orderCount && thisOptions.orderIndex) {
+							thisOptions.buttonShow = false;
+							thisOptions.buttonHide = false;
+							thisOptions.buttonDelete = false;
+							thisOptions.buttonSort = true;
+						}
+						element.directLinkEditor(thisOptions);
+						editor = element.data("directEdit-directLinkEditor");
+						break;
+					case 'postwrapper':
+						if (thisOptions.orderCount && thisOptions.orderIndex) {
+							thisOptions.buttonShow = false;
+							thisOptions.buttonHide = false;
+							thisOptions.buttonDelete = false;
+							thisOptions.buttonSort = true;
+						}
+						element.directPostwrapperEditor(thisOptions);
+						editor = element.data("directEdit-directPostwrapperEditor");
+						break;
+					case 'list':
+						element.directListEditor(thisOptions);
+						editor = element.data("directEdit-directListEditor");
+						break;
+					case 'date':
+						element.directDateEditor(thisOptions);
+						editor = element.data("directEdit-directDateEditor");
+						break;
+					case 'options':
+						element.directPageOptions(thisOptions);
+						editor = element.data("directEdit-directPageOptions");
+						break;
+					}
+					if (editor) {
+						if (editorType === 'options') {
+							self.editors['direct-page-options'] = editor;
+						} else {
+							editor.setAdditionalData(additionalData);
+							self.editors['editor-' + self.counter] = editor;
+						}
+						self.counter += 1;
+					}
+				}
+			}
+
+			if (typeof arg1 === 'object') {
+				if (arg1 instanceof jQuery) {
+					// argument is a jQuery object, options and selector are assumed to be defined before
+					arg1.find('.direct-editable').each(function () {
+						var $this = jQuery(this);
+						if ( $this.attr('data-global-options') === 'page-options' ) {
+							createEditor($this);
+						}
+					});
+				} else {
+					self.globalOptions = arg1;
+					jQuery('.direct-editable').each(function () {
+						var $this = jQuery(this);
+						if ( $this.attr('data-global-options') === 'page-options' ) {						
+							createEditor($this);
+						}
+					});
+				}
+			}
+
 			// The list of internal links
 			var data = {};
 			data['action'] = 'direct-get-internal-links';
@@ -66,103 +174,29 @@ var directEdit, directNotify, directTranslate;
 				},
 				dataType: 'json',
 				success: function (result) {
-					function createEditor(element) {
-						var optionSelector, thisOptions, thisGlobalOptions, thisLocalOptions, editorType, parentElement, additionalData, editor, link;
-						optionSelector = element.attr('data-global-options');
-						if (optionSelector && self.globalOptions) {
-							thisOptions = {};
-							if (optionSelector === 'page-options') {
-								editorType = 'options';
-							} else {
-								thisGlobalOptions = self.globalOptions[optionSelector];
-								if (element.attr('data-local-options')) {
-									thisLocalOptions = JSON.parse(element.attr('data-local-options')) || {};
-								}
-								$.extend(true, thisOptions, thisGlobalOptions, thisLocalOptions);
-								editorType = thisOptions.type;
-								additionalData = self.getData(element);
-							}
-
-							switch (editorType) {
-							case 'text':
-								link = element.closest('a');
-								if (link.length === 1) {
-									link.directLinkEditor({'buttonFollowLink': true});
-								} else if (thisOptions.unwrap) {
-									parentElement = element.parent();
-									parentElement.html(element.html());
-									element = parentElement;
-								}
-								thisOptions.instanceID = self.counter;
-								element.directTextEditor(thisOptions);
-								editor = element.data("directEdit-directTextEditor");
-								break;
-							case 'file':
-								element.directFileUploader(thisOptions);
-								editor = element.data("directEdit-directFileUploader");
-								break;
-							case 'image':
-								link = element.closest('a');
-								if (link.length === 1) {
-									link.directLinkEditor({'buttonFollowLink': true});
-								}
-								element.directImageEditor(thisOptions);
-								editor = element.data("directEdit-directImageEditor");
-								break;
-							case 'link':
-								if (thisOptions.orderCount && thisOptions.orderIndex) {
-									thisOptions.buttonShow = false;
-									thisOptions.buttonHide = false;
-									thisOptions.buttonDelete = false;
-									thisOptions.buttonSort = true;
-								}
-								element.directLinkEditor(thisOptions);
-								editor = element.data("directEdit-directLinkEditor");
-								break;
-							case 'postwrapper':
-								if (thisOptions.orderCount && thisOptions.orderIndex) {
-									thisOptions.buttonShow = false;
-									thisOptions.buttonHide = false;
-									thisOptions.buttonDelete = false;
-									thisOptions.buttonSort = true;
-								}
-								element.directPostwrapperEditor(thisOptions);
-								editor = element.data("directEdit-directPostwrapperEditor");
-								break;
-							case 'list':
-								element.directListEditor(thisOptions);
-								editor = element.data("directEdit-directListEditor");
-								break;
-							case 'date':
-								element.directDateEditor(thisOptions);
-								editor = element.data("directEdit-directDateEditor");
-								break;
-							case 'options':
-								element.directPageOptions(thisOptions);
-								editor = element.data("directEdit-directPageOptions");
-								break;
-							}
-							if (editor) {
-								if (editorType === 'options') {
-									self.editors['direct-page-options'] = editor;
-								} else {
-									editor.setAdditionalData(additionalData);
-									self.editors['editor-' + self.counter] = editor;
-								}
-								self.counter += 1;
-							}
-						}
-					}
-
 					self.internalLinks = result;
 
 					if (typeof arg1 === 'object') {
 						if (arg1 instanceof jQuery) {
 							// argument is a jQuery object, options and selector are assumed to be defined before
-							arg1.find('.direct-editable').each(function () { createEditor(jQuery(this)); });
+							arg1.find('.direct-editable').each(function () {
+								var $this = jQuery(this);
+								if ( $this.attr('data-global-options') === 'page-options' ) {
+									// Already done
+								} else {
+									createEditor($this);
+								}
+							});
 						} else {
 							self.globalOptions = arg1;
-							jQuery('.direct-editable').each(function () { createEditor(jQuery(this)); });
+							jQuery('.direct-editable').each(function () {
+								var $this = jQuery(this);
+								if ( $this.attr('data-global-options') === 'page-options' ) {
+									// Already done
+								} else {
+									createEditor($this);
+								}
+							});
 						}
 					}
 				},
