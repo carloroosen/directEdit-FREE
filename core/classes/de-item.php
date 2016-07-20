@@ -246,11 +246,6 @@ class De_Item {
 						$imageOptions[ 'sharpen' ] = $data[ 'sizes' ][ $mode ][ 'copies' ][ $this->get_setting( 'useCopy' ) ][ 'sharpen' ];
 					}
 				}
-				
-				if ( ! empty( $imageOptions[ 'imgHasRelativeScale' ] ) && ! empty( $imageOptions[ 'imgWidth100' ] ) && intval( $imageOptions[ 'imgWidth100' ] ) ) {
-					$width = round( $data[ 'sizes' ][ $mode ][ 'container-width' ] / $imageOptions[ 'imgWidth100' ] * 100 );
-					$direct_image[ 'style' ] = ( isset( $direct_image[ 'style' ] ) ? $direct_image[ 'style' ] . '; width: ' . $width . '%;' : 'width: ' . $width . '%;' );
-				}
 
 				$direct_image[ 'data-containerW' ] = $data[ 'sizes' ][ $mode ][ 'container-width' ];
 				$direct_image[ 'data-containerH' ] = $data[ 'sizes' ][ $mode ][ 'container-height' ];
