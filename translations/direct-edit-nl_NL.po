@@ -1,684 +1,611 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2015-03-11 16:52+0200\n"
-"PO-Revision-Date: 2015-03-11 16:53+0200\n"
+"POT-Creation-Date: 2016-07-22 21:08+0300\n"
+"PO-Revision-Date: 2016-07-22 21:08+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl_NL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.7.4\n"
-"X-Poedit-Basepath: .\n"
+"X-Generator: Poedit 1.8.8\n"
+"X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-KeywordsList: __;_e\n"
-"X-Poedit-SearchPath-0: Z:\\home\\directedit.pro\\www\\wp-content\\plugins"
-"\\directedit\n"
-"X-Poedit-SearchPathExcluded-0: Z:\\home\\directedit.pro\\www\\wp-content"
-"\\plugins\\directedit/lib/js/holder.js\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: lib/js/holder.js\n"
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/core/classes/de-store.php:1159
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:275
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:297
-msgid "Home"
-msgstr ""
-
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/core/classes/de-store.php:1177
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:87
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:1305
-msgid "Pages"
-msgstr ""
-
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/core/classes/de-store.php:1215
-msgid "Archive Pages"
-msgstr ""
-
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/core/classes/de-store.php:1249
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:1311
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-webform.php:217
-msgid "Webforms"
-msgstr ""
-
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/core/classes/de-store.php:1280
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:1314
-msgid "Categories"
-msgstr ""
-
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/core/classes/de-store.php:1347
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:87
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:1322
-msgid "Posts"
-msgstr ""
-
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/direct-admin.php:10
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:18
+#: direct-admin.php:10 pro/direct-admin.php:23
 msgid "Hooks on standard wp-functions "
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/direct-admin.php:24
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/direct-admin.php:233
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:44
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:1208
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:950
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:958
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:966
+#: direct-admin.php:24 direct-admin.php:233 pro/direct-admin.php:49
+#: pro/direct-admin.php:1255 pro/direct-pro.php:1042 pro/direct-pro.php:1050
+#: pro/direct-pro.php:1058
 msgid "Title"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/direct-admin.php:32
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/direct-admin.php:236
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:52
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:1211
+#: direct-admin.php:32 direct-admin.php:236 pro/direct-admin.php:57
+#: pro/direct-admin.php:1258
 msgid "Content"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/direct-admin.php:40
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/direct-admin.php:239
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:60
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:1214
+#: direct-admin.php:40 direct-admin.php:239 pro/direct-admin.php:65
+#: pro/direct-admin.php:1261
 msgid "Excerpt"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/direct-admin.php:51
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/direct-admin.php:174
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:121
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:917
+#: direct-admin.php:51 direct-admin.php:174 pro/direct-admin.php:142
+#: pro/direct-admin.php:964
 msgid "Direct Edit Options"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/direct-admin.php:51
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:121
+#: direct-admin.php:51 pro/direct-admin.php:142
 msgid "Direct Edit"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/direct-admin.php:61
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:131
+#: direct-admin.php:61 pro/direct-admin.php:152
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/direct-admin.php:72
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/direct-admin.php:91
+#: direct-admin.php:72 direct-admin.php:91
 msgid "Upgrade error."
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/direct-admin.php:117
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/direct-admin.php:141
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/direct-admin.php:149
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/direct-admin.php:156
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/direct-admin.php:162
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:146
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:225
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:246
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:267
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:343
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:377
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:465
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:503
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:560
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:636
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:674
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:709
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:716
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:835
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:841
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:877
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:885
+#: direct-admin.php:117 direct-admin.php:141 direct-admin.php:149
+#: direct-admin.php:156 direct-admin.php:162 pro/direct-admin.php:167
+#: pro/direct-admin.php:246 pro/direct-admin.php:267 pro/direct-admin.php:288
+#: pro/direct-admin.php:364 pro/direct-admin.php:398 pro/direct-admin.php:486
+#: pro/direct-admin.php:524 pro/direct-admin.php:581 pro/direct-admin.php:657
+#: pro/direct-admin.php:695 pro/direct-admin.php:730 pro/direct-admin.php:737
+#: pro/direct-admin.php:860 pro/direct-admin.php:866 pro/direct-admin.php:885
+#: pro/direct-admin.php:932
 msgid "Settings saved."
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/direct-admin.php:178
+#: direct-admin.php:178
 msgid "upgrade to PRO"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/direct-admin.php:186
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:926
+#: direct-admin.php:186 pro/direct-admin.php:973
 msgid "key"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/direct-admin.php:193
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:933
+#: direct-admin.php:193 pro/direct-admin.php:980
 msgid "setup wizard"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/direct-admin.php:195
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:953
+#: direct-admin.php:195 pro/direct-admin.php:1000
 msgid "copy files to current theme"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/direct-admin.php:210
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:968
+#: direct-admin.php:210 pro/direct-admin.php:1015
 msgid "remove /direct-edit folder from theme"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/direct-admin.php:225
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:1200
+#: direct-admin.php:225 pro/direct-admin.php:1247
 msgid "hooks on standard wp-functions"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/direct-admin.php:248
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:1223
+#: direct-admin.php:248 pro/direct-admin.php:1270
 msgid "options"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/direct-admin.php:256
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:1243
+#: direct-admin.php:256 pro/direct-admin.php:1292
 msgid "validate text"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/direct-edit.php:128
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/direct-edit.php:132
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:277
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:281
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:395
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:399
+#: direct-edit.php:129 direct-edit.php:133 pro/direct-pro.php:325
+#: pro/direct-pro.php:329 pro/direct-pro.php:470 pro/direct-pro.php:474
 msgid "Save page"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/direct-edit.php:218
+#: direct-edit.php:219
 msgid "Invalid post type"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/archive.php:44
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/de_webform_job_application.php:32
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/single.php:31
+#: pro/custom/jobs/archive.php:44
+#: pro/custom/jobs/de_webform_job_application.php:32
+#: pro/custom/jobs/single.php:31
 msgid "Pages:"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/de_webform_job_application.php:57
+#: pro/custom/jobs/de_webform_job_application.php:57
 msgid "Job"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/de_webform_job_application.php:61
+#: pro/custom/jobs/de_webform_job_application.php:61
 msgid "Name"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/de_webform_job_application.php:65
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/template/de_webform/log-in.php:31
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/template/de_webform/log-in.php:56
+#: pro/custom/jobs/de_webform_job_application.php:65
+#: pro/template/de_webform/log-in.php:34 pro/template/de_webform/log-in.php:66
 msgid "Email"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/de_webform_job_application.php:69
+#: pro/custom/jobs/de_webform_job_application.php:69
 msgid "Phone"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/de_webform_job_application.php:73
+#: pro/custom/jobs/de_webform_job_application.php:73
 msgid "Application letter"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/de_webform_job_application.php:81
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:85
+#: pro/custom/jobs/de_webform_job_application.php:81 pro/direct-admin.php:106
 msgid "Comments"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/de_webform_job_application.php:84
+#: pro/custom/jobs/de_webform_job_application.php:84
 msgid "Required field"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/de_webform_job_application.php:87
+#: pro/custom/jobs/de_webform_job_application.php:87
 msgid "Send"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/functions.php:10
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/functions.php:35
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/functions.php:68
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/functions.php:88
+#: pro/custom/jobs/functions.php:10 pro/custom/jobs/functions.php:35
+#: pro/custom/jobs/functions.php:68 pro/custom/jobs/functions.php:88
 msgid "Job Application"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/functions.php:40
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/functions.php:73
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/functions.php:93
+#: pro/custom/jobs/functions.php:40 pro/custom/jobs/functions.php:73
+#: pro/custom/jobs/functions.php:93
 msgid "job"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/functions.php:41
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/functions.php:74
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/functions.php:94
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:942
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:1059
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:1132
+#: pro/custom/jobs/functions.php:41 pro/custom/jobs/functions.php:74
+#: pro/custom/jobs/functions.php:94 pro/direct-admin.php:989
+#: pro/direct-admin.php:1106 pro/direct-admin.php:1179
 msgid "name"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/functions.php:42
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/functions.php:75
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/functions.php:95
+#: pro/custom/jobs/functions.php:42 pro/custom/jobs/functions.php:75
+#: pro/custom/jobs/functions.php:95
 msgid "email"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/functions.php:43
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/functions.php:76
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/functions.php:96
+#: pro/custom/jobs/functions.php:43 pro/custom/jobs/functions.php:76
+#: pro/custom/jobs/functions.php:96
 msgid "phone"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/functions.php:44
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/functions.php:77
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/functions.php:97
+#: pro/custom/jobs/functions.php:44 pro/custom/jobs/functions.php:77
+#: pro/custom/jobs/functions.php:97
 msgid "comments"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/functions.php:200
+#: pro/custom/jobs/functions.php:200
 msgid "Job field is empty."
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/functions.php:202
+#: pro/custom/jobs/functions.php:202
 msgid "Name field is empty."
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/functions.php:204
+#: pro/custom/jobs/functions.php:204
 msgid "Email field is empty."
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/functions.php:206
+#: pro/custom/jobs/functions.php:206
 msgid "Phone field is empty."
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/custom/jobs/single.php:47
+#: pro/custom/jobs/single.php:47
 msgid "Apply now"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:16
+#: pro/direct-admin.php:21
 msgid "Direct Edit Slug"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:28
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:981
+#: pro/direct-admin.php:33 pro/direct-pro.php:1073
 msgid "Slug"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:85
+#: pro/direct-admin.php:106
 msgid "Links"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:87
+#: pro/direct-admin.php:108
 msgid "Media"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:87
+#: pro/direct-admin.php:108
 msgid "Dashboard"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:87
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:477
+#: pro/direct-admin.php:108
+msgid "Posts"
+msgstr ""
+
+#: pro/direct-admin.php:108
+msgid "Pages"
+msgstr ""
+
+#: pro/direct-admin.php:108 pro/direct-pro.php:553
 msgid "List items"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:87
+#: pro/direct-admin.php:108
 msgid "Plugins"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:87
+#: pro/direct-admin.php:108
 msgid "Profile"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:87
+#: pro/direct-admin.php:108
 msgid "Tools"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:87
+#: pro/direct-admin.php:108
 msgid "Settings"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:105
+#: pro/direct-admin.php:126
 msgid "Themes"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:105
+#: pro/direct-admin.php:126
 msgid "Widgets"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:285
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:298
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:302
+#: pro/direct-admin.php:296 pro/direct-admin.php:318
+msgid "Home"
+msgstr ""
+
+#: pro/direct-admin.php:306 pro/direct-admin.php:319 pro/direct-admin.php:323
 msgid "home"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:310
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:332
+#: pro/direct-admin.php:331 pro/direct-admin.php:353
 msgid "Blog"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:320
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:333
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:337
+#: pro/direct-admin.php:341 pro/direct-admin.php:354 pro/direct-admin.php:358
 msgid "blog"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:761
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:787
+#: pro/direct-admin.php:786 pro/direct-admin.php:812
 msgid "Log in"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:788
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:792
+#: pro/direct-admin.php:813 pro/direct-admin.php:817
 msgid "log in"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:803
+#: pro/direct-admin.php:828
 msgid "Password recovery"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:805
+#: pro/direct-admin.php:830
 msgid ""
 "<p>Click <a href=\"{link}\">this link</a> to login on the website and to set "
 "a new password.</p>"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:918
+#: pro/direct-admin.php:965
 msgid "automatic updates"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:934
+#: pro/direct-admin.php:981
 msgid "create theme"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:946
+#: pro/direct-admin.php:993
 msgid "create a child theme for current theme"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:986
+#: pro/direct-admin.php:1033
 msgid "create home and blog pages"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:1018
+#: pro/direct-admin.php:1065
 msgid "custom home page templates"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:1054
+#: pro/direct-admin.php:1101
 msgid "custom page types"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:1115
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:1188
+#: pro/direct-admin.php:1162 pro/direct-admin.php:1235
 msgid "remove"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:1127
+#: pro/direct-admin.php:1174
 msgid "custom webforms"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:1231
+#: pro/direct-admin.php:1279
 msgid "wp-login form redirect"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:1234
+#: pro/direct-admin.php:1283
 msgid "tweak backend"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:1237
+#: pro/direct-admin.php:1286
 msgid "tweak frontend WordPress toolbar"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:1240
+#: pro/direct-admin.php:1289
 msgid "disable backend editing for editor"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:1247
+#: pro/direct-admin.php:1296
 msgid "use DirectEdit smart url's"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:1261
+#: pro/direct-admin.php:1305
+msgid "global admin email for custom webforms"
+msgstr ""
+
+#: pro/direct-admin.php:1309
+msgid "bcc for custom webforms"
+msgstr ""
+
+#: pro/direct-admin.php:1320
 msgid "SEO"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:1269
+#: pro/direct-admin.php:1328
 msgid "Use DE SEO"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:1273
+#: pro/direct-admin.php:1332
 msgid "Use All In One SEO Pack"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:1278
+#: pro/direct-admin.php:1337
 msgid "Use WordPress SEO"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:1282
+#: pro/direct-admin.php:1341
 msgid "Don't use any SEO"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:1291
-msgid "DirectEdit menu editor"
+#: pro/direct-admin.php:1351
+msgid "security"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:1299
-msgid "use DirectEdit menu editor"
+#: pro/direct-admin.php:1360
+msgid "enforce strong passwords"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:1302
-msgid "which menu items can be added"
+#: pro/direct-admin.php:1363
+msgid "limit login attempts, then block user or IP"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:1308
-msgid "DirectEdit archive pages"
+#: pro/direct-admin.php:1366
+msgid "use honeypot captcha for DirectEdit webforms"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-admin.php:1338
+#: pro/direct-admin.php:1427
 msgid "Show languages"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:71
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:75
-msgid "Back to website"
+#: pro/direct-admin.php:1513
+msgid "A password reset link will be sent to the user via email."
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:80
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:84
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:1020
-msgid "Save"
-msgstr ""
-
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:97
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:121
+#: pro/direct-pro.php:117 pro/direct-pro.php:141
 msgid "Website"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:107
+#: pro/direct-pro.php:127
 msgid "Backend"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:135
+#: pro/direct-pro.php:155
 msgid "Menus"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:215
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:219
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:333
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:337
+#: pro/direct-pro.php:235 pro/direct-pro.php:239 pro/direct-pro.php:382
+#: pro/direct-pro.php:386
 msgid "Page options"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:227
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:231
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:345
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:349
+#: pro/direct-pro.php:247 pro/direct-pro.php:251 pro/direct-pro.php:394
+#: pro/direct-pro.php:398
 msgid "Show"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:237
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:241
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:355
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:359
+#: pro/direct-pro.php:257 pro/direct-pro.php:261 pro/direct-pro.php:404
+#: pro/direct-pro.php:408
 msgid "Hide"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:251
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:256
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:369
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:374
+#: pro/direct-pro.php:271 pro/direct-pro.php:276 pro/direct-pro.php:418
+#: pro/direct-pro.php:423
 msgid "Delete"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:257
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:375
+#: pro/direct-pro.php:277 pro/direct-pro.php:424
 msgid "Delete this page in all languages"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:268
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:386
-msgid "Show all"
+#: pro/direct-pro.php:286 pro/direct-pro.php:290 pro/direct-pro.php:433
+#: pro/direct-pro.php:437
+msgid "Mode"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:290
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:294
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:408
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:412
-msgid "Edit menu"
+#: pro/direct-pro.php:295 pro/direct-pro.php:299 pro/direct-pro.php:442
+#: pro/direct-pro.php:446
+msgid "View mode"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:478
+#: pro/direct-pro.php:304 pro/direct-pro.php:308 pro/direct-pro.php:451
+#: pro/direct-pro.php:455
+msgid "Edit mode"
+msgstr ""
+
+#: pro/direct-pro.php:313 pro/direct-pro.php:317 pro/direct-pro.php:460
+#: pro/direct-pro.php:464
+msgid "Edit mode, show hidden items"
+msgstr ""
+
+#: pro/direct-pro.php:554
 msgid "List item"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:952
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:960
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:968
+#: pro/direct-pro.php:1044 pro/direct-pro.php:1052 pro/direct-pro.php:1060
 msgid "Description"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:954
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:962
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:970
+#: pro/direct-pro.php:1046 pro/direct-pro.php:1054 pro/direct-pro.php:1062
 msgid "Keywords"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:974
+#: pro/direct-pro.php:1066
 msgid "Navigation label"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:997
+#: pro/direct-pro.php:1089
 msgid "Category"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-pro.php:1031
+#: pro/direct-pro.php:1112
+msgid "Save"
+msgstr ""
+
+#: pro/direct-pro.php:1123
 msgid "Do you want to show this page?"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-webform.php:29
+#: pro/direct-webform.php:35
 msgid "General"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-webform.php:30
+#: pro/direct-webform.php:36
 msgid "Admin Email"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-webform.php:31
+#: pro/direct-webform.php:37
 msgid "User Email"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-webform.php:32
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-webform.php:152
+#: pro/direct-webform.php:38 pro/direct-webform.php:213
 msgid "Form Template"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-webform.php:44
+#: pro/direct-webform.php:52
+msgid "Form identifier"
+msgstr ""
+
+#: pro/direct-webform.php:59
+msgid "Ajax webform"
+msgstr ""
+
+#: pro/direct-webform.php:62
 msgid "Success page"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-webform.php:49
+#: pro/direct-webform.php:67
 msgid "or"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-webform.php:52
+#: pro/direct-webform.php:70
 msgid "Success message"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-webform.php:72
+#: pro/direct-webform.php:96
 msgid "Use admin email"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-webform.php:75
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-webform.php:120
+#: pro/direct-webform.php:99 pro/direct-webform.php:165
 msgid "From"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-webform.php:79
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-webform.php:124
+#: pro/direct-webform.php:107 pro/direct-webform.php:173
 msgid "To"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-webform.php:83
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-webform.php:128
+#: pro/direct-webform.php:115 pro/direct-webform.php:181
+msgid "Bcc"
+msgstr ""
+
+#: pro/direct-webform.php:123 pro/direct-webform.php:189
 msgid "Subject"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-webform.php:90
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-webform.php:135
+#: pro/direct-webform.php:130 pro/direct-webform.php:196
 msgid "Use html content type"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-webform.php:93
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-webform.php:138
+#: pro/direct-webform.php:133 pro/direct-webform.php:199
 msgid "Body"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-webform.php:100
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-webform.php:145
+#: pro/direct-webform.php:140 pro/direct-webform.php:206
 msgid "Attach uploads"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-webform.php:117
+#: pro/direct-webform.php:162
 msgid "Use user email"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-webform.php:153
+#: pro/direct-webform.php:214
 msgid "Select form template"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-webform.php:218
+#: pro/direct-webform.php:278
+msgid "Webforms"
+msgstr ""
+
+#: pro/direct-webform.php:279
 msgid "Webform"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-webform.php:333
+#: pro/direct-webform.php:410
 msgid "Wrong email address."
 msgstr "Verkeerd e-mail adres."
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-webform.php:339
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-webform.php:353
+#: pro/direct-webform.php:418 pro/direct-webform.php:435
 msgid "You have no password specified."
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-webform.php:342
-msgid "The password is too short."
+#: pro/direct-webform.php:421
+msgid "Please make the password a strong one."
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-webform.php:350
+#: pro/direct-webform.php:429
 msgid "You have no email specified."
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-webform.php:390
+#: pro/direct-webform.php:475
 msgid "An email with a login link has been sent to {email}."
 msgstr ""
 "Er is e-mail gestuurd naar {email} met daarin een tijdelijke login link."
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-webform.php:511
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/direct-webform.php:525
+#: pro/direct-webform.php:612 pro/direct-webform.php:626
 msgid "File uploading error."
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/template/404.php:4
+#: pro/template/404.php:4
 msgid "Page not found"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/template/404.php:9
+#: pro/template/404.php:9
 msgid "It seems we can't find what you're looking for."
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/template/de_webform/log-in.php:43
+#: pro/template/de_webform/log-in.php:46
 msgid "New password"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/template/de_webform/log-in.php:60
+#: pro/template/de_webform/log-in.php:50
+msgid "Retype new password"
+msgstr ""
+
+#: pro/template/de_webform/log-in.php:70
 msgid "Password"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/template/de_webform/log-in.php:63
+#: pro/template/de_webform/log-in.php:73
 msgid "Lost your password?"
 msgstr ""
 
-#: Z:\home\directedit.pro\www\wp-content\plugins\directedit/pro/template/functions.php:5
+#: pro/template/functions.php:5
 msgid "Main Menu"
 msgstr ""
