@@ -5,6 +5,10 @@ class De_Store {
 	
 	public static function is_editable( De_Item $item ) {
 		global $direct_queried_object;
+
+		if ( ! empty( $_SESSION[ 'de_mode' ] ) && $_SESSION[ 'de_mode' ] == 'view' ) {
+			return false;
+		}
 		
 		if ( $item->get_setting( 'disableEdit' ) && $item->get_setting( 'disableEdit' ) !== 'false' && $item->get_setting( 'disableEdit' ) !== 'no' ) {
 			return false;
