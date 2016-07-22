@@ -18,7 +18,7 @@
 		},
 		"buttonOptions" : {
 			"link" : {
-				"prefixes" : [["/", "internal link"], ["http://", "external link"], ["https://", "external link (safe)"], ["mailto:", "email address"]]
+				"prefixes" : [["/", "internal link"], ["", "external link"], ["mailto:", "email address"]]
 			}
 		},
 		"placeholder": "..."
@@ -32,7 +32,7 @@
 		},
 		"buttonOptions" : {
 			"link" : {
-				"prefixes" : [["/", "internal link"], ["http://", "external link"], ["https://", "external link (safe)"], ["mailto:", "email address"]]
+				"prefixes" : [["/", "internal link"], ["", "external link"], ["mailto:", "email address"]]
 			}
 		},
         "formatRules" : {
@@ -79,7 +79,7 @@
 				}
 			},
 			"link" : {
-				"prefixes" : [["/", "internal link"], ["http://", "external link"], ["https://", "external link (safe)"], ["mailto:", "email address"]]
+				"prefixes" : [["/", "internal link"], ["", "external link"], ["mailto:", "email address"]]
 			}
 		},
 		"placeholder": "..."
