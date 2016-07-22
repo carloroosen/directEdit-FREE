@@ -185,7 +185,7 @@
 					var code;
 					code = codeInput.val();
 					self.eventHandlers.restoreSelection();
-					document.execCommand('inserthtml', false, '<div class="embed-container noValidate"><iframe src="http://www.youtube.com/embed/' + code + '?rel=0" allowfullscreen></iframe></div>');
+					document.execCommand('inserthtml', false, '<div class="embed-container noValidate"><iframe src="https://www.youtube.com/embed/' + code + '?rel=0" allowfullscreen></iframe></div>');
 					self.element.trigger('change');
 					dialog.dialog('close');
 					return false;
