@@ -131,8 +131,16 @@ function de_adjust_menu( $wp_admin_bar ) {
 					'href' => '#',
 					'group' => '',
 					'meta' => array( 'title' => __( 'Save page', 'direct-edit' ) )
-				)
-			);
+			) );
+
+			$wp_admin_bar->add_node( array(
+				'id' => 'de-help',
+				'title' => __( 'Help', 'direct-edit' ),
+				'parent' => '',
+				'href' => get_permalink( get_option( 'de_help' ) ),
+				'group' => '',
+				'meta' => array( 'title' => __( 'Help', 'direct-edit' ) )
+			) );
 		}
 	}
 }
@@ -506,7 +514,30 @@ function de_transliterate( $title, $raw_title = NULL, $context = 'query' ) {
 }
 
 function de_plugin_setup() {
+	global $user_ID;
+
+	// Run DirectEdit cron
 	wp_schedule_event( time(), 'daily', 'de_cron' );
+
+	if ( function_exists( 'de_pro_plugin_setup' ) ) {
+		de_pro_plugin_setup();
+	}	
+	// Create the instruction page
+	if ( ! get_option( 'de_help' ) || ! get_post( get_option( 'de_help' ) ) ) {
+		$newPost = array(
+			'post_name' => 'de_help',
+			'post_title' => __( 'DirectEdit Help', 'direct-edit' ),
+			'post_content' => '',
+			'post_status' => 'draft',
+			'post_date' => date('Y-m-d H:i:s'),
+			'post_author' => $user_ID,
+			'post_type' => 'page',
+			'post_category' => array( 0 )
+		);
+
+		$newPostId = wp_insert_post( $newPost );
+		update_option( 'de_help', $newPostId );
+	}
 }
 
 function de_plugin_deactivate() {
