@@ -25,6 +25,7 @@ add_action( 'wp_ajax_direct-show-post', 'de_show_post' );
 add_action( 'wp_ajax_direct-upload-image', 'de_upload_image' );
 add_action( 'wp_ajax_direct-upload-file', 'de_upload_file' );
 add_action( 'wp_ajax_direct-save-menu', 'de_save_menu' );
+add_action( 'wp_ajax_direct-check-session', 'de_check_session' );
 // TODO: Sometimes we have to allow guests to upload images. Probably we need some smart condition here 
 //add_action( 'wp_ajax_nopriv_direct-upload-image', 'de_upload_image' );
 //add_action( 'wp_ajax_nopriv_direct-edit-image', 'de_edit_image' );
@@ -472,6 +473,12 @@ function de_upload_file() {
 
 function de_save_menu() {
 	echo json_encode( De_Store::write_menus() );
+	
+	die();
+}
+
+function de_check_session() {
+	echo is_user_logged_in();
 	
 	die();
 }

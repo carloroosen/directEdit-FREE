@@ -299,7 +299,29 @@ var directEdit, directNotify, directTranslate;
 	};
 
 	// ping server every 10 minutes to keep the session alive
-	setInterval(function () { $.post($.directEdit.fn.ajaxUrl); }, 600000);
+	setInterval(
+		function () {
+			//$.post($.directEdit.fn.ajaxUrl);
+			var data = {};
+			data['action'] = 'direct-check-session';
+			$.ajax({
+				url: $.directEdit.fn.ajaxUrl,
+				type: 'POST',
+				error: function () {
+				},
+				dataType: 'json',
+				success: function (result) {
+					console.log( result );
+					if ( ! result) {
+						console.log('expired');
+					}
+				},
+				data: data
+			});
+
+		},
+		60000
+	);
 
 	// prevent leaving the page when changes are made
 	$(window).on('beforeunload', function () {
