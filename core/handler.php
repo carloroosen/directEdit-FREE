@@ -17,6 +17,7 @@ add_action( 'wp_ajax_direct-delete', 'de_list_delete' );
 add_action( 'wp_ajax_direct-delete-post', 'de_delete_post' );
 add_action( 'wp_ajax_direct-edit-image', 'de_edit_image' );
 add_action( 'wp_ajax_direct-get-internal-links', 'de_internal_links' );
+add_action( 'wp_ajax_direct-get-lost-pages', 'de_lost_pages' );
 add_action( 'wp_ajax_direct-hide-post', 'de_hide_post' );
 add_action( 'wp_ajax_direct-move-left', 'de_list_move_left' );
 add_action( 'wp_ajax_direct-move-right', 'de_list_move_right' );
@@ -143,6 +144,33 @@ function de_internal_links() {
 	while ( $the_query->have_posts() ) {
 		$the_query->the_post();
 		$response[ get_the_title() ] = str_replace( home_url( '/' ), '', get_permalink( get_the_ID() ) );
+	}
+	wp_reset_postdata();
+
+	ksort( $response, SORT_STRING | SORT_FLAG_CASE );
+	echo json_encode( $response );
+	
+	die();	
+}
+
+function de_lost_pages() {
+	$response = array();
+
+	$the_query = new WP_Query( array( 'post_type' => 'page', 'posts_per_page' => -1 ) );
+	while ( $the_query->have_posts() ) {
+		$the_query->the_post();
+		
+		if ( get_the_ID() == get_option( 'de_help' )) {
+			continue;
+		}
+		
+		$menu_check = new WP_Query( array( 'post_type' => 'nav_menu_item', 'meta_key' => '_menu_item_object_id', 'meta_value' => get_the_ID() ) );
+		$menu_check->get_posts();
+		if ( $menu_check->post_count ) {
+			continue;
+		}
+		
+		$response[ get_the_title() ] = get_permalink( get_the_ID() );
 	}
 	wp_reset_postdata();
 

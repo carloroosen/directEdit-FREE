@@ -202,6 +202,59 @@ var directEdit, directNotify, directTranslate;
 				},
 				data: data
 			});
+			
+			// Lost pages functionality
+			$.fn.directLostPagesButton = function () {
+				var lostPagesButton, lostPagesDialog, lostPagesDialogOptions, lostPagesDialogCloseButton;
+
+				lostPagesButton = this;
+				lostPagesDialogOptions = {
+					autoOpen: false,
+					width: 800,
+					title: "Lost Pages",
+					modal: true,
+					dialogClass: 'direct-edit'
+				};
+				lostPagesDialog = $('<div><div id="lostPagesDiv"></div><input type="button" id="closeButton" value="Close" /></form></div>');
+				lostPagesDialogCloseButton = $('input#closeButton', lostPagesDialog);
+				lostPagesDialogCloseButton.click(function() {
+					lostPagesDialog.dialog('close');		
+					return false;		
+				});
+
+				lostPagesDialog.dialog(lostPagesDialogOptions);
+
+				lostPagesButton.click(function () {
+					lostPagesDialog.dialog('open');		
+					return false;
+				});
+				lostPagesButton.hide();
+												
+				var data = {};														
+				data['action'] = 'direct-get-lost-pages';
+				$.ajax({
+					url: self.ajaxUrl,
+					type: 'POST',
+					error: function () {
+					},
+					dataType: 'json',
+					success: function (result) {
+						// The list of lost pages
+						if (typeof (result) === 'object') {
+							var i = 0;
+							for(var index in result) {
+								lostPagesDialog.find('#lostPagesDiv').append('<p><a href="' + result[index] + '" target="_blank">' + index + '</a></p>');
+								i ++;
+							}
+						}
+
+						if (i) {
+							lostPagesButton.show();
+						}
+					},
+					data: data
+				});
+			};
 		},
 		taskCount: function () {
 			var e, editor, taskCount = 0;
@@ -438,7 +491,6 @@ var directEdit, directNotify, directTranslate;
 		}
 	});
 
-
 	$.fn.serializeObject = function () {
 		var o = {}, a = this.serializeArray();
 		jQuery.each(a, function () {
@@ -465,6 +517,6 @@ var directEdit, directNotify, directTranslate;
 			}
 		}
 		return r || m;
-	};
+	};	
 }(jQuery));
 
