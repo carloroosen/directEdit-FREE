@@ -782,8 +782,6 @@ class De_Store {
 					// Error
 					return false;
 				}
-
-				wp_update_attachment_metadata( $id, wp_generate_attachment_metadata( $id, $file ) );
 				
 				$path = pathinfo( wp_get_attachment_url( $id ) );
 				
