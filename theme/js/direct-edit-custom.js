@@ -21,7 +21,7 @@
 		},
 		'p' : {
 			command: 'formatBlock',
-			commandValue : 'P',
+			commandValue : '<P>',
 			tooltip: 'paragraph',
 			icon: 'direct-icon-p'
 		},
@@ -42,37 +42,37 @@
 		},
 		h1 : {
 			command: 'formatBlock',
-			commandValue : 'H1',
+			commandValue : '<H1>',
 			tooltip: 'header 1',
 			icon: 'direct-icon-h1'
 		},
 		h2 : {
 			command: 'formatBlock',
-			commandValue : 'H2',
+			commandValue : '<H2>',
 			tooltip: 'header 2',
 			icon: 'direct-icon-h2'
 		},
 		h3 : {
 			command: 'formatBlock',
-			commandValue : 'H3',
+			commandValue : '<H3>',
 			tooltip: 'header 3',
 			icon: 'direct-icon-h3'
 		},
 		h4 : {
 			command: 'formatBlock',
-			commandValue : 'H4',
+			commandValue : '<H4>',
 			tooltip: 'header 4',
 			icon: 'direct-icon-h4'
 		},
 		h5 : {
 			command: 'formatBlock',
-			commandValue : 'H5',
+			commandValue : '<H5>',
 			tooltip: 'header 5',
 			icon: 'direct-icon-h5'
 		},
 		h6 : {
 			command: 'formatBlock',
-			commandValue : 'H6',
+			commandValue : '<H6>',
 			tooltip: 'header 6',
 			icon: 'direct-icon-h6'
 		},
@@ -88,7 +88,7 @@
 		},
 		blockquote: {
 			command: 'formatBlock',
-			commandValue: 'blockquote',
+			commandValue: '<blockquote>',
 			tooltip: 'quotation',
 			icon: 'direct-icon-quote'
 		},
@@ -155,7 +155,8 @@
 				this.element.directFileUploader({
 					'callback': function (result) {
 						self.eventHandlers.restoreSelection();
-						document.execCommand('inserthtml', false, '<p class="download"><a href="' + result.url + '">' + result.filename + '</a></p>');
+						//document.execCommand('inserthtml', false, '<p class="download"><a href="' + result.url + '">' + result.filename + '</a></p>');
+						self.pasteHtmlAtCaret('<p class="download"><a href="' + result.url + '">' + result.filename + '</a></p>');
 					}
 				});
 				return this.element.directFileUploader('getDialog');
@@ -185,7 +186,8 @@
 					var code;
 					code = codeInput.val();
 					self.eventHandlers.restoreSelection();
-					document.execCommand('inserthtml', false, '<div class="embed-container noValidate"><iframe src="https://www.youtube.com/embed/' + code + '?rel=0" allowfullscreen></iframe></div>');
+					//document.execCommand('inserthtml', false, '<div class="embed-container noValidate"><iframe src="https://www.youtube.com/embed/' + code + '?rel=0" allowfullscreen></iframe></div>');
+					self.pasteHtmlAtCaret('<div class="embed-container noValidate"><iframe src="https://www.youtube.com/embed/' + code + '?rel=0" allowfullscreen></iframe></div>');
 					self.element.trigger('change');
 					dialog.dialog('close');
 					return false;
