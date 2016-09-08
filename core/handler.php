@@ -143,7 +143,8 @@ function de_internal_links() {
 	$the_query = new WP_Query( array( 'post_type' => 'any', 'posts_per_page' => -1 ) );
 	while ( $the_query->have_posts() ) {
 		$the_query->the_post();
-		$response[ get_the_title() ] = str_replace( home_url( '/' ), '', get_permalink( get_the_ID() ) );
+		$parsed = parse_url( get_permalink( get_the_ID() ) );
+		$response[ get_the_title() ] = ( strpos( $parsed[ 'path' ], '/' ) === 0 ? substr( $parsed[ 'path' ], 1 ) : $parsed[ 'path' ] ) . $parsed[ 'query' ];
 	}
 	wp_reset_postdata();
 
