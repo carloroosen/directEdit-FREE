@@ -175,7 +175,7 @@
 						}
 						if (linkNode && attributes) {
 							$(linkNode).attr(attributes);
-							if (attributes.target === '') {
+							if (attributes.target == '') {
 								$(linkNode).removeAttr('target');
 							}
 						}
@@ -218,7 +218,7 @@
 						self.link = '';
 					} else {
 						self.link = self.prefix + urlInput.val();
-						if (self.prefix === '') {
+						if (self.prefix == '') {
 							if (self.link.indexOf('http://') === -1 && self.link.indexOf('https://') === -1) {
 								self.link = 'http://' + self.link;
 							}
@@ -226,7 +226,7 @@
 					}
 					if (self.follow) { self.follow.attr('href', self.link); }
 					attributes = self.options.attributes || {};
-					attributes.target = (self.prefix === 'http://' || self.prefix === 'https://' || self.prefix === '') ? '_blank' : '';
+					attributes.target = (self.prefix === 'http://' || self.prefix === 'https://' || self.prefix == '') ? '_blank' : '';
 					if (self.options.textContainer) {
 						linkNode = createLinkInSelection(currentRange, self.link, attributes);
 					}
