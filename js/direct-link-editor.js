@@ -275,18 +275,31 @@
 				// get default prefix
 				changePrefix('/');
 				plainLink = (self.link && self.link.indexOf('/') === 0) ? self.link.substring(1) : self.link;
-				if (self.options.prefixes) {
+				var prefixDefined = false;
+				var prefixEmpty = false;
+				if (self.link && self.options.prefixes) {
 					for (p in self.options.prefixes) {
-						if (self.options.prefixes.hasOwnProperty(p) && self.link && self.link.indexOf(self.options.prefixes[p][0]) === 0) {
-							$('input:radio[value="' + self.options.prefixes[p][0] + '"]', dialog).prop('checked', true);
-							if (self.options.prefixes[p][0] == '/') {
-								$('div#internalLinksDiv', dialog).show();
-							} else {
-								$('div#internalLinksDiv', dialog).hide();
+						if (self.options.prefixes[p][0]) {
+							if (self.options.prefixes.hasOwnProperty(p) && self.link && self.link.indexOf(self.options.prefixes[p][0]) === 0) {
+								$('input:radio[value="' + self.options.prefixes[p][0] + '"]', dialog).prop('checked', true);
+								if (self.options.prefixes[p][0] == '/') {
+									$('div#internalLinksDiv', dialog).show();
+								} else {
+									$('div#internalLinksDiv', dialog).hide();
+								}
+								changePrefix(self.options.prefixes[p][0]);
+								plainLink = self.link.substring(self.prefix.length);
+								prefixDefined = true;
 							}
-							changePrefix(self.options.prefixes[p][0]);
-							plainLink = self.link.substring(self.prefix.length);
+						} else {
+							prefixEmpty = true;
 						}
+					}
+					
+					if (! prefixDefined && prefixEmpty) {
+						$('input:radio[value=""]', dialog).prop('checked', true);
+						$('div#internalLinksDiv', dialog).hide();
+						changePrefix('');
 					}
 				}
 				$('input[name=url]', dialog).val(plainLink);
