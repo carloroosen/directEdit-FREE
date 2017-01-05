@@ -45,9 +45,11 @@
 			(function () {
 				dialogOpenHandler = function () {
 					var textEditor;
-					textEditor = self.element.data('directEdit-directTextEditor');
-					self.additionalData = textEditor.additionalData;
-					console.log(self.additionalData);
+					if (self.element.data('directEdit-directTextEditor')) {
+						textEditor = self.element.data('directEdit-directTextEditor');
+						self.additionalData = textEditor.additionalData;
+						console.log(self.additionalData);
+					}
 					self._createUploadPage();
 				};
 			}());
